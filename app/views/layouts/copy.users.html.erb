@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Users: <%= controller.action_name %></title>
+  
+  <!-- <%= stylesheet_link_tag 'scaffold' %> -->
+  <%= stylesheet_link_tag "main" "images" %>
+  
+  <!-- include css files -->
+  <link rel="stylesheet" type="text/css" href="../../public/jqueryui/css/ui-lightness/jquery-ui-1.8.2.custom.css" />	
+  <link rel="stylesheet" href="../../public/lavalamp-0.2.0/lavalamp_test.css" type="text/css" media="screen">
+  
+  <%= javascript_include_tag "iot/main" "jqueryui/js/jquery-1.4.2.min" "jqueryui/js/jquery-ui-1.8.2.custom.min"%>
+  <%= javascript_include_tag "iot/main" "lavalamp-0.2.0/jquery.easing.min" "lavalamp-0.2.0/jquery.lavalamp.min"%>
+  
+</head>
+<body>
+
+<p style="color: green"><%= notice %></p>
+
+<%= yield %>
+
+</body>
+</html>
+
+<%= yield :javascript -%>

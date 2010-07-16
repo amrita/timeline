@@ -1,0 +1,261 @@
+*{
+
+}
+
+#timeheader{
+  width:  960px;
+  height:  40px;
+  
+  border: solid thin;
+}
+
+#timecontent{
+  width:   960px;
+  height:  500px;
+  border: solid thin;
+}
+
+.sliderarrow {
+  width:  65px;
+  height: 58px;
+  
+  margin-top:  440px;
+  position: absolute;
+}
+
+#leftarrow{
+  margin-left: -60px;
+  z-index: 10;
+}
+
+#bgleftarrow{
+  margin-left: -60px;
+}
+
+#timeline, #timelinebase{
+  width:  950px;
+  height:  20px;
+  
+  border: solid thin;
+  border-color: gray;
+  
+  background-color: #d70377;
+  
+  margin-top:  150px;
+  margin-left:   5px;
+  /*position: absolute; */
+  overflow: hidden;
+}
+
+
+.timeclass{
+  width:  90px;
+  height:  20px;
+  
+  border: solid thin;
+  border-color: gray;
+  background-color: #d70377;
+  
+  margin-top:  0px;
+  margin-left: 5px;
+  float:    left:
+}
+
+.timelineclass{
+  width:  950px;
+  height:  20px;
+  
+  border: solid thin;
+  border-color: gray;
+  
+  background-color: #d70377;
+}
+
+
+#rightarrow{
+  margin-left: 955px;
+  z-index: 10;
+}
+
+#bgrightarrow{
+  margin-left: 955px;
+}
+
+
+#timelineticks{ 
+}
+
+.ticks{
+  float:        left; 
+  /*position:  absolute; */
+  
+  width:    1px;
+  height:  20px;
+  background-color: black;
+}
+
+
+table#timelabels
+{
+    border-spacing: 0; 
+}
+
+
+.tlabels{
+  font-family: Andale Mono;
+  font-size:    10pt;
+  text-align:  center;
+  
+  line-height:  20px;
+  color:       black;
+  
+  border-width: 0px 1px 0 0;
+  border-color: black;
+  border-style: solid;
+}
+
+.hourlabels{
+  font-family: Andale Mono;
+  font-size:    10pt;
+  text-align:  center;
+  
+  line-height:  20px;
+  color:       black;
+  
+  border-width: 0px 1px 0 0;
+  border-color: black;
+  border-style: solid;
+  
+  width: 39px;
+}
+
+
+#timelinedates{
+  margin-top:   5px;
+  margin-left:  5px;
+  height:      15px;
+}
+
+table#timedatelabels
+{
+    border-width: 0px 0px 0px 1px;
+    border-spacing: 0; 
+    border-style: solid;
+    border-color: blue;
+}
+
+.tdates{
+  float:        left;
+  font-family: Andale Mono;
+  font-size:    10pt;
+  text-align:  center;
+  line-height:  15px;
+  color:        blue;
+  
+  border-width: 0px 1px 0px 0px;
+  border-color: blue;
+  border-style: solid;
+  
+  width: 950px;
+}
+
+
+#timeslidercontent{
+  width:  960px;
+  height: 85px;
+  
+  border: solid thin;
+}
+
+#timelineslider{
+  width:      960px;
+  margin-top:  70px;
+}
+
+
+#currentdate{
+  font-family: Andale Mono;
+  font-size:    10pt;
+  color:        Blue;
+  
+  width:      980px;
+  text-align: center;
+  
+  margin-top:      5px;   
+  position:    absolute;
+}
+
+td .weeklabels{
+  font-family: Andale Mono;
+  font-size:    10pt;
+  color:        Blue;
+  width:        127px;
+  text-align:   center;
+  
+  /*padding-left:      25px;
+  padding-right:     20px; */
+}
+
+#weekdaylabels{
+  margin-left:   12px;
+}
+
+
+#timeslider{
+  width:       300px;
+  margin-left:  0px;
+  margin-top:   50px;
+}
+  
+#timeslidervalue{
+  margin-top:    10px;
+  text-align: center;
+  
+  font-family: Andale Mono;
+  font-size:    10pt;
+}
+
+/* SLIDER ICON LABELS
+***************************************************************/
+
+.slidericon {
+  width:  75px;
+  height: 47px;
+}
+
+#levelicons{
+  width:  960px;
+  height:  70px;
+  
+  border: solid thin;
+}
+
+.levels{
+  margin-top:   10px;
+  position: absolute;
+  border: solid medium orange;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+}
+
+.ui-slider .ui-slider-handle { 
+  background: url('../images/dragMe.png');
+  top: -3.2em;
+  width:  2.9em; 
+  height: 3.1em;
+}
+
+/* CONTENT SLIDER STUFF
+*******************************************************************/
+
+#content-scroll {
+  width: 960px;
+  height: 500px;
+  overflow: hidden;
+  border: solid 1px black;
+}
+
+#content-holder {
+  width:  950px;
+  height: 270px;
+}

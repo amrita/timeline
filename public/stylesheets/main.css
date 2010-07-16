@@ -1,0 +1,54 @@
+
+.common{
+  font-family: "Georgia";
+  font-size  :  12pt;
+  
+  margin:0px auto;
+}
+
+.commonmono{
+  font-family:  Andale Mono;
+  font-size:    10pt;
+  color:        blue;
+}
+
+#header{
+  width:  960px;
+  height:  70px;
+  
+  border: solid thin;
+}
+
+#mainnav{
+  float: right;
+}
+
+#content{
+  width:  960px;
+  height: 420px;
+  
+  border: solid thin;
+}
+
+#footer{
+  width:  960px;
+  height:  60px;
+  
+  border: solid thin;
+}
+
+#copyright{
+  margin-top:   0px;
+  margin-left: 400px;
+  position: absolute;
+}
+
+#footnav{
+  margin:0px auto;
+}
+
+.box{
+  border: solid blue;
+  background-color: yellow;
+
+}

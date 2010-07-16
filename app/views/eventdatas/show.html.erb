@@ -1,0 +1,23 @@
+<p>
+  <b>Dataid:</b>
+  <%=h @eventdata.dataid %>
+</p>
+
+<p>
+  <b>Eventid:</b>
+  <%=h @eventdata.eventid %>
+</p>
+
+<p>
+  <b>Tag:</b>
+  <%=h @eventdata.tag %>
+</p>
+
+<p>
+  <b>Tagdesc:</b>
+  <%=h @eventdata.tagdesc %>
+</p>
+
+
+<%= link_to 'Edit', edit_eventdata_path(@eventdata) %> |
+<%= link_to 'Back', eventdatas_path %>

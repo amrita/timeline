@@ -1,0 +1,6 @@
+.ui-slider .ui-slider-handle { 
+  background: url('../images/dragMe.png');
+  top: -3.2em;
+  width:  2.9em; 
+  height: 3.1em;
+}

@@ -1,0 +1,57 @@
+8
+
+dir
+402
+http://svg-edit.googlecode.com/svn/branches/2.2/editor/jpicker
+http://svg-edit.googlecode.com/svn
+
+
+
+2009-07-02T21:50:56.887389Z
+257
+rusnakp
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+eee81c28-f429-11dd-99c0-75d572ba1ddd
+
+jpicker.js
+file
+
+
+
+
+2009-08-17T15:36:04.000000Z
+c5c0b103a3c3d826e51b894b7c6b242e
+2009-07-02T21:50:56.887389Z
+257
+rusnakp
+has-props
+
+images
+dir
+
+jpicker.css
+file
+
+
+
+
+2009-08-17T15:36:04.000000Z
+6a379dce46a173e6216e5cad4b1d16cf
+2009-07-02T21:50:56.887389Z
+257
+rusnakp
+has-props
+

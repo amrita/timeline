@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  dataid: 1
+  eventid: 1
+  tag: MyString
+  tagdesc: MyString
+
+two:
+  dataid: 1
+  eventid: 1
+  tag: MyString
+  tagdesc: MyString

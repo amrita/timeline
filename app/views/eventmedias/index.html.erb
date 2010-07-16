@@ -1,0 +1,22 @@
+<h1>Listing eventmedias</h1>
+
+<table>
+  <tr>
+    <th>Eventid</th>
+    <th>Mediafile</th>
+  </tr>
+
+<% @eventmedias.each do |eventmedia| %>
+  <tr>
+    <td><%=h eventmedia.eventid %></td>
+    <td><%=h eventmedia.mediafile %></td>
+    <td><%= link_to 'Show', eventmedia %></td>
+    <td><%= link_to 'Edit', edit_eventmedia_path(eventmedia) %></td>
+    <td><%= link_to 'Destroy', eventmedia, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New eventmedia', new_eventmedia_path %>

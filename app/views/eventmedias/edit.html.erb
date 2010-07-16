@@ -1,0 +1,20 @@
+<h1>Editing eventmedia</h1>
+
+<% form_for(@eventmedia) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :eventid %><br />
+    <%= f.text_field :eventid %>
+  </p>
+  <p>
+    <%= f.label :mediafile %><br />
+    <%= f.text_field :mediafile %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @eventmedia %> |
+<%= link_to 'Back', eventmedias_path %>

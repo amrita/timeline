@@ -1,0 +1,2 @@
+module EventdatasHelper
+end

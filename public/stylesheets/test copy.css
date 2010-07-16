@@ -1,0 +1,69 @@
+#main {
+  width: 960px;
+  margin: 0 auto;
+}
+
+#content-slider {
+  width: 950px;
+  height: 6px;
+  margin: 0 auto;
+  background: #BBBBBB;
+  position: relative;
+}
+
+.ui-slider-handle {
+  width: 8px;
+  height: 14px;
+  position: absolute;
+  top: -4px;
+  background: #478AFF;
+  border: solid 1px black;
+}
+
+#content-scroll {
+  width:  500px;
+  height: 300px;
+  margin-top: 10px;
+  overflow: hidden;
+  border: solid 1px black;
+}
+
+#content-holder {
+  width: 1500px;
+  height: 270px;
+}
+
+.content-item {
+  width: 950px;
+  height: 22px;
+  background-color: green;
+  float: left;
+  color: white;
+}
+
+
+table.partstable
+{
+  border-spacing: 0; 
+}
+
+
+.parts{
+  text-align:  center;
+  line-height:  20px;
+  color:       black;
+  
+  border-width: 0px 1px 0 0;
+  border-color: black;
+  border-style: solid;
+}
+
+.tdates{
+  text-align:  center;
+  line-height:  15px;
+  color:        blue;
+  
+  border-width: 0px 1px 0px 0px;
+  border-color: blue;
+  border-style: solid;
+}

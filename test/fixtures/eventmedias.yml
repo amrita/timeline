@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  eventid: 1
+  mediafile: MyString
+
+two:
+  eventid: 1
+  mediafile: MyString
