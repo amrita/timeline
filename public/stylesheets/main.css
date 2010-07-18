@@ -1,9 +1,10 @@
+.commonalign{
+  margin: 0px auto;
+}
 
 .common{
   font-family: "Georgia";
   font-size  :  12pt;
-  
-  margin:0px auto;
 }
 
 .commonmono{
@@ -14,27 +15,36 @@
 
 #header{
   width:  960px;
-  height:  70px;
-  
-  border: solid thin;
+  height:  45px;
 }
 
 #mainnav{
   float: right;
 }
 
+body{
+}
+
+.landing-background{
+  background-image:  url(../images/mainbackground.jpg);
+  background-repeat: no-repeat; 
+}
+
+.timeline-background{
+
+}
+
+.other-background{
+
+}
+
 #content{
-  width:  960px;
-  height: 420px;
-  
-  border: solid thin;
+  height: 730px;
 }
 
 #footer{
   width:  960px;
-  height:  60px;
-  
-  border: solid thin;
+  height:  40px;
 }
 
 #copyright{
@@ -47,8 +57,71 @@
   margin:0px auto;
 }
 
-.box{
-  border: solid blue;
-  background-color: yellow;
+
+/* SIGN UP SIGN IN BOX
+***********************************************************************/
+#sign-div {
+ position:     relative;
+ margin-top:    5%;
+ width:        960px;
+ height:       500px;
+ 
+ font-family: "Trebuchet MS";
+ font-size  :  10pt;
+ color:        #3A3A3A;
+ border: solid thin;
 
 }
+
+#sign-div input[type="text"] input[type="password"]{
+  width:  175px;
+  height:  18px;
+  /*border: solid 1px; */
+  margin-top:  5px;
+  margin-left: 5px;
+}
+
+.sign-header{
+  text-align : center;
+  color: #3E88C8;
+}
+
+.sign-buttons{
+  float:  right;
+}
+
+.sign-common{
+  position:absolute;
+  top:     80px;
+  width:  355px;
+  border: solid thin;
+  background-color: #D5EBD7;
+  
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
+
+#signin-div {
+ right:   50px;
+ height: 200px;
+}
+
+#signup-div {
+ left:    50px;
+ height: 350px;
+}
+
+#signupheader{
+  top:          60px;
+  left:        140px;
+  position: absolute;
+}
+
+#signuptable, #signintable{
+  margin-left:  5px;
+  margin-right: 5px;
+}
+
+
+
+

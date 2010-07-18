@@ -2437,3 +2437,1421 @@ Processing UsersController#signin (for 127.0.0.1 at 2010-07-15 21:49:48) [GET]
 Rendering template within layouts/standard
 Rendering users/signin
 Completed in 102ms (View: 100, DB: 0) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.7ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20100624204438)
+Migrating to CreateDataFiles (20100630031518)
+Migrating to CreateEventdatas (20100702204349)
+Migrating to CreateEventmedias (20100702204850)
+Migrating to CreateEvents (20100702205147)
+Migrating to CleanUpUserTable (20100702221056)
+Migrating to AddDatesToTables (20100702223833)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.6ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("data_files")[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mPRAGMA index_list("eventdatas")[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mPRAGMA index_list("eventmedias")[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mPRAGMA index_list("events")[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mPRAGMA index_list("users")[0m
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 20:34:48) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+
+ActionView::TemplateError (undefined local variable or method `notice' for #<ActionView::Base:0x10114f5d0>) on line #26 of app/views/layouts/standard.html.erb:
+23: </head>
+24: <body>
+25: 
+26: <p style="color: green"><%= notice %></p>
+27: 
+28: <%= yield %>
+29: 
+
+    app/views/layouts/standard.html.erb:26
+
+Rendered rescues/_trace (65.2ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 20:35:43) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 14ms (View: 12, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 21:48:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 81ms (View: 79, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 21:48:31) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>"amrita"}, "password"=>"gopal00"}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 242ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 21:48:42) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>"amrita"}, "password"=>"gopal00"}
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 18ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 21:48:50) [POST]
+  Parameters: {"commit"=>"Forgot Password", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>"amrita"}, "password"=>""}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Sent mail to thakur.amrita@gmail.com
+
+Date: Sat, 17 Jul 2010 21:48:50 -0700
+From: no-reply@islesoftime.com
+To: thakur.amrita@gmail.com
+Bcc: admin@islesoftime.com
+Subject: Access your Isles of Time
+Mime-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+Dear Amrita Thakur,
+<br/><br/>
+You can access your account by clicking on this link. <i><b> Please reset your password when you go to your account.</b></i>
+<br/><br/>
+<a href="http://localhost:3000/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e">http://localhost:3000/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e</a>
+<br/><br/>
+Thanks,
+<br/>
+Isles of Time
+ 
+ 
+Redirected to http://localhost:3000/
+Completed in 1230ms (DB: 0) | 302 Found [http://localhost/users/post_register]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 21:48:51) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-07-17 21:49:00) [GET]
+  Parameters: {"temp"=>"e852d232a20b71dd9e90e6e2c44a551a89f65a5e", "id"=>"post_register_signin", "user"=>{"userid"=>"amrita"}}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/timeline/5
+Completed in 9ms (DB: 0) | 302 Found [http://localhost/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-17 21:49:00) [GET]
+
+ActionController::RoutingError (No route matches "/timeline/5" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-17 21:50:49) [GET]
+
+ActionController::RoutingError (No route matches "/event/timeline/5" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 21:50:54) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/events
+Rendering events/timeline
+
+ActionView::TemplateError (undefined local variable or method `notice' for #<ActionView::Base:0x104244cd0>) on line #12 of app/views/layouts/events.html.erb:
+9: </head>
+10: <body>
+11: 
+12: <p style="color: green"><%= notice %></p>
+13: 
+14: <%= yield %>
+15: 
+
+    app/views/layouts/events.html.erb:12
+
+Rendered rescues/_trace (127.6ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 21:52:40) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 10ms (View: 8, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 21:57:26) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 10ms (View: 8, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing EventsController#show (for 127.0.0.1 at 2010-07-17 21:57:35) [GET]
+  Parameters: {"id"=>"timeline"}
+  [4;35;1mEvent Load (0.1ms)[0m   [0mSELECT * FROM "events" WHERE ("events"."id" = 0) [0m
+
+ActiveRecord::RecordNotFound (Couldn't find Event with ID=timeline):
+  app/controllers/events_controller.rb:34:in `show'
+
+Rendered rescues/_trace (120.6ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (not_found)
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 21:57:39) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 18ms (View: 16, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing EventsController#show (for 127.0.0.1 at 2010-07-17 21:57:41) [GET]
+  Parameters: {"id"=>"about"}
+  [4;36;1mEvent Load (0.2ms)[0m   [0;1mSELECT * FROM "events" WHERE ("events"."id" = 0) [0m
+
+ActiveRecord::RecordNotFound (Couldn't find Event with ID=about):
+  app/controllers/events_controller.rb:34:in `show'
+
+Rendered rescues/_trace (124.8ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (not_found)
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 21:58:23) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 16ms (View: 14, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing EventsController#about (for 127.0.0.1 at 2010-07-17 21:58:26) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/about
+Completed in 16ms (View: 14, DB: 0) | 200 OK [http://localhost/events/about/5]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 21:59:36) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 17ms (View: 15, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing EventsController#show (for 127.0.0.1 at 2010-07-17 21:59:40) [GET]
+  Parameters: {"id"=>"about"}
+  [4;35;1mEvent Load (0.2ms)[0m   [0mSELECT * FROM "events" WHERE ("events"."id" = 0) [0m
+
+ActiveRecord::RecordNotFound (Couldn't find Event with ID=about):
+  app/controllers/events_controller.rb:34:in `show'
+
+Rendered rescues/_trace (50.7ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (not_found)
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 22:00:21) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 122ms (View: 121, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing EventsController#show (for 127.0.0.1 at 2010-07-17 22:00:23) [GET]
+  Parameters: {"id"=>"about"}
+  [4;36;1mEvent Load (0.1ms)[0m   [0;1mSELECT * FROM "events" WHERE ("events"."id" = 0) [0m
+
+ActiveRecord::RecordNotFound (Couldn't find Event with ID=about):
+  app/controllers/events_controller.rb:34:in `show'
+
+Rendered rescues/_trace (53.5ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-17 22:01:06) [GET]
+
+ActionController::RoutingError (No route matches "/events/timeline/5" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:01:34) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+
+ActionView::TemplateError (No route matches {:action=>"post_register"}) on line #21 of app/views/users/signin.html.erb:
+18:   
+19:      <table id="signuptable" class="clean" cellpadding="5" style="display:none">
+20:        <tr id="signuplabel"><td colspan="2" class="heading" style="text-align:center">Sign Up</td></tr>
+21:        <% form_for :user, :url => {:action => :post_register} do |form| %>
+22:         <tr><td class="text">User Id</td><td><%= form.text_field(:userid) %></td></tr>
+23:         <tr><td class="text">Name</td><td><%= form.text_field(:name) %></td></tr>
+24:         <tr><td class="text">Date of Birth</td><td><%= form.text_field(:dob) %></td></tr>
+
+    app/views/users/signin.html.erb:21
+
+Rendered rescues/_trace (140.8ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:04:01) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:04:20) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>"amrita"}, "password"=>"iot2010"}
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 18ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:04:24) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>"amrita"}, "password"=>"amrita"}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 17ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:04:29) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>"amrita"}, "password"=>"gopal00"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 86ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register_signin (for 127.0.0.1 at 2010-07-17 22:04:33) [GET]
+  Parameters: {"temp"=>"e852d232a20b71dd9e90e6e2c44a551a89f65a5e", "user"=>{"userid"=>"amrita"}}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/timeline/5
+Completed in 9ms (DB: 0) | 302 Found [http://localhost/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-17 22:04:33) [GET]
+
+ActionController::RoutingError (No route matches "/timeline/5" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:06:30) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:06:33) [POST]
+  Parameters: {"commit"=>"Forgot Password", "authenticity_token"=>"G3YOR7WYLmIhn0Xef3Xdv9Mtx3g+a/F8fzer44yvboM=", "user"=>{"userid"=>""}, "password"=>""}
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = '') LIMIT 1[0m
+Please enter User id
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 115ms (View: 107, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:06:38) [POST]
+  Parameters: {"commit"=>"Forgot Password", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>""}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Sent mail to thakur.amrita@gmail.com
+
+Date: Sat, 17 Jul 2010 22:06:38 -0700
+From: no-reply@islesoftime.com
+To: thakur.amrita@gmail.com
+Bcc: admin@islesoftime.com
+Subject: Access your Isles of Time
+Mime-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+Dear Amrita Thakur,
+<br/><br/>
+You can access your account by clicking on this link. <i><b> Please reset your password when you go to your account.</b></i>
+<br/><br/>
+<a href="http://localhost:3000/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e">http://localhost:3000/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e</a>
+<br/><br/>
+Thanks,
+<br/>
+Isles of Time
+ 
+ 
+Redirected to http://localhost:3000/
+Completed in 1262ms (DB: 0) | 302 Found [http://localhost/users/post_register]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:06:39) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register_signin (for 127.0.0.1 at 2010-07-17 22:06:53) [GET]
+  Parameters: {"temp"=>"e852d232a20b71dd9e90e6e2c44a551a89f65a5e", "user"=>{"userid"=>"amrita"}}
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 10ms (DB: 1) | 302 Found [http://localhost/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 22:06:53) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 24ms (View: 8, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing EventsController#about (for 127.0.0.1 at 2010-07-17 22:06:59) [GET]
+Rendering template within layouts/standard
+Rendering events/about
+Completed in 16ms (View: 14, DB: 0) | 200 OK [http://localhost/events/about]
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-07-17 22:40:33) [GET]
+  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT * FROM "users" [0m
+Rendering template within layouts/standard
+Rendering users/index
+
+ActionView::TemplateError (undefined method `user_path' for #<ActionView::Base:0x1041a62d8>) on line #19 of app/views/users/index.html.erb:
+16:     <td><%=h user.name %></td>
+17:     <td><%=h user.dob %></td>
+18:     <td><%=h user.email %></td>
+19:     <td><%= link_to 'Show', user %></td>
+20:     <td><%= link_to 'Edit', edit_user_path(user) %></td>
+21:     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+22:   </tr>
+
+    app/views/users/index.html.erb:19
+    app/views/users/index.html.erb:12:in `each'
+    app/views/users/index.html.erb:12
+    app/controllers/users_controller.rb:175:in `index'
+
+Rendered rescues/_trace (71.1ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-07-17 22:40:39) [GET]
+  [4;36;1mUser Load (0.7ms)[0m   [0;1mSELECT * FROM "users" [0m
+Rendering template within layouts/standard
+Rendering users/index
+
+ActionView::TemplateError (undefined method `user_path' for #<ActionView::Base:0x1041e72d8>) on line #19 of app/views/users/index.html.erb:
+16:     <td><%=h user.name %></td>
+17:     <td><%=h user.dob %></td>
+18:     <td><%=h user.email %></td>
+19:     <td><%= link_to 'Show', user %></td>
+20:     <td><%= link_to 'Edit', edit_user_path(user) %></td>
+21:     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+22:   </tr>
+
+    app/views/users/index.html.erb:19
+    app/views/users/index.html.erb:12:in `each'
+    app/views/users/index.html.erb:12
+    app/controllers/users_controller.rb:175:in `index'
+
+Rendered rescues/_trace (145.8ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2010-07-17 22:40:45) [GET]
+Rendering template within layouts/standard
+Rendering users/new
+
+ActionView::TemplateError (undefined method `users_path' for #<ActionView::Base:0x10427c658>) on line #3 of app/views/users/new.html.erb:
+1: <h1>New user</h1>
+2: 
+3: <% form_for(@user) do |f| %>
+4:   <%= f.error_messages %>
+5: 
+6:   <p>
+
+    app/views/users/new.html.erb:3
+    app/controllers/users_controller.rb:204:in `new'
+
+Rendered rescues/_trace (142.9ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#post_register_signin (for 127.0.0.1 at 2010-07-17 22:41:18) [GET]
+  Parameters: {"temp"=>"e852d232a20b71dd9e90e6e2c44a551a89f65a5e", "user"=>{"userid"=>"amrita"}}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/users/post_register_signin?user[userid]=amrita&temp=e852d232a20b71dd9e90e6e2c44a551a89f65a5e]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 22:41:18) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 32ms (View: 31, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-07-17 22:41:28) [GET]
+  [4;36;1mUser Load (0.6ms)[0m   [0;1mSELECT * FROM "users" [0m
+Rendering template within layouts/standard
+Rendering users/index
+
+ActionView::TemplateError (undefined method `user_path' for #<ActionView::Base:0x10415a2e8>) on line #19 of app/views/users/index.html.erb:
+16:     <td><%=h user.name %></td>
+17:     <td><%=h user.dob %></td>
+18:     <td><%=h user.email %></td>
+19:     <td><%= link_to 'Show', user %></td>
+20:     <td><%= link_to 'Edit', edit_user_path(user) %></td>
+21:     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+22:   </tr>
+
+    app/views/users/index.html.erb:19
+    app/views/users/index.html.erb:12:in `each'
+    app/views/users/index.html.erb:12
+    app/controllers/users_controller.rb:175:in `index'
+
+Rendered rescues/_trace (141.9ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:43:24) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:43:31) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 17ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:43:46) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 90ms (View: 81, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:45:57) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 17ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:46:00) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 18ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:46:50) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 18ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:47:17) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 19ms (View: 8, DB: 1) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:47:24) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:47:42) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Invalid password
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 17ms (View: 8, DB: 0) | 200 OK [http://localhost/users/post_register]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:49:45) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 8, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:49:53) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+
+TypeError (can't convert nil into String):
+  app/controllers/users_controller.rb:107:in `post_register_signin'
+  app/controllers/users_controller.rb:18:in `post_register'
+
+Rendered rescues/_trace (50.0ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:51:11) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:51:18) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 94ms (DB: 0) | 302 Found [http://localhost/users/post_register]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 22:51:18) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 10ms (View: 9, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-17 22:52:03) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 8, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-17 22:52:12) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 10ms (DB: 0) | 302 Found [http://localhost/users/post_register]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-17 22:52:12) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 11ms (View: 9, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 00:33:15) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 10ms (View: 8, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-18 00:35:23) [GET]
+
+ActionController::RoutingError (No route matches "/" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-18 00:35:25) [GET]
+
+ActionController::RoutingError (No route matches "/" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-07-18 00:35:26) [GET]
+
+ActionController::RoutingError (No route matches "/" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 00:36:20) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 29ms (View: 27, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-18 00:36:39) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 11ms (DB: 0) | 302 Found [http://localhost/users/post_register]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-18 00:36:39) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 26ms (View: 24, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing EventsController#about (for 127.0.0.1 at 2010-07-18 00:36:42) [GET]
+Rendering template within layouts/standard
+Rendering events/about
+Completed in 9ms (View: 8, DB: 0) | 200 OK [http://localhost/events/about]
+
+
+Processing EventsController#about (for 127.0.0.1 at 2010-07-18 01:33:35) [GET]
+Rendering template within layouts/standard
+Rendering events/about
+Completed in 30ms (View: 28, DB: 0) | 200 OK [http://localhost/events/about]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:33:10) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 77ms (View: 75, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:34:14) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 19ms (View: 17, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing EventsController#about (for 127.0.0.1 at 2010-07-18 08:34:28) [GET]
+Rendering template within layouts/standard
+Rendering events/about
+Completed in 39ms (View: 37, DB: 0) | 200 OK [http://localhost/events/about]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:41:04) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 97ms (View: 95, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:41:53) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 174ms (View: 173, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:42:19) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:42:40) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:43:53) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 325ms (View: 324, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:47:37) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 204ms (View: 202, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:49:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 128ms (View: 126, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:50:57) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 117ms (View: 115, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:53:46) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 209ms (View: 207, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:54:34) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:55:04) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:55:18) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:55:58) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:55:59) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:56:37) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:56:38) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:56:39) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:56:57) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:57:58) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:58:28) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:59:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 10, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 08:59:48) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 21ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:01:56) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 28ms (View: 26, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:02:40) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:03:05) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 81ms (View: 79, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-18 09:04:19) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 139ms (DB: 0) | 302 Found [http://localhost/users/post_register]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-18 09:04:19) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 57ms (View: 55, DB: 0) | 200 OK [http://localhost/events/timeline/5]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:05:10) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:05:22) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 81ms (View: 79, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:05:32) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:06:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:06:30) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 10, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:07:04) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:07:14) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:11:08) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 25ms (View: 23, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:11:23) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:11:51) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:12:18) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:12:19) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:13:51) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:13:52) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:13:54) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 12, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:14:16) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:17:55) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 10, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:18:20) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 73ms (View: 12, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:18:41) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:18:49) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:19:38) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:20:01) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 72ms (View: 71, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:20:22) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:20:39) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:26:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 25ms (View: 23, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:28:41) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 120ms (View: 118, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:29:17) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:32:01) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 10, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:32:59) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:33:38) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:35:02) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 21ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:35:35) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:36:52) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:37:05) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:37:13) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:37:31) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 10, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:38:43) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 12, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:39:39) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:39:40) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:39:50) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 10, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:39:50) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:40:14) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 21ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:40:46) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:41:00) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:41:11) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:41:19) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:42:18) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:42:19) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:43:30) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:43:31) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:48:15) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 35ms (View: 33, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:48:17) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:48:26) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:48:38) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 09:49:56) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:16:03) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 24ms (View: 22, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:18:28) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:29:52) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 25ms (View: 23, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:36:39) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 25ms (View: 24, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:36:53) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:37:02) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:37:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:37:59) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:38:20) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:38:33) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 14ms (View: 12, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:39:06) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:39:15) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:40:32) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:40:59) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 12ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:42:48) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 18, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:43:12) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 21ms (View: 20, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:44:17) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:44:47) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 20ms (View: 19, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:45:02) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 82ms (View: 80, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:45:44) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:45:58) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:46:26) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:46:39) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 73ms (View: 71, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:46:57) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:47:06) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:47:27) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:47:35) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 74ms (View: 72, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:47:44) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:49:11) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 23ms (View: 22, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:49:54) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 13ms (View: 11, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:53:20) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 19ms (View: 17, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#signin (for 127.0.0.1 at 2010-07-18 10:56:15) [GET]
+Rendering template within layouts/standard
+Rendering users/signin
+Completed in 54ms (View: 52, DB: 0) | 200 OK [http://localhost/users/signin]
+
+
+Processing UsersController#post_register (for 127.0.0.1 at 2010-07-18 10:56:17) [POST]
+  Parameters: {"commit"=>"Sign in", "authenticity_token"=>"jSX6UtNX130rhjU6EHDZ4TdWxfQcdOpeCCbiglF3Uno=", "user"=>{"userid"=>"amrita"}, "password"=>"xxxxxx"}
+  [4;35;1mUser Load (20.0ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."userid" = 'amrita') LIMIT 1[0m
+Redirected to http://localhost:3000/events/timeline/5
+Completed in 58ms (DB: 20) | 302 Found [http://localhost/users/post_register]
+
+
+Processing EventsController#timeline (for 127.0.0.1 at 2010-07-18 10:56:17) [GET]
+  Parameters: {"id"=>"5"}
+Rendering template within layouts/standard
+Rendering events/timeline
+Completed in 39ms (View: 36, DB: 0) | 200 OK [http://localhost/events/timeline/5]

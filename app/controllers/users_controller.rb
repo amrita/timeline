@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 				if flash[:url]
 					redirect_to(flash[:url])	    	
 				else
-					redirect_to("/timeline/#{@user[:id]}")	    	
+					redirect_to("/events/timeline/#{@user[:id]}")	    	
 				end
 			else
 				render(:action => :signin)
@@ -99,10 +99,12 @@ class UsersController < ApplicationController
 			flash[:signin_notice] = "Invalid User id"
 			render :action => 'signin'
 		else
-			if params[:temp] == ""
+			if params[:temp] == nil
 				@password = Digest::SHA1.hexdigest(params[:password])
+				#print "\n\n\n1:" + @password + "\n\n\n"
 			else
 				@password = params[:temp]
+				#print "\n\n\n2:" + @password + "\n\n\n"
 			end
 			if (@password != @user.password)
 				logger.error("Invalid password")
@@ -113,7 +115,7 @@ class UsersController < ApplicationController
 				if flash[:url]
 					redirect_to(flash[:url])	    	
 				else
-					redirect_to("/timeline/#{@user[:id]}")	    	
+					redirect_to("/events/timeline/#{@user[:id]}")	    	
 				end
 			end
 		end  

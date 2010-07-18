@@ -1,11 +1,50 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>New Web Project</title>
-    </head>
-    <body>
-        <h1>New Web Project Page</h1>
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Isles of Time</title> 
+    <!-- Title Icon 
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    -->
+    
+    <!-- my css files -->
+    <%= stylesheet_link_tag "main.css" %>
+    <%= stylesheet_link_tag "images.css" %>
+  
+    <!-- jquery css files -->
+    <link rel="stylesheet" type="text/css" href="/javascripts/jqueryui/css/ui-lightness/jquery-ui-1.8.2.custom.css" />	
+    <link rel="stylesheet" href="/javascripts/lavalamp-0.2.0/lavalamp_test.css" type="text/css" media="screen">
+  
+    <!-- javascript include files -->
+    <%= javascript_include_tag "jqueryui/js/jquery-1.4.2.min.js" %>
+    <%= javascript_include_tag "jqueryui/js/jquery-ui-1.8.2.custom.min.js"%>
+    <%= javascript_include_tag "lavalamp-0.2.0/jquery.easing.min.js"  %>
+    <%= javascript_include_tag "lavalamp-0.2.0/jquery.lavalamp.js" %>
+    <%= javascript_include_tag "iot/main.js" %>
+    
+</head>
+
+<body>
+  <div id="header" class = "common" >
+    <ul class="lavaLampBottomStyle" id="mainnav">
+      <li class="current"><a href="#">Home</a></li>
+      <li><a href="#">Learn More</a></li>
+      <li><a href="/users/signin">Sign Up or Sign In</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+  </div>
+
+  <div id="footer" class="common">
+    <ul class="lavaLampBottomStyleFooter" id="footnav">
+      <li><a href="#">&copy; 2010 IslesOfTime.com</a></li>
+      <li class="current"><a href="events/about">About Us</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">FAQs</a></li>
+      <li><a href="#">Privacy</a></li>
+    </ul>
+  </div>
+</body>
 </html>

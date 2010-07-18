@@ -5,11 +5,13 @@ $(function() {
 });
 
 function initNavigationLinks(){
+
+  //$(‘.lavalamp [href='+window.location.pathname+']‘).parent().addClass(“current”);
   $("#mainnav, #footnav").lavaLamp({
     fx: "backout",
-    speed: 700,
+    speed: 150,
     click: function(event, menuItem) {
-             return false;
+             return true;
            }
   });
 }

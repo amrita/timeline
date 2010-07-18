@@ -1,144 +1,223 @@
-var cheating = false;
-var puzzleSolved = false;
-var bubblesPopped = false;
+/* ISLAND GLOBALS 
+****************************************************************************/
+var islandWidth;
+var islandScreenWidth;
 var animationLoopID;
-var addBubbleLoopID;
-var screenWidth;
-var bubbleWidth;
+var addIslandLoopID;
 
-function switchCheat() {
-	alert("switch");
-	cheating = !cheating;
+// Global Islands Array
+var islands = [];
+var deleted = [];
+
+/* ISLANDS CODE 
+*****************************************************************************/
+function createIslandDropSpace(){
+  //alert("trying to attach droppable");
+  $("#droppable").droppable({
+    activeClass: 'ui-state-hover',
+	hoverClass:  'ui-state-active',
+	drop: function(event, ui) {
+		    $(this).addClass('ui-state-highlight').find('p').html('Dropped!');
+		    alert("in islands.js bubble dropped ");
+	      }
+  });
 }
 
-function initializeIslands()
-{
-    //alert("entering initialize islands");
+function createIslands(){
+  alert("entering create islands");
     
-	// This is the animation timer
-	animationLoopID = setInterval("animationLoop()", 80);
+  // This is the animation timer
+  animationLoopID = setInterval("animationLoop()", 50);
 
-	// This is the timer for adding new bubbles
-	addBubbleLoopID = setInterval("addBubble()", 3000);
+  // This is the timer for adding new bubbles
+  addIslandLoopID = setInterval("addIsland()", 10000);
 	
-	// Go ahead and add the first bubble right now
-	addBubble();
+  // Go ahead and add the first bubble right now
+  addIsland();
 	
-	// Get some globals
-	bubbleWidth = parseInt($("#bubble-0").css("width"));
-	screenWidth = parseInt($("#island-area").css("width"));
+  // Get some globals
+  islandWidth = parseInt($("#island-0").css("width"));
+  islandScreenWidth = parseInt($("#islands").css("width"));
+
+  islandIconClickHandler();
 }
 
-// Global bubble array
-var bubbles = [];
+function attachDraggable(island){
+  //alert("trying to attach draggable ");
+  $(island).draggable({ 
+       cancel: 'a.ui-icon', // clicking an icon won't initiate dragging
+       cursor: 'move',
+       revert: 'invalid',
+       stop: function(event, ui) {
+         //$(this).css("position", "relative");
+         alert("top position after stopping is " + $(this).position().top + " left position after stopping is " + $(this).position().left);
+         alert(" left position after stopping is " + $('#content-scroll').scrollLeft());
+         
+         var tmpisland = island; //this will be added to the events table
+         var index     = islands.indexOf(island);
+         alert("id is " + island.attr('id') + "index is " + index);
+         stopAnimationLoop();
+         islands.remove(index);
+         startAnimationLoop();
+       }
+  });
+}
 
+/* ISLAND CREATION AND ANIMATION CODE 
+ ***************************************************************************/
+ var counter = 0;
+function addIsland()
+{
+	// Figure out the island's id number
+	var idNumber = counter; //islands.length;
+	counter++;
+	
+	//alert("creating a new id " + idNumber);
+	//alert("id is " + idNumber);
+
+	// This should be replaced by a function that gets a random background image 
+	//var randLetter = getRandomLetter();
+	createAndAppendIslandDiv(idNumber)
+
+	// Now, we need to grab a reference to the island we just added to the HTML
+	var island = $("#island-" + idNumber);
+	attachDraggable(island);
+	
+	// Add the island to the islands array
+	islands.push(island);
+
+	// Set the island's position using a "helper" function
+	initializePositionForIsland(island);
+}
+/**************************************************************************/
+
+function createAndAppendIslandDiv(idNumber){
+  var string = new Array();
+  
+  string.push('<div id="island-' + idNumber + '" class="bubble-container ui-widget-content ui-corner-tr" title="Drag me to create a new event">');
+  string.push('<h5 class ="ui-widget-header">Bubble Header</h5>');
+  string.push('<div class = "bubble"> </div>');
+  string.push('<div class = "bubbleicons">');
+  string.push('<a href = "link/to/trash/script/when/we/have/js/off" title="View Event"   class="ui-icon ui-icon-zoomin">View Event</a>');
+  string.push('<a href = "link/to/trash/script/when/we/have/js/off" title="Edit Event"   class="ui-icon ui-icon-pencil">Edit Event</a>');
+  string.push('<a href = "link/to/trash/script/when/we/have/js/off" title="Delete Event" class="ui-icon ui-icon-trash">Delete Event</a>');
+  string.push('</div>');
+  string.push('</div>');
+
+  var writestring = string.join('');
+  $('#islands').append(writestring);
+}
+/**************************************************************************/
+
+function initializePositionForIsland(island)
+{
+	// We will position the island above the top of the screen and at a random x position
+	var islandHeight = parseInt(island.css("height"));
+	var islandWidth  = parseInt(island.css("width"));
+	
+	// Start the island just to the left of the screen
+	var newIslandLeft = (-1 * islandWidth);
+	
+	//the island top should be somewhere within the islands region
+	var islands      = $('#islands');
+	var position     = islands.position();
+	var minHeight    = position.top;
+	var maxHeight    = minHeight + islands.height() - islandHeight;
+	var newIslandTop = getRandomNumber(minHeight, maxHeight);
+	
+	// Finally, update the island's position
+	island.css("top", newIslandTop);
+	island.css("left", newIslandLeft);
+} 
+/**************************************************************************/
+
+
+/* CODE TO ANIMATE THE ISLANDS
+*************************************************************************/
 function animationLoop()
 {
-    
-	if (puzzleSolved) {
-		clearInterval(animationLoopID);
-		clearInterval(addBubbleLoopID);
-		//setTimeout("goodJobAlert()", 1000);
-	}
 	
-
-	// Move all the bubbles
-	for (var index in bubbles)
+	// Move all the islands
+	for (var index in islands)
 	{
-		// Access the bubble at the current index
-		var bubble = bubbles[index];
-		
-		if (puzzleSolved) {
-			$(bubble).fadeOut("slow");
-			continue;
-		}
-
+		// Access the island at the current index
+		var island       = islands[index];
+	
 		// Move the bubble position right 1 pixel	
-		var left = parseInt(bubble.css("left"));
+		var left    = parseInt(island.css("left"));
 		var newLeft = left + 1;
-		$(bubble).css("left", newLeft);
+		$(island).css("left", newLeft);
 		
-		//alert("l: "+left+" s: "+screenWidth+" b: "+bubbleWidth);
-		if (left > screenWidth - bubbleWidth - 10) {
-			$(bubble).fadeOut("fast");
+		//delete the island once it goes off screen ?
+		if (left > islandScreenWidth - islandWidth - 10) {
+		   $(island).fadeOut(100).remove();
 		}
+
 	}
 }
 
-function addBubble()
-{
-	// Figure out the bubble's id number
-	var idNumber = bubbles.length;
-
-	// Add the bubble HTML
-	var randLetter = getRandomLetter();
-	$("#island-area").append('<div id="bubble-' + idNumber + '" class="bubble">' + randLetter + '</div>');
-
-	// Now, we need to grab a reference to the bubble we just added to the HTML
-	var bubble = $("#bubble-" + idNumber);
-	//bubble.click(popBubble);
-	bubble.draggable();
-	
-	// Add the bubble to the bubbles array
-	bubbles.push(bubble);
-
-	// Set the bubble's position using a "helper" function
-	initializePositionForBubble(bubble);
+function stopAnimationLoop(){
+  clearInterval(animationLoopID);
+  clearInterval(addIslandLoopID);
 }
 
-function popBubble() {
-	$(this).fadeOut("fast");
-	
-	if ($(this).text() == "P") {
-		puzzleSolved = true;
-		$("#letter-1").text("P");
-	}
+function startAnimationLoop(){
+  // This is the animation timer
+  animationLoopID = setInterval("animationLoop()", 50);
+
+  // This is the timer for adding new bubbles
+  addIslandLoopID = setInterval("addIsland()", 10000);
 }
 
-function getRandomLetter() {
-	if (cheating) {
-		return "P";
-	} else {
-		return createRandomUpperCaseLetter();
-	}
+//extension of array remove !!! 
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+/**************************************************************************
+                                       ISLAND CREATION AND ANIMATION CODE */
+
+/* ISLAND ICON CODE 
+*****************************************************************************/
+function islandIconClickHandler(){
+  $('.bubble-container').live ('click', function(ev) {
+    var $item = $(this);
+    var $target = $(ev.target);
+  
+    alert("bubble container was clicked ");
+    
+    if ($target.is('a.ui-icon-zoomin')) {  //view event 
+      viewEvent($item); 
+    } else if ($target.is('a.ui-icon-pencil')) { //edit event
+      editEvent($item);
+    } else if ($target.is('a.ui-icon-trash')) {  //delete event
+      deleteEvent($item);
+    }
+
+    return false;
+  });  
 }
 
-// Thanks to http://www.codehouse.com/javascript/tips/random_letter/
-// 		but mine's better
-function createRandomUpperCaseLetter()
-{
-   return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+function viewEvent($item){
+  alert ("trying to view the image ");
 }
 
-function initializePositionForBubble(bubble)
-{
-	// We will position the bubble above the top of the screen and at a random x position
-	var bubbleHeight = parseInt(bubble.css("height"));
-	var bubbleWidth  = parseInt(bubble.css("width"));
-	var screenHeight = parseInt($("#island-area").css("height"));
-	
-	//alert ("trying to get position");
-	
-	var position = $("#timecontent").position();
-	
-	// Start the bubble just to the left of the screen
-	var newBubbleLeft = (-1 * bubbleWidth);
-	var newBubbleTop =  randomXToY(110, 260);                    //Math.floor(Math.random() * screenHeight);
-	
-	// Finally, update the bubble's position
-	bubble.css("top", newBubbleTop);
-	bubble.css("left", newBubbleLeft);
+function editEvent($item){
+  alert ("trying to edit the image ");
 }
 
-function floater(){
-  $('#image-bubble').animate( {'marginTop':(Math.random() * $("#timecontent").height()) 
-             + 'px','marginLeft':(Math.random() * $("#timecontent").width()) + 'px'}, 2000,'linear',function(){
-                  setTimeout(floater,10);
-                  } );
+function deleteEvent($item) {
+  alert ("trying to delete the image ");
+  $item.fadeOut(function() {
+    $item.find('a.ui-icon-trash').remove();
+  });
 }
+/*****************************************************************************
+                                                            ISLAND ICON CODE */
 
 
-function randomXToY(minVal,maxVal)
+function getRandomNumber(minVal,maxVal)
 {
   var randVal =  minVal+(Math.random()*(maxVal-minVal));
   

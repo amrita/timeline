@@ -1,4 +1,22 @@
 class EventsController < ApplicationController
+  layout 'standard' 
+	
+	def timeline
+	  print "\n\n\n\n my first new controller \n\n\n\n"
+	end
+
+  def about
+	  print "\n\n\n\n my about page in the controller \n\n\n\n"
+	end
+
+
+
+
+
+
+
+
+
   # GET /events
   # GET /events.xml
   def index

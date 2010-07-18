@@ -2,9 +2,14 @@
  ************************************************************************/
  var startDate;
  var endDate;
- var currentDate;
+ var isTimelineDateSet = false;
  var birthYear = 2000;
  var lifeSpan  = "My Life Span";
+ var sliderInterval  = "";
+ var prevInterval    = 1;
+ var sliderDate   = new Date(); 
+ var currentDate  = new Date();
+ var birthDate    = new Date();
  
  var LIFESPAN = 1;
  var YEAR     = 2;
@@ -27,44 +32,72 @@ var nDaysInYear = 365;
 var nHours      = 24;
 var nIntervals  = 5; //life, year, month, week, day
 
+var windowWidth    = TIMELINELEN; //the width of the window
+var contentWidth   = TIMELINELEN; //width of the timeline
+var timelinePalette  = ["#d70377", "#d70377","#fe9400","#666764", "#37bfe6","#7bd80d"];
+
+/* ICONS
+*************************************************/
+//year, month, week, day
+var intervalLeft   = ["","","images/icons/slider_year_L.png","images/icons/slider_month_L.png","images/icons/slider_week_L.png","images/icons/slider_day_L.png"];
+var intervalRight  = ["","","images/icons/slider_year_R.png","images/icons/slider_month_R.png","images/icons/slider_week_R.png","images/icons/slider_day_R.png"];
+
+//to display on hover
+var hoverLeft  = ["","","images/icons/slider_year_L_bg.png","images/icons/slider_month_L_bg.png","images/icons/slider_week_L_bg.png","images/icons/slider_day_L_bg.png"];
+var hoverRight = ["","","images/icons/slider_year_R_bg.png","images/icons/slider_month_R_bg.png","images/icons/slider_week_R_bg.png","images/icons/slider_day_R_bg.png"];
+
+/* INITIALIZE 
+ ************************************************************************************/
 $(document).ready(function(){
-  // set the timeline areas to the window width 
-  var winWidth = $(window).width();
-  var offset   = 20;
-  //alert("winwidth " + winWidth);
-  
-  $('#main').width(winWidth - offset);
-  $('#content-scroll').width(winWidth - offset);
-  
-  
+  //resize the windows
+  resizeWindows();
+    
   //compute the start and end dates
+  birthDate   = new Date(birthYear,0,1);
   startDate   = new Date(birthYear,0,1);
   endDate     = new Date((new Date).getFullYear(),nMonths - 1, daysofmonth[nMonths - 1]);
   
-  addMonths();
+  //initialize the slider date
+  initializeSliderDate();
+  
+  //create the timelines
+  updateInterval(LIFESPAN);
 
   $('#clickme')
 			.button()
 			.click(function() {
-			    alert("the current slider value is " + slidervalue + " max value is " + maxvalue);
+			    alert(" current slider date is " + sliderDate.getFullYear() + "  " + sliderDate.getMonth() + "  " + sliderDate.getDate() + "  slider value is " + slidervalue);
+			    alert("total elements are " + islands.length);
 			});
+
+  //create the interval icon deck
+  createIntervalIconDeck();
   
+  //create the islands and a drag and drop space
+  createIslands();
+  createIslandDropSpace();
 });
 
+function resizeWindows(){
+  // set the timeline areas to the window width 
+  windowWidth = $(window).width();
+  var offset  = 20;
+  //alert("winwidth " + winWidth);
+  
+  $('#main').width(windowWidth - offset);
+  $('#content-scroll').width(windowWidth - offset);
+  $('#islands').width(windowWidth - offset);
+  $('#droppable').width(windowWidth - offset);
 
-/* TIMELINE SLIDER CODE 
- *********************************************************************/
-function initializeContentSlider(nParts){
-  // initialize the content slider 
-  $("#content-slider").slider({
-    animate: true,
-    max:     nParts,
-    change:  handleSliderChange,
-    slide:   handleSliderSlide
-  });
 }
-/********************************************************************
-                                               TIMELINE SLIDER CODE */
+
+//update island and droppable window sizes to match the context width
+function updateWindowSize(contentWidth){
+  $('#islands').width(contentWidth);
+  $('#droppable').width(contentWidth);
+}
+/************************************************************************************
+																		 INITIALIZE */
                                                
                                                
 /* TIMELINE INTERVAL ICONS CODE 
@@ -72,20 +105,90 @@ function initializeContentSlider(nParts){
  function createIntervalIconDeck(){
  var html = new Array();
  
-   for (var i = 0; i < nIntervals; i++){
-     html.push('<div id = "interval-"' + i + 'class="intervalicon levels"></div>');
-     html.push('<div id = "intervalbg-"' + i + 'class="intervalicon levels"></div>');
+   for (var i = 1; i <= nIntervals; i++){
+     html.push('<div id = "interval-' + i + '" class="intervalicon levels"></div>');
+     html.push('<div id = "intervalbg-' + i + '" class="intervalicon levels"></div>');
    }
    var writestring = html.join('');
+   
    $('#intervals').append(writestring);
+   
+   //adjust the icon positions
+   adjustIconPositions();
+   
+   //populate the icon deck
+   updateIntervalIconDeck(1);
+   
+   //bind the hover handler
+   intervalIconHoverHandler();
+   
+   //bind the click handler
+   $('.intervalicon').click(intervalIconClickHandler);
  }
- /********************************************************************
+ /*********************************************************************/
+ 
+ function updateIntervalIconDeck(currentIdx){
+  
+  for (var i = 1; i < currentIdx ; i++){
+    var newLIcon    = "url('" + intervalLeft[i] + "')";
+    var newLHover   = "url('" + hoverLeft[i] + "')";
+    
+    $('#interval-' + i).css("background",newLIcon);
+    $('#intervalbg-' + i).css("background",newLHover);
+  }
+ 
+  for (var i = currentIdx; i <= nIntervals ; i++){
+    var newRIcon    = "url('" + intervalRight[i] + "')";
+    var newRHover   = "url('" + hoverRight[i] + "')";
+    
+    $('#interval-' + i).css("background",newRIcon);
+    $('#intervalbg-' + i).css("background",newRHover);
+  }
+}
+/*********************************************************************/
+
+function adjustIconPositions(){
+  var width  = parseInt($('.intervalicon').width());
+  var start  = (parseInt($('#intervals').width()) - (width * nIntervals)) / 2;
+  var offset = 10;
+  
+  for(var i = 1; i <= nIntervals; i++){
+    $('#interval-' + i).css("margin-left",start);
+    $('#interval-' + i).css("z-index",10);
+    $('#intervalbg-' + i).css("margin-left",start);
+    start += width + offset;
+  }
+}
+/*********************************************************************/
+
+function intervalIconHoverHandler(){
+  $('.intervalicon').hover(
+   function() {
+     $(this).animate({"opacity": "0"}, "slow");
+   },
+   function() {
+     $(this).animate({"opacity": "1"}, "slow");
+   });
+}
+
+function intervalIconClickHandler(event){
+  var cInterval   =  parseInt($(this).attr('id').replace(/\D/g,''));
+ 
+  //update the interval
+  updateInterval(cInterval);
+  
+  //update the icon deck
+  updateIntervalIconDeck(cInterval);
+  
+  $(this).css("opacity", "0"); //not working
+}
+/********************************************************************
                                       TIMELINE INTERVAL ICONS CODE **/ 
 
 
 /* TIMELINE INTERVAL SELECTION BEFORE CREATION 
  *********************************************************************/
-function selectTimeInterval(interval){
+function createTimeInterval(interval){
   
   switch(interval){
     case LIFESPAN:
@@ -107,28 +210,46 @@ function selectTimeInterval(interval){
 }
 
 function addLife(){
-  createTimeline("life", 1, "years",1, null);  
+  sliderInterval = "years";
+  createTimeline(LIFESPAN, "life", 1, "years",1, null);  
 }
 
 function addYears(){
-  createTimeline("years", 1, "months",1, Months);
+  sliderInterval = "months";
+  createTimeline(YEAR, "years", 1, "months",1, Months);
 }
 
 function addMonths(){
-  createTimeline("months", 1, "days",1, null);
+  sliderInterval = "days";
+  createTimeline(MONTH, "months", 1, "days",1, null);
 }
 
 function addWeeks(){
-  createTimeline("weeks", 1, "weeks",0, weekDays);
+  sliderInterval = "weeks";
+  createTimeline(WEEK, "weeks", 1, "weeks",0, weekDays);
 }
 
 function addDays(){
-  createTimeline("days", 1, "hours",0, null);
+  sliderInterval = "hours";
+  createTimeline(DAY, "days", 1, "hours",0, null);
 }
 
+function updateInterval(cInterval){
+  //remove the existing interval
+  clearTimeInterval();
+  
+  //create a new content holder
+  $('#content-scroll').append('<div id="content-holder"></div>');
+  
+  //create a new time interval and add to this new content holder
+  createTimeInterval(cInterval);
+  
+  prevInterval = cInterval; // save the previous interval .. is this going to work ?
+}
 
-function clearTimeLineInterval(){
-
+function clearTimeInterval(){
+  var element = document.getElementById('content-holder');
+  removeElement(element);
 }
 
 function removeElement(el){
@@ -142,7 +263,7 @@ function removeElement(el){
 
 /* TIMELINE CREATION CODE
  *********************************************************************/
-function createTimeline(segmentInterval, sStep, partsInterval, pStep, intervalStrings){
+function createTimeline(sInterval, segmentInterval, sStep, partsInterval, pStep, intervalStrings){
   var days = daysofmonth;
   
   //initialize current date
@@ -153,8 +274,11 @@ function createTimeline(segmentInterval, sStep, partsInterval, pStep, intervalSt
   var string    = new Array();
   
   //compute the total width of content-holder
-  var contentWidth = nSegments * TIMELINELEN;
+  contentWidth = windowWidth * nSegments;
   $('#content-holder').width(contentWidth);
+  
+  //update the other window sizes also
+  updateWindowSize(contentWidth);
   
   //compute the number of parts the segments should be divided into
   if (partsInterval == "weeks"){
@@ -169,12 +293,12 @@ function createTimeline(segmentInterval, sStep, partsInterval, pStep, intervalSt
   nPartsPerSegment = Math.ceil(nParts/nSegments);
   
   //initialize the slider
-  initializeContentSlider(nParts)
-  
-  if (segmentInterval == "months"){
+  initializeContentSlider(partsInterval, nParts);
+ 
+  if (segmentInterval == "months"){ 
     //add one segment at a time and add the total part labels to each segment
     for (var i = 0; i < nSegments; i++){
-      string.push('<div class="content-item">');
+      string.push('<div class="content-item" style="width:' + windowWidth + '">');
       //find a way to add the part labels here 
       if (isLeapYear(currentDate.getFullYear()))
         days = daysofmonthLY; 
@@ -189,7 +313,7 @@ function createTimeline(segmentInterval, sStep, partsInterval, pStep, intervalSt
   else{
     //add one segment at a time and add the total part labels to each segment
     for (var i = 0; i < nSegments; i++){
-      string.push('<div class="content-item">');
+      string.push('<div class="content-item" style="width:' + windowWidth + '">');
       //find a way to add the part labels here 
       labelstring = createLabels(0, nPartsPerSegment, nPartLen, partsInterval, intervalStrings, segmentInterval);
       string.push(labelstring);
@@ -201,7 +325,7 @@ function createTimeline(segmentInterval, sStep, partsInterval, pStep, intervalSt
   var writestring = string.join('');
   var element     = document.getElementById('content-holder');
   withRemove(element,writestring);
-  
+    
 } // createTimeline ends
 
 
@@ -249,7 +373,7 @@ function withRemove(el,html){
      else
        nextDate = j + 1;
        
-     if (interval == "weeks"){
+     if ((interval == "weeks") && (j < (nParts - 1))){
        datelabel += getDateLabel(segmentInterval);
      }
    } //for ends
@@ -292,7 +416,7 @@ function withRemove(el,html){
        break;
    case "weeks":
        tmpstring  = Months[cmonth] + "  " + cdate + ",  " + cyear;
-       dlabel     = '<td class="tdates">' + tmpstring + '</td>';
+       dlabel     = '<td class="tdates commonmono">' + tmpstring + '</td>';
        break;
    case "days":
        dlabel = Months[cmonth] + "  " + cdate + ",  " + cyear;
@@ -308,8 +432,8 @@ function withRemove(el,html){
 												TIMELINE LABEL CREATION CODE */
 												     
 											
-
-/************************************************************************/
+/* DATE AND TIME FUNCTIONS
+ ***********************************************************************/
 function getDateDifference(date1,date2,interval) {
     var second=1000, minute=second*60, hour=minute*60, day=hour*24, week=day*7;
     date1 = new Date(date1);
@@ -335,35 +459,36 @@ function getDateDifference(date1,date2,interval) {
 }
 /************************************************************************/	
 
-function getNextDate(mydate,interval,step){
-  //var step = 1;
-  var next;
-  tmpdate   = new Date(mydate);
-  
+function getNextDate(myDate,interval,step){
+   
   switch(interval){
     case "years":
-      currentDate.setFullYear(tmpdate.getFullYear() + step);
-      return currentDate.getFullYear();
+      myDate.setFullYear(myDate.getFullYear() + step);
+      return myDate.getFullYear();
     case "months":
-      currentDate.setMonth(tmpdate.getMonth() + step); //months are numbered from 0-11
-      return currentDate.getMonth();
+      myDate.setMonth(myDate.getMonth() + step); //months are numbered from 0-11
+      return myDate.getMonth();
     case "weeks":
-      currentDate.setDate(tmpdate.getDate() + step); // there is no setDay .... aarrrgh !!
-      return currentDate.getDay();
+      myDate.setDate(myDate.getDate() + step); // there is no setDay .... aarrrgh !!
+      return myDate.getDay();
     case "days":
-      currentDate.setDate(tmpdate.getDate() + step);
-      return currentDate.getDate();
+      myDate.setDate(myDate.getDate() + step);
+      return myDate.getDate();
     case "hours":
-      currentDate.setHours(tmpdate.getHours() + step);
-      return currentDate.getHours();
+      myDate.setHours(myDate.getHours() + step);
+      return myDate.getHours();
     default:
-      alert("we have a wrong interval type ");
+      alert("in get next date we have a wrong interval type ");
       break; 
   }
 }
 
 function initializeCurrentDate(){
-  currentDate = new Date(birthYear,0,1);
+  currentDate.setFullYear(birthYear,0,1);
+}
+
+function initializeSliderDate(){
+  sliderDate.setFullYear(birthYear,0,1);
 }
 
 function isLeapYear(year) {
@@ -372,21 +497,102 @@ function isLeapYear(year) {
     if ((year/400) != Math.floor(year/400)) return false;
     return true;
 }
+/**********************************************************************
+                                               DATE AND TIME FUNCTIONS*/
+
+/* TIMELINE SLIDER CODE 
+ *********************************************************************/
+var maxvalue;
+var mScroll;
+function initializeContentSlider(partsInterval, nParts){
+      maxvalue  = nParts;
+  var zoomvalue = 1;
+  var minvalue  = 0;
+  
+  if (nParts == "years") minvalue - 1;
+  
+  zoomvalue = setTimelineZoomPoint(partsInterval);
+  slidervalue = prevslidervalue = zoomvalue;
+  //alert("zoom value is " + zoomvalue);
+  
+  // initialize the content slider 
+  $("#content-slider").slider({
+    animate: true,
+    min:     minvalue,
+    max:     nParts,
+    value:   zoomvalue,
+    change:  handleSliderChange,
+    slide:   handleSliderSlide
+  });
+ 
+}
+
+/* find out the correct place that the timeline should be zoomed to once 
+   the slider changes 
+ ************************************************************************/
+function setTimelineZoomPoint(cInterval){
+  var zoomvalue = 1;
+  
+  //alert("in get zoom point slider date is " + sliderDate.getFullYear() + "  " + sliderDate.getMonth() + "  " + sliderDate.getDate());
+  
+  switch(cInterval){
+    case "years":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "years");
+      break;
+    case "months":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "months");
+      break;
+    case "days":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "days");
+      break;
+    case "weeks":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "days");
+      break;
+    case "hours":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "hours");
+      break;
+    default:
+      alert("trying to get the zoom point for an incorrect interval");
+      break;
+  }
+  
+  return zoomvalue;
+}
+/************************************************************************/
+
+/************************************************************************/
+function zoomOutTimeline(value){
+  //$('.content-item').show('slide',null,'slow',null);
+  /*
+  $(".content-item").animate( { width:"120%" }, { duration:300 } )
+                .delay(200)
+  				.animate( { height:"22px", width: contentWidth, backgroundColor: timelinePalette[value] }, { duration:300 } );
+  */
+}
+/************************************************************************/
+
+
+/********************************************************************
+                                               TIMELINE SLIDER CODE */
 
 
 /* SLIDER HANDLERS 
 *****************************************************************************/
-var slidervalue;
-var maxvalue;
+var slidervalue     = 1;
+var prevslidervalue = 1;
+var sliderstep = 0;
 function handleSliderChange(e, ui)
 {
-  slidervalue = ui.value;
-  maxvalue    = $('#content-slider').slider("option", "max");
-  
+  slidervalue = ui.value; 
   var maxScroll = $("#content-scroll").attr("scrollWidth") - 
                   $("#content-scroll").width();
+                  
   $("#content-scroll").animate({scrollLeft: ui.value * 
-     (maxScroll / maxvalue) }, 1000);
+     (maxScroll / maxvalue) }, 1000); 
+ 
+  sliderstep = slidervalue - prevslidervalue;
+  getNextDate(sliderDate,sliderInterval,sliderstep);
+  prevslidervalue = slidervalue;
 }
 
 function handleSliderSlide(e, ui)
@@ -394,7 +600,46 @@ function handleSliderSlide(e, ui)
   slidervalue = ui.value;
   var maxScroll = $("#content-scroll").attr("scrollWidth") - 
                   $("#content-scroll").width();
+  
   $("#content-scroll").attr({scrollLeft: ui.value * (maxScroll / maxvalue) });
+  
+  sliderstep = slidervalue - prevslidervalue;
+  getNextDate(sliderDate,sliderInterval,sliderstep);
+  prevslidervalue = slidervalue;
 }
 /****************************************************************************
 														   SLIDER HANDLERS*/
+														   
+														   
+														   
+
+/* ISLANDS CODE 
+*****************************************************************************/
+/*
+function createIslandDropSpace(){
+  $("#droppable").droppable({
+    activeClass: 'ui-state-hover',
+	hoverClass:  'ui-state-active',
+	drop: function(event, ui) {
+		    $(this).addClass('ui-state-highlight').find('p').html('Dropped!');
+		    alert("bubble dropped ");
+	      }
+  });
+}
+
+function createIslands(){
+
+}
+
+function attachDraggable(){
+  $("#bubble").draggable({ 
+       revert: 'invalid',
+       stop: function(event, ui) {
+         alert("top position after stopping is " + $(this).position().top + " left position after stopping is " + $(this).position().left);
+        // alert("scroll top position after stopping is " + $(this).scrollTop() + " left position after stopping is " + $(this).scrollLeft();
+       }
+  });
+}
+*/
+/****************************************************************************
+                                                               ISLANDS CODE */
