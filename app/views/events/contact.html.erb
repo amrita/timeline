@@ -1,0 +1,27 @@
+
+<div class = "content">
+<div id="contact" class="common commonalign">
+
+  <!-- SIGN IN DIV -->
+  <div id = "contact-div" class="contact-box">
+    <table id="contacttable" class="clean" cellpadding="6">
+       <tr id="contactlabel" class="contact-header"><td colspan="2">Feedback</td></tr>
+       <% form_for :user, :url => {:action => :post_register} do |form| %>
+         <tr><td>Name</td><td><%= form.text_field(:userid) %></td></tr>
+         <tr><td>Email Address</td><td><%= form.text_field(:email) %></td></tr>
+         <tr><td>Comments</td><td><%= form.text_area(:comments) %></td></tr>
+         <tr><td></td>
+             <td class="feedback-button"><%= submit_tag "Send Comments", :class => "submit" %></td>
+         </tr>
+       <% end %>
+     </table>
+  </div>
+  
+</div>
+</div>
+
+<% content_for :javascript do %>
+    
+<% end %>
+
+<!-- onclick="window.location='/users/logout'; return false;" /> -->
