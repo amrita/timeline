@@ -12,10 +12,6 @@ class EventsController < ApplicationController
   def about
 	  print "\n\n\n\n my about page in the controller \n\n\n\n"
 	end
-
-  def contact
-	  print "\n\n\n\n my contact page in the controller \n\n\n\n"
-	end
 	
 	def faqs
 	  print "\n\n\n\n my faqs page in the controller \n\n\n\n"

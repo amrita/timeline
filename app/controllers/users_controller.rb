@@ -7,6 +7,10 @@ class UsersController < ApplicationController
 		flash[:signup_notice] = nil
 		flash.keep(:url)
   end
+	
+	def contact
+	  print "\n\n\n\n my contact page in the controller \n\n\n\n"
+	end
 
   def post_register
 		
