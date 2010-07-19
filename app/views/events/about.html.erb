@@ -1,90 +1,47 @@
-
-<table class="signInTable">
-  <!-- SIGN UP BUTTON ON SIDE -->
-   <tr>
-	 <td class="box common">
-	   <table id="signuptxt" class="clean" cellpadding="5">
-	     <tr><td class="text" height="15" style="text-align:center">First time user? Sign up here:</td></tr>
-	     <tr><td><button id="signup" onclick="clickSignUp()">Sign up</button></td></tr>
-       </table>
-       <table id="signintxt" class="clean" cellpadding="5" style="display:none">
-	     <tr><td class="text" height="15" style="text-align:center">Already a user? Sign in here:</td></tr>
-	     <tr><td><button id="signin" onclick="clickSignIn()">Sign in</button></td></tr>
-       </table>
-     </td>
-  
-     <!-- SIGN UP FORM -->
-     <td class="box">
-  
-     <table id="signuptable" class="clean" cellpadding="5" style="display:none">
-       <tr id="signuplabel"><td colspan="2" class="heading" style="text-align:center">Sign Up</td></tr>
-       <% form_for :user, :url => {:action => :post_register} do |form| %>
-        <tr><td class="text">User Id</td><td><%= form.text_field(:userid) %></td></tr>
-        <tr><td class="text">Name</td><td><%= form.text_field(:name) %></td></tr>
-        <tr><td class="text">Date of Birth</td><td><%= form.text_field(:dob) %></td></tr>
-        <tr><td class="text">Email</td><td><%= form.text_field(:email) %></td></tr>
-        <tr><td class="text">Password</td><td><input name="password" type="password" size="30" /></td></tr>
-        <tr id="confpass" style="display:none"><td class="text" width="100%">Confirm password</td><td><input name="password_confirmation" type="password" size="30" /></td></tr>
-        <tr>
-          <td colspan="2">
-          <table class="clean"><tr>
-            <td class="text" style="text-align:left;color:red;" width="100%"><% if flash[:signup_notice] %><small>* <%= flash[:signup_notice] %></small><% end %></td>
-            <td style="text-align:right;"><%= submit_tag "Sign up", :class => "submit" %></td>
-          </tr></table>
-          </td>
-        </tr>
-      <% end %>
-     </table> 
+<div class = "content">
+  <div id = "about" class="commonalign">
+    <div id = "about-header">About Us</div>
+    <br/><br/>
+    <div class = "about-text" class="commonalign">
+      Isles of Time was designed and built by a group of three schoolmates. You may be in the 3rd, 4th, or 
+      5th grade. Isles of Time's makers are in the 17th grade, aka graduate school. They study how technology 
+      helps people learn.
+    </div>
+    <br/>
+    <div class = "about-text" class="commonalign">
+      They were born in places all around the world: India, Korea, and the United States. They met each other 
+      on an "Isle of Time" in 2009, at Stanford University in California. You can read more about them below.
+    </div>
+    <br/>
+    <div id="team" class="commonalign">
+      <br/>
+      <div class="about-text">
+      <span style="color: #007CC4">Amrita Thakur</span> is a designer and developer, who creates software products. She grew up in India 
+      but has traveled widely and lived in various places.She has always been passionate about children, and wants 
+      to give them learning experiences which are fun, interactive and which encourage creativity and collaboration. 
+      She is also a bookworm and as a child constantly created imaginary islands from all the stories she read. Nowadays
+      she uses the more prosaic Google Calendar to keep track of time. 
+      </div>
+      <br/>
+      <div class="dots"> ........................................................................................ </div>
+      <br/>
+      <div class="about-text">
     
-     <!-- SIGN IN FORM -->
-     <table id="signintable" class="clean" cellpadding="5">
-       <tr id="signinlabel"><td colspan="2" class="heading" style="text-align:center">Sign In</td></tr>
-       <% form_for :user, :url => {:action => :post_register} do |form| %>
-         <tr><td class="text">User Id</td><td><%= form.text_field(:userid) %></td></tr>
-         <tr><td class="text">Password</td><td><input name="password" type="password" size="30" /></td></tr>
-         <tr>
-           <td colspan="2">
-           <table class="clean"><tr>
-             <td class="text" style="text-align:left;color:red;" width="100%"><% if flash[:signin_notice] %><small>* <%= flash[:signin_notice] %></small><% end %></td>
-             <td style="text-align:right;"><%= submit_tag "Sign in", :class => "submit" %></td>
-    	   </tr></table>
-           </td>
-         </tr>
-         <tr>
-           <td colspan="2">
-           <table class="clean"><tr>
-             <td style="text-align:right;"><%= submit_tag "Forgot Password", :class => "submit" %></td>
-    	   </tr></table>
-           </td>
-         </tr>
-       <% end %>
-     </table>
-          
-   </td>
- </tr>
-</table> 
-     
+      </div>
+      <br/>
+      <div class="dots"> ........................................................................................ </div>
+      <br/>
+      <div class="about-text">
+      <span style="color: #007CC4">Christopher Warner</span> is a teacher. He has taught kids of all ages, but mostly 4th & 5th graders. 
+      He was born in the Appalachian mountains, grew up in Kentucky, and moved to California in 2003. 
+      He has been capturing his own "Isles of Time" in a special personal journal for many years.
+      </div>
+    </div> <!-- team ends -->
+  </div>
+</div>
 
 <% content_for :javascript do %>
-<script type="text/javascript">
-
-  function clickSignUp(){   
-    document.getElementById("signuptxt").style.display   = "none";
-    document.getElementById("signintable").style.display = "none";
     
-    document.getElementById("signintxt").style.display   = "inline";
-    document.getElementById("signuptable").style.display = "inline";
-  }
-  
-  function clickSignIn(){
-    document.getElementById("signuptable").style.display  = "none";
-    document.getElementById("signintxt").style.display    = "none";
-    
-    document.getElementById("signintable").style.display  = "inline";    
-    document.getElementById("signuptxt").style.display = "inline";
-  }
-  
-</script>
 <% end %>
 
 <!-- onclick="window.location='/users/logout'; return false;" /> -->

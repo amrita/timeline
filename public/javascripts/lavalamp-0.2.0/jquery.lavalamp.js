@@ -60,11 +60,13 @@ $.fn.lavaLamp = function(o) {
     return this.each(function() {
         var me = $(this), noop = function(){},
             $back = $('<li class="back"><div class="left"></div></li>').appendTo(me),
-            $li = $("li", this), curr = $("li.current", this)[0] || $($li[0]).addClass("current")[0];
-
+            $li   = $("li", this), 
+            curr  = $("li.current", this)[0] || $($li[0]).addClass("current")[0];
+        
         $li.not(".back").hover(function() {
             move(this);
         }, noop);
+        
 
         $(this).hover(noop, function() {
             move(curr);

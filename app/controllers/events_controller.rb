@@ -2,18 +2,32 @@ class EventsController < ApplicationController
   layout 'standard' 
 	
 	def timeline
-	  print "\n\n\n\n my first new controller \n\n\n\n"
+	  print "\n\n\n\n my first new timeline controller \n\n\n\n"
 	end
 
+	def learnmore
+	  print "\n\n\n\n my learn more page in the controller \n\n\n\n"
+	end
+	
   def about
 	  print "\n\n\n\n my about page in the controller \n\n\n\n"
 	end
 
+  def contact
+	  print "\n\n\n\n my contact page in the controller \n\n\n\n"
+	end
+	
+	def faqs
+	  print "\n\n\n\n my faqs page in the controller \n\n\n\n"
+	end
 
-
-
-
-
+  def privacy
+	  print "\n\n\n\n my privacy page in the controller \n\n\n\n"
+	end
+	
+	def terms
+	  print "\n\n\n\n my terms page in the controller \n\n\n\n"
+	end
 
 
 
