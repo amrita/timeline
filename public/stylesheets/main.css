@@ -22,7 +22,9 @@
   float: right;
 }
 
-body{
+#landing-div{
+  margin-top:    82px;
+  height:       640px; /*THIS ADJUSTS THE FOOTER SO IF YOU CHANGE IT YOU HAVE TO CHANGE IT EVERYWHERE */
 }
 
 .landing-background{
