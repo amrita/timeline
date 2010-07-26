@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   layout 'standard' 
 	
 	def timeline
+	  render :layout => 'standardtimeline'
 	  print "\n\n\n\n my first new timeline controller \n\n\n\n"
 	end
 

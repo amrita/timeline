@@ -1,305 +1,194 @@
-///////////////////////////////  **GLOBALS** //////////////////////////////////
-var sliderDisplay     = ["Lifetime","Lifetime","Year","Month", "Week","Day"];
-var sliderPalette     = ["#d70377", "#d70377","#fe9400","#666764", "#37bfe6","#7bd80d"];
-
-var prevSliderValue = 0;
-
-var nMonths    = 12;
-var nMonthDays = 31;
-var nWeeks     = 52;
-var nWeekdays  = 7;
-var nYearDays  = 365;
-var nHours     = 24;
-
-var FullMonths    = ["January","February","March","April","May","June","July","August","September","October","November", "December"];
+/* GLOBALS
+ ************************************************************************/
+ var startDate;
+ var endDate;
+ var birthYear = 2000;
+ var lifeSpan  = "My Life So Far";
+ var sliderInterval  = "";
+ var prevInterval;
+ 
+ var sliderDate   = new Date(); 
+ var currentDate  = new Date();
+ var birthDate    = new Date();
+ 
+ 
+ 
+ var LIFESPAN = 1;
+ var YEAR     = 2;
+ var MONTH    = 3;
+ var WEEK     = 4;
+ var DAY      = 5;
+ var HOUR     = 6;
+ 
+ var TIMELINELEN = 960; //default timeline length
+ 
 var Months        = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+var weekDays      = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var Hours         = ["12 A.M.", "1 A.M.", "2 A.M.", "3 A.M.", "4 A.M.", "5 A.M.", "6 A.M.", "7 A.M.", "8 A.M.", "9 A.M.", "10 A.M.", "11 A.M.", 
+				     "12 P.M.", "1 P.M.", "2 P.M.", "3 P.M.", "4 P.M.", "5 P.M.", "6 P.M.", "7 P.M.", "8 P.M.", "9 P.M.", "10 P.M.", "11 P.M." ];
+
 var daysofmonth   = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 var daysofmonthLY = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-var WeekDays      = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat"]; //doubling it to allow week to start at any day
 
+var nMonths     = 12;
+var nWeeks      = 52;
+var nDaysInWeek = 7;
+var nDaysInYear = 365;
+var nHours      = 24;
 
-var timelineWidth = 950; //keep track of the current timeline length. 950 is the default
+var nIntervals      = 5; //life, year, month, week, day
+var intervalStrings = ["", "", "years","months","weeks","days","hours"];
 
-//set current day, weekday, month and year
-var cDate;
-var cDay;
-var cMonth;
-var cYear;
+var currentInterval; //the default is life
+var currentPartLen  = 0; //the length of each date interval 
 
-//placeholder for birth year
-var birthYear = 2000;
-var lifeSpan  = "My Life Span";
+var windowWidth    = TIMELINELEN; //the width of the window
+var contentWidth   = TIMELINELEN; //width of the timeline
+var timelinePalette  = ["#BFD73B","#BFD73B","#F05F8A","#F15F2D","#AFDFE5","#FFE73B"];
 
-var LIFETIME = 1;
-var YEAR     = 2;
-var MONTH    = 3;
-var WEEK     = 4;
-var DAY      = 5;
-var nLEVELS  = 5;
+/* ICONS
+*************************************************/
+//year, month, week, day
+var intervalLeft   = ["","","/images/icons/slider_year_L.png","/images/icons/slider_month_L.png","/images/icons/slider_week_L.png","/images/icons/slider_day_L.png"];
+var intervalRight  = ["","","/images/icons/slider_year_R.png","/images/icons/slider_month_R.png","/images/icons/slider_week_R.png","/images/icons/slider_day_R.png"];
 
-var totLevelSegments = [0,0,1,12,52,365];
-var currentLevel     = 0; //Lifetime 0, 1   Year 2 Month 3 Week 4 Day 5
-var totLevelDays     = [0,0,365,31,1,1];
+//to display on hover
+var hoverLeft  = ["","","/images/icons/slider_year_L_bg.png","/images/icons/slider_month_L_bg.png","/images/icons/slider_week_L_bg.png","/images/icons/slider_day_L_bg.png"];
+var hoverRight = ["","","/images/icons/slider_year_R_bg.png","/images/icons/slider_month_R_bg.png","/images/icons/slider_week_R_bg.png","/images/icons/slider_day_R_bg.png"];
 
-//slider arrows .. year, month, week, day
-var sliderLeft   = ["","","images/icons/slider_year_L.png","images/icons/slider_month_L.png","images/icons/slider_week_L.png","images/icons/slider_day_L.png"];
-var sliderRight  = ["","","images/icons/slider_year_R.png","images/icons/slider_month_R.png","images/icons/slider_week_R.png","images/icons/slider_day_R.png"];
+/* INITIALIZE 
+ ************************************************************************************/
+$(document).ready(function(){
 
-//slider arrows to display on hover
-var hSliderLeft  = ["","","images/icons/slider_year_L_bg.png","images/icons/slider_month_L_bg.png","images/icons/slider_week_L_bg.png","images/icons/slider_day_L_bg.png"];
-var hSliderRight = ["","","images/icons/slider_year_R_bg.png","images/icons/slider_month_R_bg.png","images/icons/slider_week_R_bg.png","images/icons/slider_day_R_bg.png"];
+  //Set maxlength of all the textarea (call plugin)
+  $().maxlength();
 
-var timelineLeft   = ["","","images/icons/timeline_year_L.png","images/icons/timeline_month_L.png","images/icons/timeline_week_L.png","images/icons/timeline_day_L.png"];
-var timelineRight  = ["","","images/icons/timeline_year_R.png","images/icons/timeline_month_R.png","images/icons/timeline_week_R.png","images/icons/timeline_day_R.png"];
-
-var hTimelineLeft   = ["","","images/icons/timeline_year_L.png","images/icons/timeline_month_L.png","images/icons/timeline_week_L.png","images/icons/timeline_day_L.png"];
-var hTimelineRight  = ["","","images/icons/timeline_year_R.png","images/icons/timeline_month_R.png","images/icons/timeline_week_R.png","images/icons/timeline_day_R.png"];
-
-
-///////////////////////////////  **GLOBALS** //////////////////////////////////
-
-
-/************************************************************************/
-//init function 
-$(function() {
-
-  //adjust icon positions below timeline
-  adjustIconPositions();
+  //resize the windows
+  resizeWindows();
+    
+  //compute the start and end dates
+  birthDate   = new Date(birthYear,0,1); /********* GLOBAL VAR SETUP *********/
+  startDate   = new Date(birthYear,0,1);
+  endDate     = new Date((new Date).getFullYear(),nMonths - 1, daysofmonth[nMonths - 1]);
   
-  //initialize current date
-  cDate   = 1;
-  cMonth = 1; //subtract by 1 to pass to the Date() function 
-  cYear  = birthYear;
+  //initialize the slider date
+  initializeSliderDate();
   
-  currentDate = new Date(cYear,cMonth - 1, cDate);
-  cDay        = currentDate.getDay();
+  $('#prev, #next').click(handleSliderArrowClicked);
+  
+  //create the timelines
+  prevInterval    = LIFESPAN;
+  currentInterval = LIFESPAN;
+  createTimelines();
 
-  //initTimeLevelSlider();
-  //initTimelineSlider();
-  
-  //populate the timeline with the default
-  //addLife(2000);
-  
-  //set hover handlers
-  hoverSliderLeft();
-  hoverSliderRight();
-  
-  //add initial slider icons
-  //addSliderIcons(LIFETIME);
-  initSliderIcons(LIFETIME);
-  
-  //set click handlers
-  //$("#rightarrow").click(rightArrowClickHandler);
-  //$("#leftarrow" ).click(leftArrowClickHandler);
-  
-  $("#timelineslider").slider({
-    animate: true,
-    change: handleSliderChange,
-    slide: handleSliderSlide
-  });
-  
-  //set slider icon click handler
-  $(".slidericon").click(sliderIconClickHandler);
-  
-  /*
-  $('#getvalue')
+  $('#clickme')
 			.button()
 			.click(function() {
-			    alert("the current slider value is " + iTime + "  prevTime is " + prevTime);
+			    alert(" current slider date is " + sliderDate.getFullYear() + "  " + sliderDate.getMonth() + "  " + sliderDate.getDate() + "  slider value is " + slidervalue);
+			    alert("total elements are " + islands.length);
 			});
-  */
- 
- 
-  //floater();
-  //initializeIslands();
+			
+  $("#toggle").button().click(eventViewOpenClickHandler);
+
+  //create the interval icon deck
+  createIntervalIconDeck();
   
+  //create the islands and a drag and drop space
+  createIslands();
+  createIslandDropSpace();
+  
+  //initialize the event editor and the event editor space
+  initializeEditLayout();
+  
+  //initialize the event viewer and the event viewer space
+  initializeEventViewer();
 });
-/************************************************************************/
 
-/************************************************************************/
-function initTimelineSlider(){
-  $("#timelineslider").slider({
-    orientation: 'horizontal',
-	range: "min",
-	max: 0,
-	value: 1,
-	slide: refreshSwatch,
-	change: refreshSwatch
-  });
+function resizeWindows(){
+  // set the timeline areas to the window width 
+  var offset  = 20;
+  windowWidth = $(window).width() - offset;
   
-  $("#timelineslider").slider("value", 1);
+  $('#main').width(windowWidth);
+  $('#content-scroll').width(windowWidth);
+  $('#islands').width(windowWidth);
+  $('#droppable').width(windowWidth);
+
 }
-/************************************************************************/
 
-
-/* UPDATE THE TIMELINE SLIDER WHEN YOU MOVE TO A DIFFERENT LEVEL OF
-   GRANULARITY. E.G. LIFETIME, DAY, MONTH, YEAR
-***********************************************************************/
-function updateTimelineSlider(){
-  var startdate   = new Date(birthYear,0,1);
-  var enddate     = new Date((new Date).getFullYear(),11,31);
-  
-  switch(currentLevel){
-    case 2:
-      maxvalue = getDateDifference(startdate,enddate, "years");
-      break;
-    case 3:
-      maxvalue = getDateDifference(startdate,enddate, "months");
-      break;
-    case 4:
-      maxvalue = getDateDifference(startdate,enddate, "weeks");
-      break;
-    case 5:
-      maxvalue = getDateDifference(startdate,enddate, "days");
-      break;
-    default:
-     maxvalue = 10;
-     break; 
-  }
-  
-  var zoompt = getTimelineZoomPt();
-  
-  //reset items when slider is updated
-  prevTime = 0;
-  cDate    = 1;
-  cMonth   = 1;
-  cYear    = birthYear;
-  
-  alert("max value is " + maxvalue + " zoompt is " + zoompt);
-  //alert("in update timeline slider zoom to " + zoompt + " current date is " + cYear + " " + cMonth + " " + cDate);
-  $("#timelineslider").slider( "option" , "max" , maxvalue );
-  $("#timelineslider").slider("value", zoompt); //change this to set to the currentspace
+//update island and droppable window sizes to match the context width
+function updateWindowSize(contentWidth){
+  $('#islands').width(contentWidth);
+  islandScreenWidth = contentWidth;
+  $('#droppable').width(contentWidth);
 }
-/************************************************************************/
-
-
-/************************************************************************/
-var prevTime = 0;
-var iTime; 
-function refreshSwatch() {
-      iTime = $("#timelineslider").slider("value");
-  var step;
-  
-  if (iTime > prevTime){
-    step = iTime - prevTime;
-    //alert("before getNextDate next " + cYear + " " + cMonth + " " + cDate );
-    getNextDate("next", step);
-    //alert("after geNextDate before printdates from refresh swatch " + cYear + " " + cMonth + " " + cDate );
-    printDates();
-    printDaysinMonth(); //if we have a month update the timeline
-  }
-  else if (iTime < prevTime){
-    step = prevTime - iTime;
-    //alert("before getNextDate prev " + cYear + " " + cMonth + " " + cDate );
-    getNextDate("prev", step);
-    //alert("after geNextDate before printdates from refresh swatch " + cYear + " " + cMonth + " " + cDate );
-    printDates();
-    printDaysinMonth(); // if we have a month update the timeline
-  }
-  else{ //if its the same place do nothing
-  }
-  
-  prevTime = iTime; //update previous time
-}
-/************************************************************************/	
-
-/************************************************************************/
-//zoom slider function
-function initTimeLevelSlider(){
-  $("#timeslider").slider({
-    animate: true,
-    step: 1,
-    min: 1,
-    orientation: 'horizontal',
-    max: 5,
-    start: function(event, ui){
-	  $('#timeslidervalue').empty();
-	  slide_int = setInterval(updateSlider, 10);	
-	},
-	slide: function(event, ui){
-	  setTimeout(updateSlider, 10);  
-	},
-	stop: stopSlider
-  });
-}	
-/************************************************************************/
-
-/************************************************************************/
-function stopSlider (event, ui){
-  var offset   = $('.ui-slider-handle').offset();
-  value        = $('#timeslider').slider('option', 'value');
-  currentLevel = value;
-  
-  //update the timeline slider
-  //populate the timeline level with ticks and values
-  //we need the location to figure out the correct place that it should be 
-  //zoomed into
-  updateTimelineSlider();
-  createExistingLevel(value);
-  addSliderArrows(value);
-  addSliderIcons(value);
-  //initSliderIcons(value);
-  
-   if (value < prevSliderValue)
-    zoomOutAnimateSlider(value);
-  else
-    zoomInAnimateSlider(value);
-  
-  clearInterval(slide_int);
-  slide_int = null;
-  
-  prevSliderValue = value; //set new prev slider value 
-}
-/************************************************************************/
-
-/************************************************************************/
-function updateSlider(){
-  var offset = $('.ui-slider-handle').offset();
-  value = $('#timeslider').slider('option', 'value');
+/************************************************************************************
+																		 INITIALIZE */
+                                               
+                                               
+/* TIMELINE INTERVAL ICONS CODE 
+ *********************************************************************/  
+ function createIntervalIconDeck(){
+ var html = new Array();
  
-  $('#timeslidervalue').text(sliderDisplay[value]).css({top:offset.top });
-  $('#timeslidervalue').fadeIn();
-}
-/************************************************************************/
-
-/************************************************************************/
-function zoomOutAnimateSlider(value){
-  $("#timeline, #timelinebase").animate( { height:"7%", width:"100%", marginLeft:"-145px" }, { duration:300 } )
-                .delay(200)
-  				.animate( { height:"20px", width: timelineWidth, marginLeft:"5px", backgroundColor: sliderPalette[value] }, { duration:300 } );
-}
-/************************************************************************/
-
-/************************************************************************/
-function zoomInAnimateSlider(value){
-  $("#timeline, #timelinebase").animate( { height:"8%", width:"50%", marginLeft:"200px"}, { duration:300 } )
-  				.delay(200)
-                .animate( { height:"20px", width: timelineWidth, marginLeft:"5px", backgroundColor: sliderPalette[value] }, { duration:300 } );
-}
-/************************************************************************/
-
-/************************************************************************/
-function addSliderArrows(value){
+   for (var i = 1; i <= nIntervals; i++){
+     html.push('<div id = "interval-' + i + '" class="intervalicon levels"></div>');
+     html.push('<div id = "intervalbg-' + i + '" class="intervalicon levels"></div>');
+   }
+   var writestring = html.join('');
+   
+   $('#intervals').append(writestring);
+   
+   //adjust the icon positions
+   adjustIconPositions();
+   
+   //populate the icon deck
+   updateIntervalIconDeck(1);
+   
+   //bind the hover handler
+   intervalIconHoverHandler();
+   
+   //bind the click handler
+   $('.intervalicon').click(intervalIconClickHandler);
+ }
+ /*********************************************************************/
+ 
+ function updateIntervalIconDeck(currentIdx){
   
-  var newLBg = "url('" + timelineLeft[value] + "')";
-  var newRBg = "url('" + timelineRight[value] + "')"
-  
-  var newLHoverBg = "url('" + hTimelineLeft[value] + "')";
-  var newRHoverBg = "url('" + hTimelineRight[value] + "')";
-  
-  //add normal arrows
-  $('#leftarrow').css("background",newLBg);
-  $('#rightarrow').css("background",newRBg);
-  
-  //add hover arrows to be displayed during hover
-  $('#bgleftarrow').css("background",newLHoverBg);
-  $('#bgrightarrow').css("background",newRHoverBg);
+  for (var i = 1; i < currentIdx ; i++){
+    var newLIcon    = "url('" + intervalLeft[i] + "')";
+    var newLHover   = "url('" + hoverLeft[i] + "')";
+    
+    $('#interval-' + i).css("background",newLIcon);
+    $('#intervalbg-' + i).css("background",newLHover);
+  }
+ 
+  for (var i = currentIdx; i <= nIntervals ; i++){
+    var newRIcon    = "url('" + intervalRight[i] + "')";
+    var newRHover   = "url('" + hoverRight[i] + "')";
+    
+    $('#interval-' + i).css("background",newRIcon);
+    $('#intervalbg-' + i).css("background",newRHover);
+  }
 }
-/************************************************************************/
+/*********************************************************************/
 
-/************************************************************************/
-function hoverSliderLeft(){
-  $('#leftarrow, .slidericon').hover(
+function adjustIconPositions(){
+  var width  = parseInt($('.intervalicon').width());
+  var start  = (parseInt($('#intervals').width()) - (width * nIntervals)) / 2;
+  var offset = 10;
+  
+  for(var i = 1; i <= nIntervals; i++){
+    $('#interval-' + i).css("margin-left",start);
+    $('#interval-' + i).css("z-index",10);
+    $('#intervalbg-' + i).css("margin-left",start);
+    start += width + offset;
+  }
+}
+/*********************************************************************/
+
+function intervalIconHoverHandler(){
+  $('.intervalicon').hover(
    function() {
      $(this).animate({"opacity": "0"}, "slow");
    },
@@ -307,529 +196,294 @@ function hoverSliderLeft(){
      $(this).animate({"opacity": "1"}, "slow");
    });
 }
-/************************************************************************/
 
-/************************************************************************/
-function hoverSliderRight(){
-  $('#rightarrow, .slidericon').hover(
-   function() {
-     $(this).animate({"opacity": "0"}, "slow");
-   },
-   function() {
-     $(this).animate({"opacity": "1"}, "slow");
-   });
-}
-/************************************************************************/
-
-/************************************************************************/
-function addSliderIcons(value){
-  
-  var newLIcon = "url('" + sliderLeft[value - 1] + "')";
-  var newRIcon = "url('" + sliderRight[value + 1] + "')";
-  
-  //add the icons
-  $('#prevlevelicon').css("background",newLIcon);
-  $('#nextlevelicon').css("background",newRIcon);
-
-}
-/************************************************************************/
-
-function initSliderIcons(value){
-  for (var i = 1; i < value ; i++){
-    var newLIcon    = "url('" + sliderLeft[i] + "')";
-    var newLHoverBg = "url('" + hSliderLeft[i] + "')";
-    $('#level-' + i).css("background",newLIcon);
-    $('#levelbg-' + i).css("background",newLHoverBg);
-  }
+function intervalIconClickHandler(event){
+  var cInterval   =  parseInt($(this).attr('id').replace(/\D/g,''));
+  currentInterval =  cInterval; /********* GLOBAL VAR SETUP *********/
  
-  for (var i = value; i <= nLEVELS ; i++){
-    var newRIcon    = "url('" + sliderRight[i] + "')";
-    var newRHoverBg = "url('" + hSliderRight[i] + "')";
-    $('#level-' + i).css("background",newRIcon);
-    $('#levelbg-' + i).css("background",newRHoverBg);
-  }
-}
-
-function sliderIconClickHandler(event){
-  var value        =  parseInt($(this).attr('id').replace(/\D/g,''));
-  currentLevel = value;
+  //update the interval
+  updateInterval(cInterval);
   
-  /* update the timeline slider. populate the timeline level with 
-     ticks and values. find the right place the slider should be 
-     zoomed to  
-   */
-  //updateTimelineSlider();
-  createExistingLevel(value);
-  addSliderArrows(value);
-  initSliderIcons(value);
-  
-   if (value < prevSliderValue)
-    zoomOutAnimateSlider(value);
-  else
-    zoomInAnimateSlider(value);
+  //update the icon deck
+  updateIntervalIconDeck(cInterval);
   
   $(this).css("opacity", "0"); //not working
 }
+/********************************************************************
+                                      TIMELINE INTERVAL ICONS CODE **/ 
 
-/************************************************************************/
-/* when we move from years to months to days etc .. clear any existing
-   ticks and labels */
-function clearExistingLevel(){
-  var element = document.getElementById('timelabels');
-  if (element)
-    removeElement(element);
-    
-  var delement = document.getElementById('timedatelabels');
-  if (delement)
-    removeElement(delement);
 
+/* TIMELINE INTERVAL SELECTION BEFORE CREATION 
+ *********************************************************************/
+var intervalObjects = new Array();
+function intervalObject(){
+  this.interval       = LIFESPAN;
+  this.partsinterval  = "";
+  this.parts          = 0;
+  this.partlen        = 0;
+  this.sliderinterval = "";
 }
-
-/************************************************************************/
-
-/************************************************************************/
-function createExistingLevel(value){
-  $("#timeline, #timelinebase").css("width", 950); //reset timeline width to original
-  var startdate     = new Date(birthYear,0,1);
-  var enddate       = new Date((new Date).getFullYear(),11,31);
-  var currentwidth  = parseInt($('#content-holder').width());
+ 
+function createTimelines(){
+  var html    = "";
+  var objects = new Array();
   
-  //alert("calling printdate from create existing level " + cYear + " " + cMonth + " " + cDate);
-  /* the constants should be replaced by computed variables */
-  switch(value){
-    case 0:
-    case 1:
-      //addLife(); //pass the birth year
-      break;  
-    case YEAR:
-      //get some basics we need for computational purposes 
-      var nTimelines  = getDateDifference(startdate,enddate, "years");
-  
-      //update the content holder width 
-      timelineWidth = currentwidth * (nTimelines + 1);
-      $('#content-holder').width(timelineWidth);
-      for (var i = 0; i <= nTimelines; i++){
-        alert("calling addYears");
-        addYears(i); //add a year segment
-      }      
-      break;
-    case MONTH:
-      addMonths(); //pass in current month and year
-      break;
-    case WEEK:
-      addWeeks(); //pass in start weekday, date, month and year
-      break;
-    case DAY:
-      addDays(); //date, month and year
-      break;
-    default:
-      addLife(birthYear);
-      break;
+  //create a new content holder for each one 
+  for (var i = 1; i <= nIntervals; i++){
+   html += '<div class="contentholder" id="content-holder-' + i + '"></div>'; 
+   var obj = new intervalObject();
+   intervalObjects.push(obj);
   }
+  $('#content-scroll').append(html);
+  
+  addLife();
+  addYears();
+  addMonths();
+  addWeeks();
+  addDays();
+  
+  //show the life time timeline 
+  updateInterval(LIFESPAN);
 }
-/************************************************************************/
-
-/************************************************************************/
-/* Add year from birthyear to current year, pass in birth year as a variable */
+ 
 function addLife(){
-  //clear any existing levels
-  clearExistingLevel();
-  
-  //this is the total number of years 
-  var startdate   = new Date(birthYear,0,1);
-  var enddate     = new Date((new Date).getFullYear(),11,31);
-  maxvalue        = getDateDifference(startdate,enddate, "years");
-  
-  /* compute the total number of new segments */
-  var nSegments = maxvalue + 1;
-  //timelineWidth  = parseInt($('#timeline').width());
-  
-  $('#content-holder').append('<div id = "timeline"></div>');
-  element = document.getElementById('timeline');
-  
-  //compute the segments
-  var timelineSegLen = parseInt(timelineWidth / nSegments);
-  
-  //create the labels 
-  createMonthTimeLabels(element,1, nSegments, timelineSegLen, null, "years");
-  
-  //print the dates
-  printDates(1, 1, timelineWidth, "");
+  intervalObjects[LIFESPAN - 1].sliderinterval = intervalStrings[YEAR];
+  createTimeline(LIFESPAN, "life", 1, "years",1, null);  
 }
-/************************************************************************/
 
-
-/************************************************************************/
-/* Add year from birthyear to current year, pass in birth year as a variable */
-function addYears(index){ 
-  //clear any existing levels
-  clearExistingLevel();
-  
-  //get some basics we need for computational purposes 
-  var startdate   = new Date(birthYear,0,1);
-  var enddate     = new Date((new Date).getFullYear(),11,31);
-  /*var nTimelines  = getDateDifference(startdate,enddate, "years"); */
-  //var nSegments   = getDateDifference(startdate,enddate, "months") + 1;
-  
-  //first extend the timeline segment to accomodate the total years 
-  //var currentwidth  = parseInt($('#timeline').width());
-  //      timelineWidth = currentwidth * (nTimelines + 1);
-  //$('#timeline').width(timelineWidth);
-
-  //compute the segments
-  var nSegments      = nMonths;
-  var timelineSegLen = parseInt(timelineWidth / nSegments);
-  
-  $('#content-holder').append('<div id = "timeline-' + index + '" class = "timeclass"></div>');
-  element = document.getElementById('timeline-' + index);
-  
-  //create the timeline table with the labels
-  //createMonthTimeLabels(element, 1, nSegments, timelineSegLen, Months,"months");
-  
-  //print the dates 
-  //printDates(1, nTimelines + 1, timelineSegLen, "years");
+function addYears(){
+  intervalObjects[YEAR - 1].sliderinterval = intervalStrings[MONTH];
+  createTimeline(YEAR, "years", 1, "months",1, Months);
 }
-/************************************************************************/
 
-/************************************************************************/
-/* Add year from birthyear to current year, pass in birth year as a variable */
 function addMonths(){
-  
-  //clear any existing levels
-  clearExistingLevel();
-  
-  //get some basics we need for computational purposes 
-  var startdate   = new Date(birthYear,0,1);
-  var enddate     = new Date((new Date).getFullYear(),11,31);
-  var nTimelines  = getDateDifference(startdate,enddate, "months");
-  var nSegments   = getDateDifference(startdate,enddate, "days") + 1;
-  
-  //first extend the timeline segment to accomodate the total years 
-  var currentwidth  = parseInt($('#timeline').width());
-      timelineWidth = currentwidth * (nTimelines + 1);
-  $('#timeline').width(timelineWidth);
- 
-  //compute the segments
-  var timelineSegLen = parseInt(timelineWidth / nSegments);
-  
-  //create the labels 
-  createMonthTimeLabels(1, nSegments, timelineSegLen, null, "days");
-  
-  //print the dates
-  printDates(1, nTimelines + 1, timelineSegLen, "months");
+  intervalObjects[MONTH - 1].sliderinterval = intervalStrings[DAY];
+  createTimeline(MONTH, "months", 1, "days",1, null);
 }
-/************************************************************************/
 
-
-/************************************************************************/
 function addWeeks(){
-  
-  //clear any existing levels
-  clearExistingLevel();
-  
-  //get some basics we need for computational purposes 
-  var startdate   = new Date(birthYear,0,1);
-  var enddate     = new Date((new Date).getFullYear(),11,31);
-  var nTimelines  = getDateDifference(startdate,enddate, "weeks");
-  var nSegments   = nTimelines * 7;
-  
-  //first extend the timeline segment to accomodate the total years 
-  var currentwidth  = parseInt($('#timeline').width());
-      timelineWidth = currentwidth * (nTimelines + 1);
-  $('#timeline').width(timelineWidth);
-  
-  //compute the segments
-  var timelineSegLen = parseInt(timelineWidth / nSegments);
-  
-  //create the labels 
-  createMonthTimeLabels(1, nSegments, timelineSegLen, WeekDays, "weeks");
-  
-  //print the dates
-  printDates(1, nTimelines + 1, timelineSegLen, "weeks");
+  intervalObjects[WEEK - 1].sliderinterval = intervalStrings[WEEK];
+  createTimeline(WEEK, "weeks", 1, "weeks",0, weekDays);
 }
-/************************************************************************/
 
-/************************************************************************/
 function addDays(){
- 
-  //clear any existing levels
-  clearExistingLevel();
-  
-  //get some basics we need for computational purposes 
-  var startdate   = new Date(birthYear,0,1);
-  var enddate     = new Date((new Date).getFullYear(),11,31);
-  var nTimelines  = getDateDifference(startdate,enddate, "days");
-  var nSegments   = getDateDifference(startdate,enddate, "hours");
-  
-  //first extend the timeline segment to accomodate the total years 
-  var currentwidth  = parseInt($('#timeline').width());
-      timelineWidth = currentwidth * (nTimelines + 1);
-  $('#timeline').width(timelineWidth);
-  
-  //compute the segments
-  var timelineSegLen = parseInt(timelineWidth / nSegments);
-  
-  createHourTimeLabels(0, 23, nSegments, timelineSegLen, null, "hours");
-
-  //print the dates
-  printDates(1, nTimelines + 1, timelineSegLen, "days");
+  intervalObjects[DAY - 1].sliderinterval = intervalStrings[HOUR];
+  createTimeline(DAY, "days", 1, "hours",0, Hours);
 }
-/************************************************************************/
 
-/* CREATING MONTH TIME LABELS
-***********************************************************************/
-function createMonthTimeLabels(element, startIdx, nSegments, timelineSegLen, tArray, interval){
-  var html      = "";
-  var next, width, lPos;
+
+function updateInterval(cInterval){
   
-  alert("in create month labels ");
-  initializeCurrentDate();
-  //add the table
-  element.innerHTML = '<table id="timelabels"></table>';
-  
-  var string = new Array();
-  string.push('<tbody><tr>');
-  next = parseInt(getNextDate(currentDate, interval,0));
-  for (i = startIdx; i <= nSegments; i++){
-    if (tArray)
-      string.push('<td id ="tlabel-' + i + '" class="tlabels" style="width:' + timelineSegLen + '">' + tArray[next] + '</td>');
-    else
-      string.push('<td id ="tlabel-' + i + '" class="tlabels" style="width:' + timelineSegLen + '">' + next + '</td>');
-    next = getNextDate(currentDate, interval,1);
+  //set all the intervals to display none. do not use visibility that screws
+  //this up. 
+  for (var i = 1; i <= nIntervals; i++){
+    $('#content-holder-' + i).css("display","none");
   }
-  string.push('</tr></tbody>');
   
-  //append html
-  var writestring = string.join('');
-  var etable      = document.getElementById('timelabels');
-  //element.innerHTML = writestring;
+  //update visibility and width for this interval
+  var cObject = $('#content-holder-' + cInterval);
+  $(cObject).css("display","inline");
   
-  //alert("write string is " + writestring);
-  withRemove(etable,writestring);
+  //update the content window sizes  
+  updateWindowSize($(cObject).width());
+  
+  //populate window with static islands
+  //populateWithIslands($(cObject).width());
+  
+  //update the slider initialize the slider max value, and then set 
+  //slider interval to compute the correct zooming points
+  initializeContentSlider(intervalObjects[cInterval - 1].partsinterval, intervalObjects[cInterval - 1].parts);
+  sliderInterval = intervalObjects[cInterval - 1].sliderinterval;
+  
+  //update the color palette. set background color for this interval.
+  $('.content-item').css("background", timelinePalette[cInterval]);
+  
+  //set ze globals 
+  currentPartLen =  intervalObjects[cInterval - 1].partlen; /********* GLOBAL VAR SETUP *********/
 
-  return;
+  //trying to map ze events
+  mapAllEventsToInterval(cInterval);
+  
+  //save the current interval for the next update
+  prevInterval = cInterval;
 }
-/************************************************************************/
+/********************************************************************
+                        TIMELINE INTERVAL SELECTION BEFORE CREATION */
 
 
-/************************************************************************/
-function createHourTimeLabels(startIdx, endIdx, nSegments, timelineSegLen, tArray, interval){
-  var html      = "";
-  var next, width, lPos;
+/* TIMELINE CREATION CODE
+ *********************************************************************/
+function createTimeline(sInterval, segmentInterval, sStep, partsInterval, pStep, intervalStrings, object){
+  var days = daysofmonth;
   
-  //add the table
-  $('#timeline').append('<table id="timelabels"></table>');
+  //initialize current date
+  initializeCurrentDate();
+
+  //compute the number of segments to be added 
+  var nSegments = getDateDifference(startDate,endDate, segmentInterval) + sStep;
+  var string    = new Array();
   
-  //alert("timeline length is " + timelineLen + "timeline segment length is " + timelineSegLen + "timeline segments are " + nSegments);
-  var time1  = new Date().getTime();
-  var string = new Array();
-  string.push('<tbody><tr>');
-  for (i = startIdx; i <= nSegments;){
-    for (j = startIdx; j <= endIdx; j++, i++){
-        string.push('<td id ="tlabel-' + i + '" class="hourlabels">' + j + '</td>');
+  //compute and set the total width of content-holder
+  contentWidth = windowWidth * nSegments;
+  $('#content-holder-' + sInterval).width(contentWidth);
+  
+  //compute the number of parts the segments should be divided into
+  if (partsInterval == "weeks"){
+    var nParts = nSegments * nDaysInWeek;
+  }
+  else{
+    var nParts = getDateDifference(startDate,endDate, partsInterval) + pStep;
+  }
+  var nPartLen   = parseInt(contentWidth / nParts);
+  intervalObjects[sInterval - 1].partlen = nPartLen;
+  
+  //compute parts per segment
+  nPartsPerSegment = Math.ceil(nParts/nSegments);
+  
+  //save the interval parts and parts interval values for the slider 
+  // instantiation
+  intervalObjects[sInterval - 1].partsinterval = partsInterval;
+  intervalObjects[sInterval - 1].parts         = nParts;
+
+  
+  if (segmentInterval == "months"){ 
+    //add one segment at a time and add the total part labels to each segment
+    for (var i = 0; i < nSegments; i++){
+      string.push('<div class="content-item" style="width:' + windowWidth + 'px">');
+      //find a way to add the part labels here 
+      if (isLeapYear(currentDate.getFullYear()))
+        days = daysofmonthLY; 
+      else
+        days = daysofmonth;
+      nPartsPerSegment = days[currentDate.getMonth()];
+      labelstring = createLabels(0, nPartsPerSegment, nPartLen, partsInterval, intervalStrings, segmentInterval);
+      string.push(labelstring);
+      string.push('</div>');
+    }  
+  }
+  else{
+    //add one segment at a time and add the total part labels to each segment
+    for (var i = 0; i < nSegments; i++){
+      string.push('<div class="content-item" style="width:' + windowWidth + 'px">');
+      //find a way to add the part labels here 
+      labelstring = createLabels(0, nPartsPerSegment, nPartLen, partsInterval, intervalStrings, segmentInterval);
+      string.push(labelstring);
+      string.push('</div>');
     }
   }
-  string.push('</tr></tbody>');
   
-  //append html
+  //add all the segments to the content holder
   var writestring = string.join('');
-  var element = document.getElementById('timelabels');
-  //element.innerHTML = writestring;
-  
+  var element     = document.getElementById('content-holder-' + sInterval);
   withRemove(element,writestring);
-  var time2 = new Date().getTime();
-  
-  var diff = time2 - time1;
-  alert(" time taken " + diff);
-  
-  return;
-}
-/************************************************************************/
+} // createTimeline ends
 
-/************************************************************************/
+
+/* Supposedly faster than innerHTML = */
 function withRemove(el,html){
- var nextSibling = el.nextSibling;
- var parent = el.parentNode;
- parent.removeChild(el);
- el.innerHTML = html;
- if(nextSibling)
-  parent.insertBefore(el,nextSibling)
- else
-  parent.appendChild(el);
-} 
-/************************************************************************/
-
-/************************************************************************/
-function removeElement(el){
   var nextSibling = el.nextSibling;
   var parent = el.parentNode;
   parent.removeChild(el);
+  el.innerHTML = html;
+  if(nextSibling)
+    parent.insertBefore(el,nextSibling)
+  else
+    parent.appendChild(el);
 } 
-/************************************************************************/
+/****************************************************************************
+												     TIMELINE CREATION CODE */
+												     
 
-/************************************************************************/
-/* Compute the next date based on the level and the current date values */
-function printDates(startIdx, nSegments, timelineSegLen, interval){
-  var html      = "";
-  var next, width, lPos;
-  var datestr   = "";
-  
-  initializeCurrentDate();
-  
-  //adjust width of timelinedates
-  $('#timelinedates').width(timelineWidth);
-  
-  //add the table
-  $('#timelinedates').append('<table id="timedatelabels"></table>');
-  
-  //alert("in print dates segment length is " + timelineSegLen);
-  
-  var string = new Array();
-  string.push('<tbody><tr>');
-  if (nSegments == 1){
-    string.push('<td id ="tdate-' + i + '" class="tdates" style="width:' + timelineSegLen + '">' + lifeSpan + '</td>');
-  }
-  else{
-    next = parseInt(getNextDate(currentDate, interval,0));
-    for (i = startIdx; i <= nSegments; i++){
-      switch(interval){
-        case "years":
-          datestr = next;
-          length  = timelineSegLen * nMonths;
-          step = 1;
-          break;
-       case "months":
-         if ( isLeapYear(currentDate.getFullYear()) ) daysofmonth = daysofmonthLY;
-         datestr = Months[next] + ", " + currentDate.getFullYear();
-         length  = timelineSegLen * daysofmonth[next];
-         step = 1;
-         break;
-       case "weeks":
-         datestr = Months[currentDate.getMonth()] + " " + currentDate.getDate() + ", " + currentDate.getFullYear();
-         step = 7;
-         break;
-       case "days":
-         datestr = Months[currentDate.getMonth()] + " " + next + ", " + currentDate.getFullYear();
-         step = 1;
-         break;
-       default:
-         datestr = "";
-         break;
-      }  //switch ends 
-      string.push('<td id ="tdate-' + i + '" class="tdates" style="width:' + length + '">' + datestr + '</td>');
-      next = getNextDate(currentDate, interval,step);
-    }
-    string.push('</tr></tbody>');
-  }
-  
-  //append html
-  var writestring = string.join('');
-  var element = document.getElementById('timedatelabels');
-  //element.innerHTML = writestring;
-  
-  //alert("write string is " + writestring);
-  withRemove(element,writestring);
-
-  return;
-}
-/************************************************************************/
-
-/************************************************************************/
-/* Compute the next date based on the level and the current date values */
-/*
-function printDates(){
-  var wkMonDate = new Array();
-  var wkYear    = new Array();
-  var j = 0, k = 0;
-  
-  //alert("entering printdates date is " + cYear + " " + cMonth + " " + cDate );
-  switch(currentLevel){
-    case 0: //Lifetime 
-    case 1:
-      $("#currentdate").text("My Life Span");
-      break;
-    case 2: //Year
-      $("#currentdate").text(cYear);
-      break;
-    case 3: //Month
-      $("#currentdate").text(Months[cMonth] + ", " + cYear);
-      break;
-    case 4:  
-      $("#weekdaylabels").remove();
-      createWeekDayLabels();  
-      break;
-    case 5:
-      $("#currentdate").text(Months[cMonth] + " " + cDate + ", " + cYear);
-      break;
-    default:
-       $("#currentdate").text("My Life Span");
-  }
-  
-  return;
-  
-}
-*/
-/************************************************************************/
-
-/************************************************************************/
-function createWeekDayLabels(){
-  var startIdx = cDay;
-  var endIdx   = nWeekdays + (cDay - 1); 
-  var html     = "<table id='weekdaylabels'><tr>";
-  var nextDate = new Date(cYear,cMonth - 1, cDate);
-    for (var i = cDay; i <= endIdx; ++i){  
-      html +=  "<td><div id ='tMonDate-" + i + "' class='weeklabels'>" + Months[cMonth] + '  ' + cDate + '  ' + cYear + "</div></td>";
-      if (i == endIdx) break;
-        nextDate.setDate(nextDate.getDate() + 1);
-        
-        cYear  = nextDate.getFullYear();
-  		cMonth = nextDate.getMonth() + 1;
-  		cDate  = nextDate.getDate();
-  		cDay   = nextDate.getDay();
-    }
-    html += "</tr></table>";
+/* TIMELINE LABEL CREATION CODE
+ *****************************************************************************/
+ function createLabels(startIdx, nParts, nPartLen, interval, intervalStrings, segmentInterval){
+   var lstring    = new Array();
+   var nextDate;
+   
+   //lets now try to compute the overall label for all these parts first before the for loop gets incremented
+   // and throws it off by one. 
+   var datelabel = getDateLabel(segmentInterval);
+   
+   lstring.push('<table class="partstable"><tbody><tr>');
+   //add the total part labels to each segment
+   if (interval != "hours")
+     nextDate = parseInt(getNextDate(currentDate, interval,0));
+   else
+     nextDate = 0;
+   for (var j = startIdx; j < nParts; j++){
+     if (intervalStrings){
+       lstring.push('<td id="part-' +  interval + j  + '" class="parts commontreb" style="width:' + nPartLen + 'px">' + intervalStrings[nextDate] + '</td>');
+     }
+     else{
+       lstring.push('<td id="part-' +  interval + j  + '" class="parts commontreb" style="width:' + nPartLen + 'px">' + nextDate + '</td>'); 
+     }
+     if (interval != "hours"){
+       nextDate = parseInt(getNextDate(currentDate, interval,1));
+     }
+     else
+       nextDate = j + 1;
        
-    $("#currentdate").text('');
-    $("#currentdate").append(html);
-    
-  return;
-}
-/************************************************************************/
-
-/* find out the correct place that the timeline should be zoomed to once 
-   the slider changes 
- */
-function getTimelineZoomPt(){
-  var zoomvalue = 1;
-
-  var curDate   = new Date(cYear,cMonth - 1, cDate);
-  var birthDate = new Date(birthYear,0,1);
+     if ((interval == "weeks") && (j < (nParts - 1))){
+       datelabel += getDateLabel(segmentInterval);
+     }
+   } //for ends
+   lstring.push('</tr>');
+   
+   //now add the overall label for these parts
+   if (segmentInterval == "weeks"){
+     lstring.push('<tr>');
+     lstring.push(datelabel);
+     lstring.push('</tr>');
+   }
+   else{
+     lstring.push('<tr><td class="tdates commontreb" colspan = "' + nParts + 'style="width:' + nPartLen * nParts + 'px">' + datelabel + '</td></tr>');
+   }
+   lstring.push('</tbody></table>');
+   
+   //add all the segments to the content holder
+   var labelstring = lstring.join('');
   
-  switch(currentLevel){
-    case 0:
-    case 1:
-      break;
-    case 2:
-      zoomvalue = getDateDifference(birthDate, curDate, "years");
-      break;
-    case 3:
-      zoomvalue = getDateDifference(birthDate, curDate, "months");
-      break;
-    case 4:
-      zoomvalue = getDateDifference(birthDate, curDate, "weeks");
-      break;
-    case 5:
-      zoomvalue = getDateDifference(birthDate, curDate, "days");
-      break;
-    default:
-      break;
-  }
-  
-  return zoomvalue;
-}
-/************************************************************************/
-
-/************************************************************************/
+   return labelstring;
+ }
+ 
+ 
+ function getDateLabel(interval){
+   var dlabel    = " ";
+   var tmpstring = " ";
+   var cdate  = currentDate.getDate();
+   var cmonth = currentDate.getMonth();
+   var cyear  = currentDate.getFullYear();
+   
+   switch(interval){
+     case "life":
+       dlabel = lifeSpan;
+       break;
+     case "years":
+       dlabel = cyear;
+       break;
+     case "months":
+       dlabel = Months[cmonth] + ", " + cyear;
+       break;
+   case "weeks":
+       tmpstring  = Months[cmonth] + "  " + cdate + ",  " + cyear;
+       dlabel     = '<td class="tdates commontreb">' + tmpstring + '</td>';
+       break;
+   case "days":
+       dlabel = Months[cmonth] + "  " + cdate + ",  " + cyear;
+       getNextDate(currentDate,"days",1);
+       break;
+   default:
+     alert("wrong interval type to build a label from ");
+   }
+   
+   return dlabel;
+ }
+/*****************************************************************************
+												TIMELINE LABEL CREATION CODE */
+												     
+											
+/* DATE AND TIME FUNCTIONS
+ ***********************************************************************/
 function getDateDifference(date1,date2,interval) {
     var second=1000, minute=second*60, hour=minute*60, day=hour*24, week=day*7;
     date1 = new Date(date1);
@@ -848,44 +502,44 @@ function getDateDifference(date1,date2,interval) {
         case "hours"  : return Math.floor(timediff / hour); 
         case "minutes": return Math.floor(timediff / minute);
         case "seconds": return Math.floor(timediff / second);
+        case "life"   : return 0;
         default: return undefined;
     }
     
 }
-/************************************************************************/
+/************************************************************************/	
 
-var currentDate;
-function initializeCurrentDate(){
-  currentDate = new Date(birthYear,0,1);
-}
-
-function getNextDate(mydate,interval,step){
-  //var step = 1;
-  var next;
-  tmpdate   = new Date(mydate);
-  
+function getNextDate(myDate,interval,step){
+   
   switch(interval){
     case "years":
-      currentDate.setFullYear(tmpdate.getFullYear() + step);
-      return currentDate.getFullYear();
+      myDate.setFullYear(myDate.getFullYear() + step);
+      return myDate.getFullYear();
     case "months":
-      currentDate.setMonth(tmpdate.getMonth() + step); //months are numbered from 0-11
-      return currentDate.getMonth();
+      myDate.setMonth(myDate.getMonth() + step); //months are numbered from 0-11
+      return myDate.getMonth();
     case "weeks":
-      currentDate.setDate(tmpdate.getDate() + step); // there is no setDay .... aarrrgh !!
-      return currentDate.getDate();
+      myDate.setDate(myDate.getDate() + step); // there is no setDay .... aarrrgh !!
+      return myDate.getDay();
     case "days":
-      currentDate.setDate(tmpdate.getDate() + step);
-      return currentDate.getDate();
+      myDate.setDate(myDate.getDate() + step);
+      return myDate.getDate();
     case "hours":
-      currentDate.setHours(tmpdate.getHours() + step);
-      return currentDate.getHours();
+      myDate.setHours(myDate.getHours() + step);
+      return myDate.getHours();
     default:
-      alert("we have a wrong interval type ");
+      alert("in get next date we have a wrong interval type " + interval);
       break; 
   }
 }
 
+function initializeCurrentDate(){
+  currentDate.setFullYear(birthYear,0,1);
+}
+
+function initializeSliderDate(){
+  sliderDate.setFullYear(birthYear,0,1);
+}
 
 function isLeapYear(year) {
     if ((year/4)   != Math.floor(year/4))   return false;
@@ -893,129 +547,162 @@ function isLeapYear(year) {
     if ((year/400) != Math.floor(year/400)) return false;
     return true;
 }
+/**********************************************************************
+                                               DATE AND TIME FUNCTIONS*/
 
-
-/************************************************************************/
-function rightArrowClickHandler(event){
-  //try to slide timeline 
-  //$("#timeline").slideRightShow();
-  //$("#timelinebase").slideLeftHide(); 
+/* TIMELINE SLIDER CODE 
+ *********************************************************************/
+var maxvalue;
+var mScroll;
+function initializeContentSlider(partsInterval, nParts){
+      maxvalue  = nParts;
+  var zoomvalue = 1;
+  var minvalue  = 0;
   
-  /*$('#timeline').animate({ width: 'hide' }); */
+  if (nParts == "years") minvalue - 1;
   
-  /*
-  //try to slide the labels
-  $('.tlabels').each(function(index) {
-    $(this).slideRightShow();
+  zoomvalue = setTimelineZoomPoint(partsInterval);
+  slidervalue = prevslidervalue = zoomvalue;
+  //alert("zoom value is " + zoomvalue);
+  
+  // initialize the content slider 
+  $("#content-slider").slider({
+    animate: true,
+    min:     minvalue,
+    max:     nParts,
+    value:   zoomvalue,
+    change:  handleSliderChange,
+    slide:   handleSliderSlide
   });
-  */
+ 
+}
+
+/* find out the correct place that the timeline should be zoomed to once 
+   the slider changes 
+ ************************************************************************/
+function setTimelineZoomPoint(cInterval){
+  var zoomvalue = 1;
   
+  //alert("in get zoom point slider date is " + sliderDate.getFullYear() + "  " + sliderDate.getMonth() + "  " + sliderDate.getDate());
   
-  //Update the current date 
-  /*getNextDate("next", 1);
-  printDates();
-  printDaysinMonth(); //if we have a month update the timeline
-  */
+  switch(cInterval){
+    case "years":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "years");
+      break;
+    case "months":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "months");
+      break;
+    case "days":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "days");
+      break;
+    case "weeks":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "days");
+      break;
+    case "hours":
+      zoomvalue = getDateDifference(birthDate, sliderDate, "hours");
+      break;
+    default:
+      alert("trying to get the zoom point for an incorrect interval");
+      break;
+  }
   
-  //update the slider also
-  $("#timelineslider").slider("value", ++iTime);
-  prevTime = iTime;
-  
-  //try to slide the current date
-  //$('#currentdate').slideRightShow();
+  return zoomvalue;
 }
 /************************************************************************/
 
 /************************************************************************/
-function leftArrowClickHandler(event){	
- //try to slide timeline 
-  //$("#timeline").slideLeftShow();
-  //$("#timelinebase").slideRightHide();
-  
-  //$('#timeline').animate({ width: 'show' });
-  
+function zoomOutTimeline(value){
+  //$('.content-item').show('slide',null,'slow',null);
   /*
-  //try to slide the labels
-  $('.tlabels').each(function(index) {
-    $(this).slideLeftShow();
-  });
+  $(".content-item").animate( { width:"120%" }, { duration:300 } )
+                .delay(200)
+  				.animate( { height:"22px", width: contentWidth, backgroundColor: timelinePalette[value] }, { duration:300 } );
   */
-  
-  //Update the current date 
-  /*getNextDate("prev", 1);
-  printDates();
-  printDaysinMonth(); // if we have a month update the timeline
-  */
-  
-  //update the slider also
-  $("#timelineslider").slider("value", --iTime);
-  prevTime = iTime;
-  
-  //try to slide the current date
-  //$('#currentdate').slideLeftShow();
 }
 /************************************************************************/
 
-function adjustIconPositions(){
-  var width = parseInt($('.slidericon').width());
-  var start = 280;
-  
-  for(var i = 1; i <= nLEVELS; i++){
-    $('#level-' + i).css("margin-left",start);
-    $('#level-' + i).css("z-index",10);
-    $('#levelbg-' + i).css("margin-left",start);
-    start += 85;
-  }
 
-}
+/********************************************************************
+                                               TIMELINE SLIDER CODE */
 
-/************************************************************************/
-jQuery.fn.extend({
-  slideRightShow: function() {
-    return this.each(function() {
-        $(this).show('slide', {direction: 'right'}, 1000);
-    });
-  },
-  slideLeftHide: function() {
-    return this.each(function() {
-      $(this).hide('slide', {direction: 'left'}, 990);
-    });
-  },
-  slideRightHide: function() {
-    return this.each(function() {
-      $(this).hide('slide', {direction: 'right'}, 990);
-    });
-  },
-  slideLeftShow: function() {
-    return this.each(function() {
-      $(this).show('slide', {direction: 'left'}, 1000);
-    });
-  }
-});
-/************************************************************************/
 
-/************************************************************************/
-$.fn.delay = function(time, callback){
-    // Empty function:
-    jQuery.fx.step.delay = function(){};
-    // Return meaningless animation, (will be added to queue)
-    return this.animate({delay:1}, time, callback);
-}
-/************************************************************************/
-
-/************************************************************************/
-function handleSliderChange(e, ui){
+/* SLIDER HANDLERS 
+*****************************************************************************/
+var slidervalue     = 1;
+var prevslidervalue = 1;
+var sliderstep = 0;
+function handleSliderChange(e, ui)
+{
+  slidervalue = ui.value; 
   var maxScroll = $("#content-scroll").attr("scrollWidth") - 
                   $("#content-scroll").width();
+                  
   $("#content-scroll").animate({scrollLeft: ui.value * 
-     (maxScroll / 100) }, 1000);
+     (maxScroll / maxvalue) }, 1000); 
+ 
+  sliderstep = slidervalue - prevslidervalue;
+  getNextDate(sliderDate,sliderInterval,sliderstep);
+  prevslidervalue = slidervalue;
 }
-/************************************************************************/
 
-/************************************************************************/
-function handleSliderSlide(e, ui){
+function handleSliderSlide(e, ui)
+{
+  slidervalue = ui.value;
   var maxScroll = $("#content-scroll").attr("scrollWidth") - 
                   $("#content-scroll").width();
-  $("#content-scroll").attr({scrollLeft: ui.value * (maxScroll / 100) });
+  
+  $("#content-scroll").attr({scrollLeft: ui.value * (maxScroll / maxvalue) });
+  
+  sliderstep = slidervalue - prevslidervalue;
+  getNextDate(sliderDate,sliderInterval,sliderstep);
+  prevslidervalue = slidervalue;
 }
-/************************************************************************/
+
+function handleSliderArrowClicked(event, ui){
+   //alert("arrow clicked");
+   
+   if ($(this).attr("id") == "prev"){
+     if (slidervalue == 0) return;
+     slidervalue = prevslidervalue - 1;
+     sliderstep  = -1;
+     getNextDate(sliderDate,sliderInterval,sliderstep);
+   }
+   else if ($(this).attr("id") == "next"){
+     if (slidervalue == maxvalue) return;
+     slidervalue = prevslidervalue + 1;
+     sliderstep  = 1;
+     getNextDate(sliderDate,sliderInterval,sliderstep);
+   }
+   else{
+     alert("this slider arrow name does not exist");
+   }
+   
+   $("#content-slider").slider( "option", "value", slidervalue);
+   prevslidervalue = slidervalue;
+   
+   return;
+}
+/****************************************************************************
+														   SLIDER HANDLERS*/	
+														   
+
+/* HELPER FUNCTIONS
+ ****************************************************************************/
+ 
+/* restrict text area length */
+jQuery.fn.maxlength = function(){
+    $("textarea[@maxlength]").keypress(function(event){
+        var key = event.which;
+        //all keys including return.
+        if(key >= 33 || key == 13) {
+            var maxLength = $(this).attr("maxlength");
+            var length = this.value.length;
+            if(length >= maxLength) {
+                event.preventDefault();
+            }
+        }
+    });
+}
+/* HELPER FUNCTIONS
+ ****************************************************************************/
+														   

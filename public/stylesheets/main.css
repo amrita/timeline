@@ -1,5 +1,5 @@
 .commonalign{
-  margin: 0px auto;
+  margin: auto;
 }
 
 .common{
@@ -11,6 +11,17 @@
   font-family:  Andale Mono;
   font-size:    10pt;
   color:        blue;
+}
+
+.commontreb{
+  font-family: "Trebuchet MS";
+  font-size  :  9pt;
+  color:        #3A3A3A;
+}
+
+#accountsettings{ 
+  width: 917px;
+  text-align: right;
 }
 
 #header{
@@ -28,13 +39,13 @@
 }
 
 .landing-background{
-  background-image:  url(../images/mainbackground.jpg);
-  background-repeat: no-repeat; 
+  background:  url(../images/mainbackground.jpg) no-repeat 0 0 #fff;
+  background-position: top center;
 }
 
 .signup-background{
-  background-image:  url(../images/LoginPage.jpg);
-  background-repeat: no-repeat; 
+  background:  url(../images/LoginPage.jpg) no-repeat 0 0 #fff;
+  background-position: top center;
 }
 
 .other-background{
@@ -200,18 +211,25 @@
 #faqs {
  position:     relative;
  margin-top:    80px;
- width:        600px;
- height:       640px; /*THIS ADJUSTS THE FOOTER SO IF YOU CHANGE IT YOU HAVE TO CHANGE IT EVERYWHERE */
+ width:        1000px;
+ height:        640px; /*THIS ADJUSTS THE FOOTER SO IF YOU CHANGE IT YOU HAVE TO CHANGE IT EVERYWHERE */
  
  font-family: "Trebuchet MS";
- font-size  :           12pt;
+ font-size  :           10pt;
  color      :        #3A3A3A;
- text-align :         left;
+ text-align :           left;
+ background-color:   #EEF5A8;
+ border:  solid thin #EEF5A8;
 }
 
 #faqs-header {
   font-size  :  18pt;
   text-align :  center;
+}
+
+.faqs-text{
+  width:     960px;
+  margin:  0 auto;
 }
 
 #q-a{
@@ -222,6 +240,9 @@
   color: #007CC4;
 }
 
+.as{
+  text-align: justify;
+}
 /* PRIVACY
 ***********************************************************************/
 #privacy{

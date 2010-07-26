@@ -1,29 +1,46 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en">
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Isles Of Time</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <title>Isles Of Time</title> 
   <link rel="icon" type="image/png" href="/images/favicon.png">
+  
+  
+  <!-- External CSS Libraries  -->
+  <link rel="stylesheet" type="text/css" href="/javascripts/jqueryui/css/custom-theme/jquery-ui-1.8.2.custom.css" />	
+  <link rel="stylesheet" href="/javascripts/lavalamp-0.2.0/lavalamp_test.css" type="text/css" media="screen">
   
   <!-- <%= stylesheet_link_tag 'scaffold' %> -->
   <!-- IOT CSS Files -->
   <%= stylesheet_link_tag "main.css" %>
-  <%= stylesheet_link_tag "images.css" %>
-  
-  <!-- External CSS Libraries  -->
-  <link rel="stylesheet" type="text/css" href="/javascripts/jqueryui/css/ui-lightness/jquery-ui-1.8.2.custom.css" />	
-  <link rel="stylesheet" href="/javascripts/lavalamp-0.2.0/lavalamp_test.css" type="text/css" media="screen">
+  <%= stylesheet_link_tag "editevent.css" %>
+  <%= stylesheet_link_tag "viewevent.css" %>
+  <!-- Put timeline last so as to inherit from the others -->
+  <%= stylesheet_link_tag "timeline.css" %>
+
   
   <!-- External Javascript Libraries -->
   <%= javascript_include_tag "jqueryui/js/jquery-1.4.2.min.js" %>
   <%= javascript_include_tag "jqueryui/js/jquery-ui-1.8.2.custom.min.js"%>
-  <%= javascript_include_tag "lavalamp-0.2.0/jquery.easing.min.js"  %>
+  
+  <%= javascript_include_tag "lavalamp-0.2.0/jquery.easing.min.js" %>
   <%= javascript_include_tag "lavalamp-0.2.0/jquery.lavalamp.js" %>
+  
+  <%= javascript_include_tag "jquery.cycle/jquery.cycle.all.min.js"  %>
+  <%= javascript_include_tag "jquery.cycle/jquery.easing.1.1.1.js"  %>
+  
   
   <!-- IOT javascript files -->
   <%= javascript_include_tag "iot/main.js" %>
+  <!-- Put timeline first because it has the init function -->
+  <%= javascript_include_tag "iot/timeline.js" %>
+  <%= javascript_include_tag "iot/islands.js" %>
+  <%= javascript_include_tag "iot/timelinemapping.js" %>
+  <%= javascript_include_tag "iot/editevent.js" %>
+  <%= javascript_include_tag "iot/viewevent.js" %>
+  
   
 </head>
 <body class="signup-background commonalign">

@@ -1,91 +1,31 @@
 
-<table class="signInTable">
-  <!-- SIGN UP BUTTON ON SIDE -->
-   <tr>
-	 <td class="box common">
-	   <table id="signuptxt" class="clean" cellpadding="5">
-	     <tr><td class="text" height="15" style="text-align:center">First time user? Sign up here:</td></tr>
-	     <tr><td><button id="signup" onclick="clickSignUp()">Sign up</button></td></tr>
-       </table>
-       <table id="signintxt" class="clean" cellpadding="5" style="display:none">
-	     <tr><td class="text" height="15" style="text-align:center">Already a user? Sign in here:</td></tr>
-	     <tr><td><button id="signin" onclick="clickSignIn()">Sign in</button></td></tr>
-       </table>
-     </td>
+  <button id="save-event">Save My Events </button>
+  <div id="events" class="commonalign"></div>
   
-     <!-- SIGN UP FORM -->
-     <td class="box">
-  
-     <table id="signuptable" class="clean" cellpadding="5" style="display:none">
-       <tr id="signuplabel"><td colspan="2" class="heading" style="text-align:center">Sign Up</td></tr>
-       <% form_for :user, :url => {:action => :post_register} do |form| %>
-        <tr><td class="text">User Id</td><td><%= form.text_field(:userid) %></td></tr>
-        <tr><td class="text">Name</td><td><%= form.text_field(:name) %></td></tr>
-        <tr><td class="text">Date of Birth</td><td><%= form.text_field(:dob) %></td></tr>
-        <tr><td class="text">Email</td><td><%= form.text_field(:email) %></td></tr>
-        <tr><td class="text">Password</td><td><input name="password" type="password" size="30" /></td></tr>
-        <tr id="confpass" style="display:none"><td class="text" width="100%">Confirm password</td><td><input name="password_confirmation" type="password" size="30" /></td></tr>
-        <tr>
-          <td colspan="2">
-          <table class="clean"><tr>
-            <td class="text" style="text-align:left;color:red;" width="100%"><% if flash[:signup_notice] %><small>* <%= flash[:signup_notice] %></small><% end %></td>
-            <td style="text-align:right;"><%= submit_tag "Sign up", :class => "submit" %></td>
-          </tr></table>
-          </td>
-        </tr>
-      <% end %>
-     </table> 
-    
-     <!-- SIGN IN FORM -->
-     <table id="signintable" class="clean" cellpadding="5">
-       <tr id="signinlabel"><td colspan="2" class="heading" style="text-align:center">Sign In</td></tr>
-       <% form_for :user, :url => {:action => :post_register} do |form| %>
-         <tr><td class="text">User Id</td><td><%= form.text_field(:userid) %></td></tr>
-         <tr><td class="text">Password</td><td><input name="password" type="password" size="30" /></td></tr>
-         <tr>
-           <td colspan="2">
-           <table class="clean"><tr>
-             <td class="text" style="text-align:left;color:red;" width="100%"><% if flash[:signin_notice] %><small>* <%= flash[:signin_notice] %></small><% end %></td>
-             <td style="text-align:right;"><%= submit_tag "Sign in", :class => "submit" %></td>
-    	   </tr></table>
-           </td>
-         </tr>
-         <tr>
-           <td colspan="2">
-           <table class="clean"><tr>
-             <td style="text-align:right;"><%= submit_tag "Forgot Password", :class => "submit" %></td>
-    	   </tr></table>
-           </td>
-         </tr>
-       <% end %>
-     </table>
-          
-   </td>
- </tr>
- <tr> <td> <a href="/events/about"> Click to go to About </a> </td></tr>
-</table> 
-     
+  <div id="main">
+    <div id="content-scroll">
+      <div id="islands">
+      </div>
+      <div id="droppable">
+      </div>
+      <div id="content-holder">
+      </div>
+    </div>
+    <table id="slider-elements" cellpadding="10"><tr>
+      <td><div id="prev" class="arrows"></div></td>
+      <td><div id="content-slider"></div></td>
+      <td><div id="next" class="arrows"></div></td>
+    </table></tr>
+    <div id="deleteevent-alert"><p><span class="ui-icon ui-icon-alert" style="float:left; margin: 0 7px 20px 0;"></span>Are you sure you want to delete this isle ?</p></div>
+  </div>
+ 
+  <!-- <button id="clickme"> Click me </button>
+  <button id="toggle"> Toggle </button> -->
+
+  <div id="intervals" class="common commonalign"></div>
 
 <% content_for :javascript do %>
-<script type="text/javascript">
-
-  function clickSignUp(){   
-    document.getElementById("signuptxt").style.display   = "none";
-    document.getElementById("signintable").style.display = "none";
     
-    document.getElementById("signintxt").style.display   = "inline";
-    document.getElementById("signuptable").style.display = "inline";
-  }
-  
-  function clickSignIn(){
-    document.getElementById("signuptable").style.display  = "none";
-    document.getElementById("signintxt").style.display    = "none";
-    
-    document.getElementById("signintable").style.display  = "inline";    
-    document.getElementById("signuptxt").style.display = "inline";
-  }
-  
-</script>
 <% end %>
 
 <!-- onclick="window.location='/users/logout'; return false;" /> -->
