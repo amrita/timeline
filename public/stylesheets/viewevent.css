@@ -1,0 +1,92 @@
+/* EVENT VIEW MODE CSS STUFF 
+ **********************************************************/
+.noTitleStuff .ui-dialog-titlebar{
+  display: none;
+}
+
+#eventview-container{
+  background-color:#ecfff9;
+}
+
+#eventview-table{
+  margin: 0 auto;
+}
+
+#eventview-table td{
+  padding-left:  20px;
+  padding-right: 20px;
+}
+ 
+.slideshow { 
+  margin:  0; 
+  padding: 0; 
+  overflow: hidden; 
+ }
+
+.slide, .video-slide { 
+  margin:  0; 
+  padding: 0; 
+}
+
+.slideshow, .slide, .video-slide { 
+  height: 432px; 
+  width:  432px; 
+}
+
+.slide img { 
+  padding: 15px; 
+  border:  1px solid #ccc; 
+  background-color: #eee; 
+  margin:  auto;
+  display: block; 
+  max-width:  400px;
+  max-height: 400px;
+}
+
+ 
+#eventview-nav { 
+  width:        50px;
+  height:       70px;
+  z-index:        10;
+}
+
+#eventview-nav a { 
+  margin		 : 0px 8px 0px;
+  width			 : 50px;
+  height		 : 47px; 
+  text-decoration: none;
+  text-align     : center;
+  line-height    : 32px;
+  float          : left;
+  background     : url('../images/cloud.png');
+  background-repeat: no-repeat;
+  color          :  #3A3A3A; 
+  
+  font-size      : 16pt;
+  font-weight    : bold;
+}
+
+#eventview-nav a.activeSlide { 
+  color:  white; 
+}
+
+#eventview-nav a:focus { 
+  outline: none; 
+}
+
+#eventview-item-desc{
+  width:     217px;
+  height:    375px;
+  background: url('../images/notepad.png');
+}
+/***********************************************************
+                                EVENT VIEW MODE CSS STUFF  */
+                                
+                                
+
+/* RANDOM CLOUD CSS STUFF 
+ **********************************************************/                               
+
+
+/***********************************************************
+                                   RANDOM CLOUD CSS STUFF  */

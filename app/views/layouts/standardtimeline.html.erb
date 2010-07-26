@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <title>Isles Of Time</title> 
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  
+  
+  <!-- External CSS Libraries  -->
+  <link rel="stylesheet" type="text/css" href="/javascripts/jqueryui/css/custom-theme/jquery-ui-1.8.2.custom.css" />	
+  <link rel="stylesheet" href="/javascripts/lavalamp-0.2.0/lavalamp_test.css" type="text/css" media="screen">
+  
+  <!-- <%= stylesheet_link_tag 'scaffold' %> -->
+  <!-- IOT CSS Files -->
+  <%= stylesheet_link_tag "main.css" %>
+  <%= stylesheet_link_tag "editevent.css" %>
+  <%= stylesheet_link_tag "viewevent.css" %>
+  <!-- Put timeline last so as to inherit from the others -->
+  <%= stylesheet_link_tag "timeline.css" %>
+
+  
+  <!-- External Javascript Libraries -->
+  <%= javascript_include_tag "jqueryui/js/jquery-1.4.2.min.js" %>
+  <%= javascript_include_tag "jqueryui/js/jquery-ui-1.8.2.custom.min.js"%>
+  
+  <%= javascript_include_tag "lavalamp-0.2.0/jquery.easing.min.js" %>
+  <%= javascript_include_tag "lavalamp-0.2.0/jquery.lavalamp.js" %>
+  
+  <%= javascript_include_tag "jquery.cycle/jquery.cycle.all.min.js"  %>
+  <%= javascript_include_tag "jquery.cycle/jquery.easing.1.1.1.js"  %>
+  
+  
+  <!-- IOT javascript files -->
+  <%= javascript_include_tag "iot/main.js" %>
+  <!-- Put timeline first because it has the init function -->
+  <%= javascript_include_tag "iot/timeline.js" %>
+  <%= javascript_include_tag "iot/islands.js" %>
+  <%= javascript_include_tag "iot/timelinemapping.js" %>
+  <%= javascript_include_tag "iot/editevent.js" %>
+  <%= javascript_include_tag "iot/viewevent.js" %>
+  
+  
+</head>
+<body class="commonalign">
+
+  <div id="header" class = "common commonalign" >
+    <ul class="lavaLampBottomStyle" id="mainnav">
+      <li class="current"><a href="/index.html">Home</a></li>
+      <li><a href="/events/learnmore">Learn More</a></li>
+      <li><a href="/users/signin">Sign Up or Sign In</a></li>
+    </ul>
+  </div>
+
+<%= yield %>
+
+  <div id="footer" class="common commonalign">
+    <ul class="lavaLampBottomStyleFooter" id="footnav">
+      <li><a href="/events/terms">&copy; 2010 IslesOfTime.com</a></li>
+      <li class="current"><a href="/events/about">About Us</a></li>
+      <li><a href="/users/contact">Contact Us</a></li>
+      <li><a href="/events/faqs">FAQs</a></li>
+      <li><a href="/events/privacy">Privacy</a></li>
+    </ul>
+  </div>
+  
+</body>
+</html>
+
+<%= yield :javascript -%>
