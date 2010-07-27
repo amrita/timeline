@@ -143,12 +143,12 @@ function attachDraggable(island){
                eventObjects[index].top      = $(island).position().top;
                eventObjects[index].left     = $(island).position().left;
                scrollLeft                   = $('#content-scroll').scrollLeft();
-               alert("ID:  " +  eventObjects[index].id + " TOP: " + eventObjects[index].top + " LEFT : " + eventObjects[index].left + " SCROLLLEFT: " + scrollLeft);
+               //alert("ID:  " +  eventObjects[index].id + " TOP: " + eventObjects[index].top + " LEFT : " + eventObjects[index].left + " SCROLLLEFT: " + scrollLeft);
                //using slider interval because it has the string instead of the number
                getTimestampFromPosition(eventObjects[index].left, scrollLeft, islandWidth, sliderInterval, currentPartLen, index);
                
                //can we populate the event form ? 
-               populateEventForm(index);
+               addUpdateEventFormHandler(index);
              }
   });
 }
@@ -167,9 +167,8 @@ function textareaFocusOutHandler(event){
      eventObjects[arrayindex].desc = "No Description Available";
    }
    
-   //lets update the form from here
-   $('#event_update_eventid').val(eventObjects[arrayindex].id);
-   $('#event_update_desc').val(eventObjects[arrayindex].desc);
+   //call the form handler
+   updateEventDescriptionFormHandler(arrayindex);
    
 }
 /***************************************************************************/
@@ -250,6 +249,7 @@ function createAndAppendIslandDiv(idNumber,randomIcon){
   
   
   string.push('<div id="island-' + idNumber + '" class="bubble-container" title="Drag me to create a new isle">');
+  string.push('<div class="myId" style="display:none">' + idNumber + '</div>');
   string.push('<textarea class="textfield_effect commontreb" rows="2" col="18" maxlength="47" id="btext-' + idNumber + '"/>');
   string.push('<div class="bcontainer-' + idNumber + ' icon-lock bubbleicons" style="opacity:0">');
   string.push('<a href = "link/to/trash/script/when/we/have/js/off" title="Lock Isle" class="ui-icon ui-icon-unlocked">Lock Event</a>');
@@ -378,10 +378,18 @@ function editEvent(ev,$item){
 
 function deleteEvent($item) {
   //alert ("trying to delete the image ");
+  var ofind  =  $item.find('div.myId');
+  var id     =  $(ofind).text();
+  
   $("#deleteevent-alert").dialog("option", "buttons", { 
                    "Ok": function() {  $item.fadeOut(function(){$item.find('a.ui-icon-trash').remove();});  $(this).dialog('close'); }, 
                    "Cancel": function() { $(this).dialog('close'); } } );
+  
   $("#deleteevent-alert").dialog('open');
+  
+  //call the form handler 
+  deleteEventFormHandler(id);
+  
 }
 
 function createDeleteEventAlertDialog(){
@@ -453,7 +461,7 @@ function printEventObject(object){
 
 /*FORM STUFF 
  ****************************************************************************/
-function populateEventForm(index){
+function  addUpdateEventFormHandler(index){
   //alert("trying to populate these events with " + index);
   
   $('#event_eventid').val(eventObjects[index].id);
@@ -468,7 +476,21 @@ function populateEventForm(index){
   $('#event_interval').val(eventObjects[index].interval);
   $('#event_icon').val(eventObjects[index].icon);
 }
+
+function updateEventDescriptionFormHandler(index){
+   //lets update the form from here
+   $('#event_update_eventid').val(eventObjects[index].id);
+   $('#event_update_desc').val(eventObjects[index].desc);
+}
  
+function deleteEventFormHandler(id){
+  //lets update the form from here
+   $('#event_delete_eventid').val(id);
+}
+
+function getEventsFormHandler(){
+
+}
 /***************************************************************************
 																FORM STUFF */
               

@@ -1,4 +1,5 @@
 <div id="island-<%= island.eventid %>" class="bubble-container" title="Drag me to create a new isle" style="top:<%= island.top %>px; left:<%= island.left %>px;">
+  <div class="myId" style="display:none"><%= island.eventid %></div>
   <textarea class="textfield_effect commontreb" rows="2" col="18" maxlength="47" id="btext-<%= island.eventid %>" />
   <div class = "bcontainer-<%= island.eventid %> icon-lock bubbleicons" style="opacity:0">
     <a href = "link/to/trash/script/when/we/have/js/off" title="Lock Isle" class="ui-icon ui-icon-unlocked">Lock Event</a>
