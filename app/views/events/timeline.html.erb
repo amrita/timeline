@@ -23,6 +23,55 @@
   <button id="toggle"> Toggle </button> -->
 
   <div id="intervals" class="common commonalign"></div>
+  
+  <!-- Adding the event post form here -->
+  <div>
+    
+    <table>
+     <% form_for :event, :url => {:action => :get_events}, :html => {:id => 'get_event_rows' } do |form| %>
+     <tr><td class="sign-buttons"><%= submit_tag "Get Events", :class => "submit", :id=> "getEventsButton" %></td></tr>
+     <% end %>
+    </table>
+    
+    <table id="eventrow" class="clean" cellpadding="6">
+       <% form_for :event, :url => {:action => :add_event}, :html => {:id => 'new_event_row' } do |form| %>
+         <tr><td>eventid</td><td><%= form.text_field(:eventid) %></td></tr>
+         <tr><td>desc</td><td><%= form.text_field(:desc) %></td></tr>
+         <tr><td>div</td><td><%= form.text_field(:div) %></td></tr>
+         <tr><td>top</td><td><%= form.text_field(:top) %></td></tr>
+         <tr><td>left</td><td><%= form.text_field(:left) %></td></tr>
+         <tr><td>year</td><td><%= form.text_field(:year) %></td></tr>
+         <tr><td>month</td><td><%= form.text_field(:month) %></td></tr>
+         <tr><td>day</td><td><%= form.text_field(:day) %></td></tr>
+         <tr><td>hour</td><td><%= form.text_field(:hour) %></td></tr>
+         <tr><td>interval</td><td><%= form.text_field(:interval) %></td></tr>
+         <tr><td>icon</td><td><%= form.text_field(:icon) %></td></tr>    
+         <tr><td></td>
+             <td class="sign-buttons"><%= submit_tag "Add Event", :class => "submit", :id=> "addEventButton" %></td>
+         </tr>
+       <% end %>
+     </table>
+     
+     
+     <table>
+     <% form_for :event, :url => {:action => :update_event_description}, :html => {:id => 'update_event_desc' } do |form| %>
+     <tr><td>eventid</td><td><%= form.text_field(:update_eventid) %></td></tr>
+     <tr><td>desc</td><td><%= form.text_field(:update_desc) %></td></tr>
+     <tr><td class="sign-buttons"><%= submit_tag "Update Event Desc", :class => "submit", :id=> "updateDescButton" %></td></tr>
+     <% end %>
+     </table>
+     
+     <table>
+     <% form_for :event, :url => {:action => :delete_event}, :html => {:id => 'delete_event_row' } do |form| %>
+     <tr><td>eventid</td><td><%= form.text_field(:delete_eventid) %></td></tr>
+     <tr><td class="sign-buttons"><%= submit_tag "Delete Event", :class => "submit", :id=> "deleteEventButton" %></td></tr>
+     <% end %>
+     </table>
+     
+  </div>
+  
+  <!-- Adding the Media form here -->
+  
 
 <% content_for :javascript do %>
     

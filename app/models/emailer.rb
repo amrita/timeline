@@ -13,15 +13,14 @@ class Emailer < ActionMailer::Base
   end  
 
   # create a function with all the variables I want to use in my actual email 
-  def feedback(user_name, user_email, userid, feedback, sent_at = Time.now)
+  def feedback(user_name, user_email, feedback, sent_at = Time.now)
      @subject = 'Feedback from IOT Website'
      @recipients = 'feedback@islesoftime.com'
      @from = user_email
      @sent_on = sent_at
-         @body["user_name"] = user_name
-         @body["email"]     = user_email
-         @body["userid"]    = userid
-				 @body["feedback"]  = feedback
+         @body["user_name"]  = user_name
+         @body["user_email"] = user_email
+				 @body["feedback"]   = feedback
      @headers = {}
   end 
 	

@@ -15,6 +15,7 @@ var eventObjects  = new Array();
 
 function eventObject(){
   this.id         = 0;
+  this.div        = "";
   this.object     = null;
   this.timestamp  = "";
   this.year       = "";
@@ -41,6 +42,8 @@ function getTimestampFromPosition(x, leftScroll, islandWidth, interval, iPartLen
   var timestamp;
   var nextDate;
   var xLocation  = x + leftScroll + (islandWidth/2);  // compute the x value of where the island is located. 
+  
+  //alert("islandWidth is " + islandWidth);
   
   increment  = Math.floor(xLocation / iPartLen); //compute the incremental step where we need 
   islandDate = new Date(birthYear,0,1);
@@ -76,6 +79,7 @@ function mapTimestampToInterval(index, cInterval){
 
   var objectInterval = eventObjects[index].interval; //what interval was the object originally created in 
   
+  //alert(" we have " + eventObjects[index].year + "  " + eventObjects[index].month + "  " + eventObjects[index].date);
   //we are zooming in, find a way to hide the events
   //prolly loop through the events at this level and higher 
   //and turn on the invisible flag. may not need to do higher
@@ -85,7 +89,7 @@ function mapTimestampToInterval(index, cInterval){
     $(eventObjects[index].object).css("visibility","hidden");    
   }
   else if (objectInterval > cInterval) {
-   // alert("trying to zoom out ");
+    //alert("trying to zoom out ");
     
     //make sure you make this event visible
     $(eventObjects[index].object).css("visibility","visible");  
@@ -164,6 +168,7 @@ function deepCopyEventObject(island){
   if (index != -1){
     var newevent = new eventObject();
     newevent.id         = islandObjects[index].id;
+    newevent.div        = islandObjects[index].div;
     newevent.object     = islandObjects[index].object;
     newevent.top        = islandObjects[index].top; //object top
     newevent.left       = islandObjects[index].left; //object left
@@ -187,7 +192,7 @@ function getEventObject(array, object){
   var len = array.length;
  
   for (var i = 0; i < len; i++){
-    if ( object == array[i].object){
+    if ( object.attr('id') == array[i].object.attr('id')){
       return i;
     }
   }

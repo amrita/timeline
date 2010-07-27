@@ -1,0 +1,17 @@
+<div id="island-<%= island.eventid %>" class="bubble-container" title="Drag me to create a new isle" style="top:<%= island.top %>px; left:<%= island.left %>px;">
+  <textarea class="textfield_effect commontreb" rows="2" col="18" maxlength="47" id="btext-<%= island.eventid %>" />
+  <div class = "bcontainer-<%= island.eventid %> icon-lock bubbleicons" style="opacity:0">
+    <a href = "link/to/trash/script/when/we/have/js/off" title="Lock Isle" class="ui-icon ui-icon-unlocked">Lock Event</a>
+  </div>
+  <div id="bubble-<%= island.eventid %>" class="bubble" style="background:url('<%= island.icon %>')"> </div>
+  <div class= "bcontainer-<%= island.eventid %> bubbleicons" style="opacity:0">
+    <a href = "link/to/trash/script/when/we/have/js/off" title="View Isle"   class="ui-icon ui-icon-zoomin">View Event</a>
+    <a href = "link/to/trash/script/when/we/have/js/off" title="Edit Isle"   class="ui-icon ui-icon-pencil">Edit Event</a>
+    <a href = "link/to/trash/script/when/we/have/js/off" title="Delete Isle" class="ui-icon ui-icon-trash">Delete Event</a>
+  </div>
+  <div id="interval-<%= island.eventid %>" style="display:none"><%= island.interval %></div>
+  <div id="year-<%= island.eventid %>" style="display:none"><%= island.year %></div>
+  <div id="month-<%= island.eventid %>" style="display:none"><%= island.month %></div>
+  <div id="date-<%= island.eventid %>" style="display:none"><%= island.day %></div>
+  <div id="year-<%= island.eventid %>" style="display:none"><%= island.hour %></div>
+</div>

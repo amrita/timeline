@@ -81,11 +81,28 @@ function createIslandDropSpace(){
   });
 }
 
-function createIslands(){
-  //alert("entering create islands");
-  
+function initializeIslands(){
   //create the island icons object array
   addIslandIcons();
+  
+  // Get some globals // also got in get_events.js.erb
+  islandWidth = parseInt($(".bubble-container").css("width"));
+  
+  islandIconClickHandler();
+  
+  //hover handlers
+  $('.bubble-container').live('mouseover mouseout', islandHoverHandler);
+  
+  //textarea mouseout handler
+  $('.textfield_effect').live('focusout', textareaFocusOutHandler);
+  
+  //delete event alert dialog
+  createDeleteEventAlertDialog();
+
+}
+
+function startIslands(){
+  //alert("entering create islands");
  
   // This is the animation timer
   animationLoopID = setInterval("animationLoop()", 50);
@@ -95,14 +112,6 @@ function createIslands(){
 	
   // Go ahead and add the first bubble right now
   addIsland();
-  
-  islandIconClickHandler();
-  
-  //hover handlers
-  $('.bubble-container').live('mouseover mouseout', islandHoverHandler);
-  
-  //delete event alert dialog
-  createDeleteEventAlertDialog();
 }
 
 function attachDraggable(island){
@@ -127,15 +136,41 @@ function attachDraggable(island){
                  }
                  //set the current interval of the object
                  eventObjects[index].interval = currentInterval;
-               }  
+               }
+               else{
+                 index = eindex;
+               }
                eventObjects[index].top      = $(island).position().top;
                eventObjects[index].left     = $(island).position().left;
                scrollLeft                   = $('#content-scroll').scrollLeft();
-               //alert("TOP: " + eventObjects[index].top + " LEFT : " + eventObjects[index].left + " SCROLLLEFT: " + scrollLeft);
+               alert("ID:  " +  eventObjects[index].id + " TOP: " + eventObjects[index].top + " LEFT : " + eventObjects[index].left + " SCROLLLEFT: " + scrollLeft);
                //using slider interval because it has the string instead of the number
                getTimestampFromPosition(eventObjects[index].left, scrollLeft, islandWidth, sliderInterval, currentPartLen, index);
+               
+               //can we populate the event form ? 
+               populateEventForm(index);
              }
   });
+}
+
+function textareaFocusOutHandler(event){
+   
+   var parent = $(this).parent();
+   var id     = parseInt($(parent).attr('id').replace(/\D/g,''));
+
+   arrayindex  =  getEventObject(eventObjects, parent);
+   
+   if (arrayindex != -1){
+     eventObjects[arrayindex].desc = $('#btext-' + id).val();
+   }
+   else{
+     eventObjects[arrayindex].desc = "No Description Available";
+   }
+   
+   //lets update the form from here
+   $('#event_update_eventid').val(eventObjects[arrayindex].id);
+   $('#event_update_desc').val(eventObjects[arrayindex].desc);
+   
 }
 /***************************************************************************/
 
@@ -197,6 +232,7 @@ function addIsland()
 	var iObject    = new eventObject();
 	
 	iObject.id       = idNumber;
+	iObject.div      = "#island-" + idNumber;
 	iObject.object   = island;
 	iObject.top      = parseInt($(island).css("top"));
 	iObject.left     = parseInt($(island).css("left"));
@@ -214,7 +250,7 @@ function createAndAppendIslandDiv(idNumber,randomIcon){
   
   
   string.push('<div id="island-' + idNumber + '" class="bubble-container" title="Drag me to create a new isle">');
-  string.push('<textarea class="textfield_effect commontreb" rows="2" col="18" maxlength="47" name="btext-' + idNumber + '"/>');
+  string.push('<textarea class="textfield_effect commontreb" rows="2" col="18" maxlength="47" id="btext-' + idNumber + '"/>');
   string.push('<div class="bcontainer-' + idNumber + ' icon-lock bubbleicons" style="opacity:0">');
   string.push('<a href = "link/to/trash/script/when/we/have/js/off" title="Lock Isle" class="ui-icon ui-icon-unlocked">Lock Event</a>');
   string.push('</div>');
@@ -404,7 +440,7 @@ function getRandomNumber(minVal,maxVal)
  */
 var counter = 0;
 function getId(){
-  counter++;
+  counter = Math.round(new Date().getTime() / 1000.0); //get the epoch time in seconds
   return counter;
 }
 
@@ -413,3 +449,26 @@ function printEventObject(object){
   alert(" id is " + object.id + " TOP: " + object.top + " LEFT:" + object.left);
 }
 /*****************************************************************************/
+
+
+/*FORM STUFF 
+ ****************************************************************************/
+function populateEventForm(index){
+  //alert("trying to populate these events with " + index);
+  
+  $('#event_eventid').val(eventObjects[index].id);
+  $('#event_desc').val("");
+  $('#event_div').val(eventObjects[index].div);
+  $('#event_top').val(eventObjects[index].top);
+  $('#event_left').val(eventObjects[index].left);
+  $('#event_year').val(eventObjects[index].year);
+  $('#event_month').val(eventObjects[index].month);
+  $('#event_day').val(eventObjects[index].date);
+  $('#event_hour').val(eventObjects[index].hour);
+  $('#event_interval').val(eventObjects[index].interval);
+  $('#event_icon').val(eventObjects[index].icon);
+}
+ 
+/***************************************************************************
+																FORM STUFF */
+              

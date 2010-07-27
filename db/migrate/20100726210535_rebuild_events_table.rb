@@ -1,6 +1,8 @@
-class CreateEvents < ActiveRecord::Migration
+class RebuildEventsTable < ActiveRecord::Migration
   def self.up
-    create_table :events do |t|
+	  drop_table :events
+		
+	  create_table :events do |t|
       t.integer :eventid
       t.string  :userid
       t.string  :desc
@@ -20,10 +22,10 @@ class CreateEvents < ActiveRecord::Migration
       t.integer  :segmentlen
 			
       t.timestamps
-    end
   end
+ end
 
   def self.down
-    drop_table :events
+	  drop_table :events
   end
 end

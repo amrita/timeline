@@ -1,0 +1,39 @@
+//alert('ajax works');
+//alert('trying to render partials ');
+$("#islands").append("<%= escape_javascript(render(:partial => 'island', :collection => @events)) %>");
+
+setUpEventObjects();
+
+function setUpEventObjects(){
+  // Get some globals
+  islandWidth = parseInt($(".bubble-container").css("width"));
+
+  $('#islands').children().each(function() {
+       var child   = $(this);
+       var eObject  = new eventObject();
+       var index = parseInt($(child).attr('id').replace(/\D/g,''));
+       
+       //attach draggable to div
+       attachDraggable(child);
+       
+       eObject.id       = index;
+       eObject.div      = $(child).attr('id');
+       eObject.object   = child;
+       eObject.desc     = " ";
+       eObject.top      = $(child).position().top;
+       eObject.left     = $(child).position().left;
+       eObject.icon     = $('#bubble-' + index).css("background");
+       eObject.interval = $('#interval-' + index).text();
+       eObject.year     = $('#year-' + index).text();
+       eObject.month    = $('#month-' + index).text();
+       eObject.date     = $('#date-' + index).text();
+       eObject.hour     = $('#hour-' + index).text();
+       
+       eventObjects.push(eObject);
+  });
+  
+  mapAllEventsToInterval(LIFESPAN);
+  
+  //now that we have loaded all the saved islands in, lets start the animation
+  startIslands();
+}

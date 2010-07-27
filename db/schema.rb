@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100702223833) do
+ActiveRecord::Schema.define(:version => 20100726210535) do
 
   create_table "data_files", :force => true do |t|
     t.datetime "created_at"
@@ -34,21 +34,24 @@ ActiveRecord::Schema.define(:version => 20100702223833) do
 
   create_table "events", :force => true do |t|
     t.integer  "eventid"
-    t.string   "desc"
     t.string   "userid"
+    t.string   "desc"
+    t.string   "div"
+    t.integer  "top"
+    t.integer  "left"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day"
+    t.integer  "hour"
+    t.integer  "interval"
+    t.string   "icon"
     t.datetime "startdate"
     t.datetime "enddate"
     t.integer  "span"
     t.integer  "location"
-    t.integer  "year"
-    t.integer  "month"
-    t.integer  "day"
     t.integer  "segmentlen"
-    t.string   "icon"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "date_added"
-    t.datetime "date_modified"
   end
 
   create_table "users", :force => true do |t|

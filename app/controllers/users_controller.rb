@@ -162,6 +162,25 @@ class UsersController < ApplicationController
 			end  
 	end
 	
+	def send_feedback
+	  flash[:feedback_notice] = nil
+		flash.keep(:url)
+		
+		if (params[:user][:email].nil?)
+		  print "\n\n\nPRINTING LOGGER ERROR\n\n\n"
+			logger.error("Please enter an email address")
+			flash[:feedback_notice] = "Please enter an email address"
+			render :action => 'contact'
+		else
+			print "DELIVERING EMAIL\n"
+			@name     = params[:user][:name]
+			@email    = params[:user][:email]
+		  @comments = params[:user][:comments]
+			Emailer.deliver_feedback(@name, @email, @comments);
+			redirect_to(:controller => :users, :action => :contact)
+			end  
+	end
+	
 	
 def logout
   reset_session

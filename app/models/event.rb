@@ -4,5 +4,5 @@ class Event < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_associated :eventdatas, :eventmedias
+  #validates_associated :eventdatas, :eventmedias
 end

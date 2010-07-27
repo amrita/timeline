@@ -6,11 +6,11 @@
   <div id = "contact-div" class="contact-box">
     <table id="contacttable" class="clean" cellpadding="6">
        <tr id="contactlabel" class="contact-header"><td colspan="2">Feedback</td></tr>
-       <% form_for :user, :url => {:action => :post_register} do |form| %>
-         <tr><td>Name</td><td><%= form.text_field(:userid) %></td></tr>
+       <% form_for :user, :url => {:action => :send_feedback} do |form| %>
+         <tr><td>Name</td><td><%= form.text_field(:name) %></td></tr>
          <tr><td>Email Address</td><td><%= form.text_field(:email) %></td></tr>
          <tr><td>Comments</td><td><%= form.text_area(:comments) %></td></tr>
-         <tr><td></td>
+         <tr><td style="text-align:left;color:red;" width="100%"><% if flash[:feedback_notice] %><small>* <%= flash[:feedback_notice] %></small><% end %></td>
              <td class="feedback-button"><%= submit_tag "Send Comments", :class => "submit" %></td>
          </tr>
        <% end %>

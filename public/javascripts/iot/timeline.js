@@ -58,7 +58,22 @@ var hoverRight = ["","","/images/icons/slider_year_R_bg.png","/images/icons/slid
 
 /* INITIALIZE 
  ************************************************************************************/
+jQuery.ajaxSetup({ 
+  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+})
+
+jQuery.fn.submitWithAjax = function() {
+  this.submit(function() {
+    $.post($(this).attr("action"), $(this).serialize(), null, "script");
+    return false;
+  });
+  return this;
+};
+
 $(document).ready(function(){
+
+  $("#new_event_row").submitWithAjax();
+  $("#get_event_rows").submitWithAjax();
 
   //Set maxlength of all the textarea (call plugin)
   $().maxlength();
@@ -94,7 +109,7 @@ $(document).ready(function(){
   createIntervalIconDeck();
   
   //create the islands and a drag and drop space
-  createIslands();
+  initializeIslands();
   createIslandDropSpace();
   
   //initialize the event editor and the event editor space

@@ -1,0 +1,24 @@
+<h1>Listing posts</h1>
+
+<% if @events.length > 0 %>
+<table>
+<% @events.each do |event| %>
+  <tr>
+    <td><%= event.eventid %></td>
+    <td><%= event.userid %></td>
+    <td><%= event.desc %></td>
+    <td><%= event.div %></td>
+    <td><%= event.top %></td>
+    <td><%= event.left %></td>
+    <td><%= event.year %></td>
+    <td><%= event.month %></td>
+    <td><%= event.day %></td>
+    <td><%= event.hour %></td>
+    <td><%= event.interval %></td>
+    <td><%= event.icon %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+
+<br />

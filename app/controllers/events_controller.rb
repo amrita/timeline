@@ -26,7 +26,76 @@ class EventsController < ApplicationController
 	  print "\n\n\n\n my terms page in the controller \n\n\n\n"
 	end
 
+  
+	# Add a new event or update a modified event
+	def add_event
+	  flash.keep(:url)
+	
+	  #see if the event already exists
+	  @event = Event.find_by_eventid(params[:event][:eventid])
+		
+		#if it doesnt then create a new event row
+		if (@event.nil?)
+			print "\n\n\n CREATING A NEW EVENT ROW \n\n\n"
+	    @event = Event.new
+		end
+		
+		print "\n\n\n TRYING TO CREATE /UPDATING NEW EVENT ROW \n\n\n"
+		
+		# add/update the event with the form values
+		@event.eventid  = params[:event][:eventid]
+		@event.userid   = session["timeline_id"];
+		@event.desc     = params[:event][:desc]
+		@event.div      = params[:event][:div]
+		@event.top      = params[:event][:top]
+		@event.left     = params[:event][:left]
+		@event.year     = params[:event][:year]
+		@event.month    = params[:event][:month]
+		@event.day      = params[:event][:day]
+		@event.hour     = params[:event][:hour]
+		@event.interval = params[:event][:interval]
+		@event.icon     = params[:event][:icon]
+		
+		@event.created_at    = Time.now
+		@event.updated_at    = Time.now
+		
+		print "\n\n\n AFTER CREATING/UPDATING NEW EVENT ROW \n\n\n"
+	 
+	  if @event.save
+		  respond_to do |format|
+			  format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+			  format.js 
+			end
+	  else
+		  print "\n\n\n SOMETHING SCREWED UP COULD NOT SAVE EVENT \n\n"
+	  end
+	 
+  end
+	
+	
+	# Get all the events for a given user
+	def get_events
+	  @events = Event.find(:all, :conditions => ["userid = ?", session["timeline_id"]])
+	
+		respond_to do |format|
+		  format.html
+			format.js
+		end
 
+  end
+	
+	
+	#update the event description field for a given event for a user
+	def update_event_description
+	
+	end
+	
+	
+	#delete an event for a user
+	def delete_event
+	
+	end
+	
 
   # GET /events
   # GET /events.xml
