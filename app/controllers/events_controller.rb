@@ -100,6 +100,8 @@ class EventsController < ApplicationController
 		  #update its description
 		  @event.desc = params[:event][:update_desc]
 		
+		  print "\n\n\n WE ARE TRYING TO UPDATE IT !!! "  + params[:event][:update_desc] + " \n\n\n "
+		
 		  if @event.save
 			  respond_to do |format|
 			    format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
