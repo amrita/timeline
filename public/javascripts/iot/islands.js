@@ -321,16 +321,15 @@ function updatePositionsForIslands(){
    maxAnimate = Math.ceil(contentWidth / increment);
    //alert("max Animate is " + maxAnimate);
    
-   for (var i = 0; i < maxAnimate ; i++){
+   for (var i = 0; i < maxAnimate && i < islandObjects.length ; i++){
      var newIslandLeft = globalLeft;
      globalLeft       += increment;
-     islandObjects[i].object.css("left", newIslandLeft);
+     $(islandObjects[i].div).css("left", newIslandLeft);
    }
-   
    
    for (var j = maxAnimate; j < islandObjects.length; j++){
      var newIslandLeft = -1 * islandWidth;
-     islandObjects[j].object.css("left", newIslandLeft);
+      $(islandObjects[i].div).css("left", newIslandLeft);
    }
    
    return;

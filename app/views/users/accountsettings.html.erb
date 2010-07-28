@@ -1,0 +1,31 @@
+
+<div class = "content">
+<div id = "account-div" class="common commonalign">
+
+  <!-- ACCOUNT SETTINGS -->
+  <div id = "accountheader"> Update your Account Settings </div>
+  <div id = "accountdiv" class="sign-common" >
+    <table id="accounttable" class="clean" cellpadding="6" >
+       <tr id="accountlabel" class="sign-header"><td colspan="2">Your Account Settings</td></tr>
+       <% form_for :user, :url => {:action => :update_accountsettings} do |form| %>
+        <tr><td>User Id</td><td><%= form.text_field(:userid, :disabled => 'disabled', :style => "background-color:#eeeeee") %></td></tr>
+        <tr><td>Name</td><td><%= form.text_field(:name) %></td></tr>
+        <tr><td>Birth Date</td><td><%= form.text_field(:dob) %></td></tr>
+        <tr><td>Email</td><td><%= form.text_field(:email) %></td></tr>
+        <tr><td>Password</td><td><input name="password" type="password" size="30" /></td></tr>
+        <tr><td>Confirm password</td><td><input name="password_confirmation" type="password" size="30" /></td></tr>
+        <tr><td style="text-align:left;color:red;" width="100%"><% if flash[:signup_notice] %><small>* <%= flash[:signup_notice] %></small><% end %></td>
+            <td class="sign-buttons"><%= submit_tag "Update My Settings", :class => "submit" %></td>
+        </tr>
+      <% end %>
+     </table> 
+  </div>
+  
+</div>
+</div>
+
+<% content_for :javascript do %>
+    
+<% end %>
+
+<!-- onclick="window.location='/users/logout'; return false;" /> -->

@@ -113,6 +113,10 @@
 
 /* THE SCROLL SPACE
 **************************************************/
+#timeline-content{
+ height: 710px;
+}
+
 #events{
   position: absolute;
 }
@@ -130,16 +134,15 @@
   width: 950px;
   height: 6px;
   margin: 0 auto;
-  margin-top:  5px;
-  background: #167631;
+  background: #F6E03F;
   position: relative;
 }
 
 .ui-slider .ui-slider-handle { 
   background: url('../images/dragMe.png');
-  top: -3.4em;
-  width:  2.7em; 
-  height: 3.2em;
+  top: -4.0em;
+  width:  3.6em; 
+  height: 4.2em;
 }
 
 .arrows{
@@ -234,8 +237,8 @@ table.partstable{
 **************************************************/
 #intervals{
   width:  960px;
-  height:  70px;
-  margin-top: -40px;
+  height:  100px;
+  margin-top: -60px;
 }
 
 .intervalicon{

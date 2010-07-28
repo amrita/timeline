@@ -12,6 +12,23 @@ class UsersController < ApplicationController
 	  print "\n\n\n\n my contact page in the controller \n\n\n\n"
 	end
 
+
+  def logout
+    reset_session
+	  redirect_to("/")  
+  end
+	
+	
+	def accountsettings
+    @user = User.find_by_userid(session['timeline_id'])
+		
+		respond_to do |format|
+      format.html # index.html.erb
+	  end
+		
+  end
+	
+	
   def post_register
 		
 		# WARNING
@@ -125,6 +142,79 @@ class UsersController < ApplicationController
 		end  
 	end
 	
+	
+	
+  def update_accountsettings
+		
+		# WARNING
+		# This logic is wholy dependent on the names of the buttons on the signin
+		# page.  If you change the button text, you must update the strings here
+		
+	  @user = User.find_by_userid(session['timeline_id'])
+	  
+		if (@user.nil?)
+			print "USER IS NIL\n"
+			reset_session
+			logger.error("Please enter User id")
+			flash[:signin_notice] = "Please enter User id"
+			render :action => 'accountsettings'
+		end
+		
+		@user.userid = session['timeline_id']
+		@user.name   = params[:user][:name]
+		@user.dob    = params[:user][:dob]
+		@user.email  = params[:user][:email]
+		@password    = params[:password]
+		@password_confirmation = params[:password_confirmation]
+
+		@user.date_added = Time.now
+		@user.date_modified = Time.now
+				
+		
+		flash[:signup_notice] = nil
+		#flash[:signin_notice] = nil
+		flash.keep(:url)
+		
+		
+		if @user.name.length < 1
+			logger.error("Name can't be blank")
+			flash[:signup_notice] = "Name can't be blank"
+			render(:action => :signin)
+			return
+		elsif @user.email.length < 1
+			logger.error("Email can't be blank")
+			flash[:signup_notice] = "Email can't be blank"
+			render(:action => :signin)
+			return
+		end
+		
+		if (@password != @password_confirmation)
+			logger.error("Confirmation must match password")
+			flash[:signup_notice] = "Confirmation must match password"
+			render(:action => :signin)
+		elsif (@password.length < 6)
+			logger.error("Password must contain at least six characters")
+			flash[:signup_notice] = "Password must contain six or more characters"
+			render(:action => :signin)
+		else
+			@user.password = Digest::SHA1.hexdigest(@password)
+			if @user.save
+				session["timeline_id"] = @user[:userid];
+				if flash[:url]
+					redirect_to(flash[:url])	    	
+				else
+					redirect_to("/events/timeline/#{@user[:id]}")	    	
+				end
+			else
+				render(:action => :update_accountsettings)
+			end
+		end	  
+	
+	end
+
+	
+	
+	
 	def forgot_password
 	  flash[:signup_notice] = nil
 		flash[:signin_notice] = nil
@@ -181,11 +271,6 @@ class UsersController < ApplicationController
 			end  
 	end
 	
-	
-def logout
-  reset_session
-	redirect_to("/")  
-end
 	
   # GET /users
   # GET /users.xml

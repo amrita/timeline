@@ -51,12 +51,12 @@ var first_time = true;
 /* ICONS
 *************************************************/
 //year, month, week, day
-var intervalLeft   = ["","","/images/icons/slider_year_L.png","/images/icons/slider_month_L.png","/images/icons/slider_week_L.png","/images/icons/slider_day_L.png"];
-var intervalRight  = ["","","/images/icons/slider_year_R.png","/images/icons/slider_month_R.png","/images/icons/slider_week_R.png","/images/icons/slider_day_R.png"];
+var intervalLeft   = ["","/images/icons/slider_life_L.png","/images/icons/slider_year_L.png","/images/icons/slider_month_L.png","/images/icons/slider_week_L.png","/images/icons/slider_day_L.png"];
+var intervalRight  = ["","/images/icons/slider_life_R.png","/images/icons/slider_year_R.png","/images/icons/slider_month_R.png","/images/icons/slider_week_R.png","/images/icons/slider_day_R.png"];
 
 //to display on hover
-var hoverLeft  = ["","","/images/icons/slider_year_L_bg.png","/images/icons/slider_month_L_bg.png","/images/icons/slider_week_L_bg.png","/images/icons/slider_day_L_bg.png"];
-var hoverRight = ["","","/images/icons/slider_year_R_bg.png","/images/icons/slider_month_R_bg.png","/images/icons/slider_week_R_bg.png","/images/icons/slider_day_R_bg.png"];
+var hoverLeft  = ["","/images/icons/slider_life_L_bg.png","/images/icons/slider_year_L_bg.png","/images/icons/slider_month_L_bg.png","/images/icons/slider_week_L_bg.png","/images/icons/slider_day_L_bg.png"];
+var hoverRight = ["","/images/icons/slider_life_R_bg.png","/images/icons/slider_year_R_bg.png","/images/icons/slider_month_R_bg.png","/images/icons/slider_week_R_bg.png","/images/icons/slider_day_R_bg.png"];
 
 /* INITIALIZE 
  ************************************************************************************/
