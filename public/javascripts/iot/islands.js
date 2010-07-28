@@ -97,7 +97,7 @@ var maxScreenWidth;
 var animationLoopID;
 var addIslandLoopID;
 
-var MAXISLANDS = 10;
+var MAXISLANDS = 1000;
 var RANDOMLEFT = false;
 
 // Global Islands Array
