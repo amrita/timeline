@@ -46,6 +46,8 @@ var windowWidth    = TIMELINELEN; //the width of the window
 var contentWidth   = TIMELINELEN; //width of the timeline
 var timelinePalette  = ["#BFD73B","#BFD73B","#F05F8A","#F15F2D","#AFDFE5","#FFE73B"];
 
+var first_time = true;
+
 /* ICONS
 *************************************************/
 //year, month, week, day
@@ -70,10 +72,23 @@ jQuery.fn.submitWithAjax = function() {
   return this;
 };
 
-$(document).ready(function(){
+$(window).load(function(){
+  $("#loader").dialog('close');
+});
 
+$(document).ready(function(){
+ 
+ $('#loader').dialog({
+   modal: 'true',
+   width:  300,
+   height: 100,
+   resizable: false
+ });
+  
+ 
+  //set up ajax
   $("#new_event_row").submitWithAjax();
-  $("#get_event_rows").submitWithAjax();
+  $("#get_event_rows, #update_event_desc, #delete_event_row").submitWithAjax();
 
   //Set maxlength of all the textarea (call plugin)
   $().maxlength();
@@ -82,7 +97,7 @@ $(document).ready(function(){
   resizeWindows();
     
   //compute the start and end dates
-  birthDate   = new Date(birthYear,0,1); /********* GLOBAL VAR SETUP *********/
+  birthDate   = new Date(birthYear,0,1); //////// GLOBAL VAR SETUP ////////////
   startDate   = new Date(birthYear,0,1);
   endDate     = new Date((new Date).getFullYear(),nMonths - 1, daysofmonth[nMonths - 1]);
   
@@ -95,7 +110,8 @@ $(document).ready(function(){
   prevInterval    = LIFESPAN;
   currentInterval = LIFESPAN;
   createTimelines();
-
+  
+  
   $('#clickme')
 			.button()
 			.click(function() {
@@ -105,18 +121,22 @@ $(document).ready(function(){
 			
   $("#toggle").button().click(eventViewOpenClickHandler);
 
+  
   //create the interval icon deck
   createIntervalIconDeck();
   
   //create the islands and a drag and drop space
   initializeIslands();
   createIslandDropSpace();
-  
+   
   //initialize the event editor and the event editor space
   initializeEditLayout();
   
   //initialize the event viewer and the event viewer space
   initializeEventViewer();
+ 
+  $('#get_event_rows').submit();
+  
 });
 
 function resizeWindows(){
@@ -259,6 +279,7 @@ function createTimelines(){
   
   //show the life time timeline 
   updateInterval(LIFESPAN);
+  first_time = false;
 }
  
 function addLife(){
@@ -302,9 +323,9 @@ function updateInterval(cInterval){
   //update the content window sizes  
   updateWindowSize($(cObject).width());
   
-  //populate window with static islands
-  //populateWithIslands($(cObject).width());
-  
+  //reset the contentWidth global to this width
+  contentWidth =  $(cObject).width();
+
   //update the slider initialize the slider max value, and then set 
   //slider interval to compute the correct zooming points
   initializeContentSlider(intervalObjects[cInterval - 1].partsinterval, intervalObjects[cInterval - 1].parts);
@@ -316,6 +337,11 @@ function updateInterval(cInterval){
   //set ze globals 
   currentPartLen =  intervalObjects[cInterval - 1].partlen; /********* GLOBAL VAR SETUP *********/
 
+  //update the islands
+  if (!first_time){
+    updatePositionsForIslands();
+  }
+  
   //trying to map ze events
   mapAllEventsToInterval(cInterval);
   

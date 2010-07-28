@@ -1,5 +1,5 @@
 /*GLOBAL */
-var BUBBLEWIDTH = 50;  //all the icons are 50 pixel squares
+var BUBBLEWIDTH = 150;  //the bubble container is 150 px wide
 
 //zoom factors
 var ZOOM100     = 50;

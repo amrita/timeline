@@ -15,7 +15,6 @@ function initializeEventViewer(){
   
   createEventViewCarousel();
    
-  $("#eventview-back").click(eventViewCloseClickHandler);
 }
 /**********************************************************/
 

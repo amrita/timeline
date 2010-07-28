@@ -1,5 +1,7 @@
-
-  <button id="save-event">Save My Events </button>
+ 
+  <div id="loader" class="commontreb">Please wait while your isles load !</div>
+  <div id="last-saved" class="commontreb"></div>
+  
   <div id="events" class="commonalign"></div>
   
   <div id="main">
@@ -7,8 +9,6 @@
       <div id="islands">
       </div>
       <div id="droppable">
-      </div>
-      <div id="content-holder">
       </div>
     </div>
     <table id="slider-elements" cellpadding="10"><tr>
@@ -25,13 +25,13 @@
   <div id="intervals" class="common commonalign"></div>
   
   <!-- Adding the event post form here -->
-  <div>
+  <div id="forms" style="display:none">
     
     <table>
      <% form_for :event, :url => {:action => :get_events}, :html => {:id => 'get_event_rows' } do |form| %>
      <tr><td class="sign-buttons"><%= submit_tag "Get Events", :class => "submit", :id=> "getEventsButton" %></td></tr>
      <% end %>
-    </table>
+   </table>
     
     <table id="eventrow" class="clean" cellpadding="6">
        <% form_for :event, :url => {:action => :add_event}, :html => {:id => 'new_event_row' } do |form| %>

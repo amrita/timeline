@@ -5,13 +5,14 @@ $("#islands").append("<%= escape_javascript(render(:partial => 'island', :collec
 setUpEventObjects();
 
 function setUpEventObjects(){
+  
   // Get some globals
   islandWidth = parseInt($(".bubble-container").css("width"));
 
   $('#islands').children().each(function() {
        var child   = $(this);
-       var eObject  = new eventObject();
-       var index = parseInt($(child).attr('id').replace(/\D/g,''));
+       var eObject = new eventObject();
+       var index   = parseInt($(child).attr('id').replace(/\D/g,''));
        
        //attach draggable to div
        attachDraggable(child);
@@ -19,7 +20,7 @@ function setUpEventObjects(){
        eObject.id       = index;
        eObject.div      = $(child).attr('id');
        eObject.object   = child;
-       eObject.desc     = " ";
+       eObject.desc     = $('#btext-' + index).val();
        eObject.top      = $(child).position().top;
        eObject.left     = $(child).position().left;
        eObject.icon     = $('#bubble-' + index).css("background");
@@ -34,6 +35,13 @@ function setUpEventObjects(){
   
   mapAllEventsToInterval(LIFESPAN);
   
+  //populate the entire space with islands 
+  populateWithIslands();
+  
+  //update the positions
+  updatePositionsForIslands();
+  
   //now that we have loaded all the saved islands in, lets start the animation
   startIslands();
+  
 }

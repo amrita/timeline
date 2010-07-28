@@ -87,13 +87,52 @@ class EventsController < ApplicationController
 	
 	#update the event description field for a given event for a user
 	def update_event_description
-	
+	  flash.keep(:url)
+		
+		#find the event 
+	  @event      = Event.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:update_eventid]])
+	  
+		
+		#if it doesnt find it 
+		if (@event.nil?)
+			print "\n\n\n WE COULD NOT FIND AN EVENT TO UPDATE \n\n\n"
+		else
+		  #update its description
+		  @event.desc = params[:event][:update_desc]
+		
+		  if @event.save
+			  respond_to do |format|
+			    format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+			    format.js 
+			  end
+	    else
+		    print "\n\n\n SOMETHING SCREWED UP COULD NOT UPDATE THE EVENT DESC \n\n"
+	    end
+	  end
+		
 	end
 	
 	
 	#delete an event for a user
 	def delete_event
 	
+		#find the event 
+	  @event = Event.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:delete_eventid]])
+    
+		#if it doesnt find it 
+		if (@event.nil?)
+			print "\n\n\n WE COULD NOT FIND AN EVENT TO UPDATE \n\n\n"
+		else
+		  #delete it
+		  @event.destroy
+		
+			#redirect
+			respond_to do |format|
+      format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+      format.js
+    end
+	  end
+
 	end
 	
 

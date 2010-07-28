@@ -3,7 +3,8 @@
    CATEGORY. WE WILL PICK A RANDOM ICON FROM THIS, AND ASSOCIATE AN 
    ICON OBJECT WITH EACH EVENT OBJECT TO ALLOW FOR SOME FILTERING 
  *******************************************************************/
-var islandImagePath = "/images/floatingicons/";
+//var islandImagePath = "/images/floatingiconsgif/";
+var islandImagePath = "/images/floatingiconspng/";
 //var categories      = ["milestone","mood"];
 
 var islandImages = ["blox.png",
@@ -35,6 +36,38 @@ var moodImages   = ["blah.png",
                     "unhappy.png",
                     "wink.png"
                    ];
+                   
+/*
+var islandImages = ["blox.gif",
+				    "cap.gif",				
+				    "cellphone.gif",
+                    "donut.gif",
+                    "exclamation.gif",             
+                    "gift.gif",
+                    "mail.gif",                    
+                    "milk.gif",
+                    "oj.gif",
+                    "pc.gif",
+                    "pencil.gif",
+                    "rain.gif",
+                    "safetycone.gif",
+                    "school.gif",
+                    "starjump.gif",
+                    "truck.gif",
+                    "xmas.gif"             
+                   ];   
+                                      
+var moodImages   = ["blah.gif",
+                    "elated.gif",
+                    "good.gif",
+                    "hee.gif",
+                    "neh.gif",
+                    "sad.gif",
+                    "sleepy.gif",
+                    "unhappy.gif",
+                    "wink.gif"
+                   ];
+*/
 
 var islandIcons = new Array();                 
 function islandIcon(imagepath, category){
@@ -60,8 +93,12 @@ function addIslandIcons(){
 ****************************************************************************/
 var islandWidth;
 var islandScreenWidth;
+var maxScreenWidth;
 var animationLoopID;
 var addIslandLoopID;
+
+var MAXISLANDS = 1000;
+var RANDOMLEFT = false;
 
 // Global Islands Array
 var islandObjects = new Array();
@@ -108,10 +145,10 @@ function startIslands(){
   animationLoopID = setInterval("animationLoop()", 50);
 
   // This is the timer for adding new bubbles
-  addIslandLoopID = setInterval("addIsland()", 10000);
+  addIslandLoopID = setInterval("addIsland()", 20000);
 	
   // Go ahead and add the first bubble right now
-  addIsland();
+  //addIsland();
 }
 
 function attachDraggable(island){
@@ -176,44 +213,27 @@ function textareaFocusOutHandler(event){
 /* ISLAND CREATION AND ANIMATION CODE 
  ***************************************************************************/
 /* find a way to pre-populate the content space */
-/*
-function populateWithIslands(contentWidth){
-  alert("content width is " + contentWidth); 
-  
-  //stop animation loop
-  stopAnimationLoop();
-  
+function populateWithIslands(){
+ 
   //clear the array
   islandObjects = [];
   
-  //compute total islands needed
-  var nIslands    = Math.floor(contentWidth / 250);
+  // set some globals // global defined in timelinemapping.js 
+  islandWidth = BUBBLEWIDTH; 
   
-  addIsland();
-  // Get some globals
-  islandWidth = parseInt($("#island-0").css("width"));
-  
-  var increment   = 250 + islandWidth;
-  var currentLeft = increment;
-  //shift left
-  $(islandObjects[islandObjects.length - 1].object).css("left",currentLeft);
-  
-  for (var i = 0; i < (nIslands - 5); i++){
-    currentLeft += increment;
+  for (var i = 0; i < MAXISLANDS; i++){
     //shift left
-    $(islandObjects[islandObjects.length - 1].object).css("left",currentLeft);
+    addIsland();
   }
-  
-  //start the animation loop
-  //startAnimationLoop(); 
 }
-*/ 
+/***************************************************************************/
 
 function addIsland()
 {
 
 	// Figure out the island's id number
 	var idNumber = getId(); 
+	//alert("id is " + idNumber);
 	
 	// This should be replaced by a function that gets a random background image 
 	var randomIcon = getRandomNumber(0, islandIcons.length);
@@ -228,7 +248,7 @@ function addIsland()
 	initializePositionForIsland(island);
 	
 	// Add the island to the islands array
-	var iObject    = new eventObject();
+	var iObject      = new eventObject();
 	
 	iObject.id       = idNumber;
 	iObject.div      = "#island-" + idNumber;
@@ -287,6 +307,34 @@ function initializePositionForIsland(island)
 	island.css("top", newIslandTop);
 	island.css("left", newIslandLeft); 
 } 
+
+var increment  = 0;
+var globalLeft = 0;
+var maxAnimate = 0;
+function updatePositionsForIslands(){
+   
+   increment  = BUBBLEWIDTH + 100;
+   globalLeft = BUBBLEWIDTH;
+  
+   //alert("in update positions for islands " + contentWidth);
+   //find max number of islands to animate
+   maxAnimate = Math.ceil(contentWidth / increment);
+   //alert("max Animate is " + maxAnimate);
+   
+   for (var i = 0; i < maxAnimate ; i++){
+     var newIslandLeft = globalLeft;
+     globalLeft       += increment;
+     islandObjects[i].object.css("left", newIslandLeft);
+   }
+   
+   
+   for (var j = maxAnimate; j < islandObjects.length; j++){
+     var newIslandLeft = -1 * islandWidth;
+     islandObjects[j].object.css("left", newIslandLeft);
+   }
+   
+   return;
+}
 /**************************************************************************/
 
 
@@ -294,8 +342,10 @@ function initializePositionForIsland(island)
 *************************************************************************/
 function animationLoop()
 {	
+    //alert("entering animation loop " + islandObjects.length);
+    
 	// Move all the islands
-	for (var i = 0; i < islandObjects.length ; i++){
+	for (var i = 0; i < maxAnimate ; i++){
       // Access the island at the current index
 	  var island       = islandObjects[i].object;
 	
@@ -312,6 +362,7 @@ function animationLoop()
 
 	}
 }
+/*************************************************************************/
 
 
 function stopAnimationLoop(){
@@ -448,7 +499,7 @@ function getRandomNumber(minVal,maxVal)
  */
 var counter = 0;
 function getId(){
-  counter = Math.round(new Date().getTime() / 1000.0); //get the epoch time in seconds
+  counter = Math.round(new Date().getTime()); //get the epoch time in seconds
   return counter;
 }
 
@@ -475,17 +526,26 @@ function  addUpdateEventFormHandler(index){
   $('#event_hour').val(eventObjects[index].hour);
   $('#event_interval').val(eventObjects[index].interval);
   $('#event_icon').val(eventObjects[index].icon);
+  
+  //call the form submit
+  $("#new_event_row").submit();
 }
 
 function updateEventDescriptionFormHandler(index){
    //lets update the form from here
    $('#event_update_eventid').val(eventObjects[index].id);
    $('#event_update_desc').val(eventObjects[index].desc);
+   
+   //call the form submit
+   $("#update_event_desc").submit();
 }
  
 function deleteEventFormHandler(id){
   //lets update the form from here
    $('#event_delete_eventid').val(id);
+   
+   //call the form submit
+   $("#delete_event_row").submit();
 }
 
 function getEventsFormHandler(){

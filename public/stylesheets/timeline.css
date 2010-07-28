@@ -1,5 +1,22 @@
 /* THE USER SPACE
 **************************************************/
+#last-saved{
+  margin-top:   25px;
+  margin-left:  20px;
+  position:  absolute;
+  color:      #38A4DD;
+}
+
+#loader{
+  width:  100px;
+  height: 100px;
+  text-align: center;
+}
+
+#loader .ui-dialog-titlebar{ 
+  display:none; 
+}
+
 #userinfo{
 }
 
@@ -113,7 +130,7 @@
   width: 950px;
   height: 6px;
   margin: 0 auto;
-  margin-top: 10px;
+  margin-top:  5px;
   background: #167631;
   position: relative;
 }
@@ -218,7 +235,7 @@ table.partstable{
 #intervals{
   width:  960px;
   height:  70px;
-  margin-top: -30px;
+  margin-top: -40px;
 }
 
 .intervalicon{
@@ -227,7 +244,7 @@ table.partstable{
 }
 
 .levels{
-  margin-top:   10px;
+  margin-top:    5px;
   position: absolute;
   border: solid #F6E03F;
   -webkit-border-radius: 8px;
