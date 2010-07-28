@@ -1,10 +1,12 @@
 /* THE USER SPACE
 **************************************************/
 #last-saved{
-  margin-top:   25px;
+  margin-top:    -15px;
   margin-left:  20px;
   position:  absolute;
   color:      #38A4DD;
+  z-index:    200;
+  font-weight: bold;
 }
 
 #loader{
