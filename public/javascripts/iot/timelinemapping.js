@@ -10,8 +10,9 @@ var ZOOM10      = 5;
 
 var islandDate = new Date();
 
-var islandObjects = new Array();
-var eventObjects  = new Array();
+var islandObjects        = new Array();
+var islandIconBarObjects = new Array();
+var eventObjects         = new Array();
 
 function eventObject(){
   this.id         = 0;
@@ -164,21 +165,32 @@ function mapTimestampToInterval(index, cInterval){
 /* COPY THE ISLAND OBJECT OVER TO THE EVENTS ARRAY 
  *************************************************************************/
 function deepCopyEventObject(island){
-  var index   =  getEventObject(islandObjects, island);
+  var index;
+  var islandArray;
+  
+  //look for the object in the global array
+  index       =  getEventObject(islandObjects, island);
+  islandArray = islandObjects;
+  
+  //couldn't find it .. look in the icon bar
+  if (index == -1){
+    index       =  getEventObject(islandIconBarObjects, island);
+    islandArray = islandIconBarObjects;
+  }
+  
   if (index != -1){
     var newevent = new eventObject();
-    newevent.id         = islandObjects[index].id;
-    newevent.div        = islandObjects[index].div;
-    newevent.object     = islandObjects[index].object;
-    newevent.top        = islandObjects[index].top; //object top
-    newevent.left       = islandObjects[index].left; //object left
-    newevent.icon       = islandObjects[index].icon; //object left
+    newevent.id         = islandArray[index].id;
+    newevent.div        = islandArray[index].div;
+    newevent.object     = islandArray[index].object;
+    newevent.top        = islandArray[index].top; //object top
+    newevent.left       = islandArray[index].left; //object left
+    newevent.icon       = islandArray[index].icon; //object left
     eventObjects.push(newevent);
     
     //hmm can we remove this element from islandObjects without screwing
     //it all up ?
-    islandObjects.splice(index,1);
-    //alert("island objects length " + islandObjects.length);
+    islandArray.splice(index,1);
     
     return eventObjects.length - 1; //index is always length - 1
   }

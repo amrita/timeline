@@ -85,13 +85,23 @@ $(document).ready(function(){
    resizable: false
  });
   
+ //helper stuff
+ $('#helper-crab').click(function (){
+   $("#help-screen").css("display","inline");
+ });
+ 
+ $('#close-help').click(function (){
+   $("#help-screen").css("display","none");
+ });
  
   //set up ajax
   $("#new_event_row").submitWithAjax();
   $("#get_event_rows, #update_event_desc, #delete_event_row").submitWithAjax();
+  $('#update_event_notes_sketch, #update_video_details, #get_eventcontent_rows, #upload_media_details').submitWithAjax();
 
   //Set maxlength of all the textarea (call plugin)
-  $().maxlength();
+  //broken needs fixing
+  //$('.bubbletext').maxlength(55);
 
   //resize the windows
   resizeWindows();
@@ -145,6 +155,7 @@ function resizeWindows(){
   windowWidth = $(window).width() - offset;
   
   $('#main').width(windowWidth);
+  $('#island-scroll').width(windowWidth);
   $('#content-scroll').width(windowWidth);
   $('#islands').width(windowWidth);
   $('#droppable').width(windowWidth);
@@ -731,6 +742,7 @@ function handleSliderArrowClicked(event, ui){
  ****************************************************************************/
  
 /* restrict text area length */
+/*
 jQuery.fn.maxlength = function(){
     $("textarea[@maxlength]").keypress(function(event){
         var key = event.which;
@@ -744,6 +756,8 @@ jQuery.fn.maxlength = function(){
         }
     });
 }
+*/
+
 /* HELPER FUNCTIONS
  ****************************************************************************/
 														   

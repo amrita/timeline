@@ -1,10 +1,17 @@
 <div id="timeline-content"> 
   <div id="loader" class="commontreb">Please wait while your isles load !</div>
   <div id="last-saved" class="commontreb"></div>
+  <div id="help-screen"><div id="close-help"></div></div>
+  <div id="helper-crab"></div>
   
   <div id="events" class="commonalign"></div>
   
   <div id="main">
+    <!--
+    <div id="island-scroll">
+    </div>
+    <div id="island-iconbar-slider"></div>
+    -->
     <div id="content-scroll">
       <div id="islands">
       </div>
@@ -17,6 +24,9 @@
       <td><div id="next" class="arrows"></div></td>
     </table></tr>
     <div id="deleteevent-alert"><p><span class="ui-icon ui-icon-alert" style="float:left; margin: 0 7px 20px 0;"></span>Are you sure you want to delete this isle ?</p></div>
+  </div>
+  <div id="island-helper">
+	<!-- this is where the helper gets appended for temporary use -->
   </div>
 
   <div id="intervals" class="common commonalign"></div>
@@ -65,12 +75,46 @@
      <% end %>
      </table>
      
+     <!-- Adding the Media form here -->
+   <table>
+     <% form_for :event, :url => {:action => :update_event_notes_sketch}, :html => {:id => 'update_event_notes_sketch' } do |form| %>
+     <tr><td>eventid</td><td><%= form.text_field(:eventnotes_eventid) %></td></tr>
+     <tr><td>eventnotes</td><td><%= form.text_field(:eventnotes) %></td></tr>
+     <tr><td>eventsketch</td><td><%= form.text_area(:eventsketch) %></td></tr>
+     <tr><td class="sign-buttons"><%= submit_tag "Update event details", :class => "submit", :id=> "updateEventDetailsButton" %></td></tr>
+     <% end %>
+  </table>
+  
+  <table>
+     <% form_for :event, :url => {:action => :update_video_details}, :html => {:id => 'update_video_details' } do |form| %>
+     <tr><td>eventid</td><td><%= form.text_field(:eventvideo_eventid) %></td></tr>
+     <tr><td>eventvideo</td><td><%= form.text_field(:eventvideo) %></td></tr>
+     <tr><td>eventvideodesc</td><td><%= form.text_field(:eventvideodesc) %></td></tr>
+     <tr><td class="sign-buttons"><%= submit_tag "Update video details", :class => "submit", :id=> "updateEventVideoDetailsButton" %></td></tr>
+     <% end %>
+  </table>
+  
+  <table>
+     <% form_for :event, :url => {:action => :upload_media_details}, :html => {:multipart => true} do |form| %>
+     <tr><td>eventid</td><td><%= form.text_field(:eventmedia_eventid) %></td></tr>
+     <tr><td>eventmediafile</td><td><%= form.file_field(:eventmediafile) %></td></tr>
+     <tr><td>eventmediadesc</td><td><%= form.text_field(:eventmediadesc) %></td></tr>
+     <tr><td class="sign-buttons"><%= submit_tag "Upload media details", :class => "submit", :id=> "updateEventMediaDetailsButton" %></td></tr>
+     <% end %>
+  </table>
+  
+  <table>
+     <% form_for :event, :url => {:action => :get_eventcontent}, :html => {:id => 'get_eventcontent_rows' } do |form| %>
+     <tr><td>eventid</td><td><%= form.text_field(:get_eventid) %></td></tr>
+     <tr><td class="sign-buttons"><%= submit_tag "Get Events", :class => "submit", :id=> "getEventsButton" %></td></tr>
+     <% end %>
+   </table>
+
+     
   </div>
 </div>
 
-  <!-- Adding the Media form here -->
   
-
 <% content_for :javascript do %>
     
 <% end %>

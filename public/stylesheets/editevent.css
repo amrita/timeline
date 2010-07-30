@@ -127,6 +127,7 @@ label{
   background-color: #eeeeee;
 }
 
+
 .vidbox:hover, .imgbox:hover{
   background-color: #abdff4;
 }
@@ -134,6 +135,7 @@ label{
 .vidbox:focus, .imgbox:focus{
   background-color: #abdff4;
 }
+
 
 .vidtext, .imgtext{ 
   width:  380px;

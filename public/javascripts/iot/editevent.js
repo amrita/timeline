@@ -1,3 +1,5 @@
+/*GLOBAL */
+var eventId; //event id that is currently being edited
 
 /* INITIALIZE THE EVENT EDIT LAYOUT SPACE 
  **********************************************************************/
@@ -21,7 +23,8 @@ function initializeEditLayout(){
   addImageBox();
   $("#addimg").button().click(addImageBox);
   
-  itemBoxCloseHandler();
+  imgBoxCloseHandler();
+  vidBoxCloseHandler();
 
 }
 /********************************************************************************/
@@ -47,7 +50,7 @@ function createEditViewLayout(){
   //create the event notepad to write into
   var nstring = new Array();
   nstring.push('<div id="eventtext">');
-  nstring.push('<textarea id="etextarea" rows="16" cols="25"></textarea>');
+  nstring.push('<textarea id="etextarea" rows="16" cols="24" class="commontreb"></textarea>');
   nstring.push('</div>');
 
   var nwritestring = nstring.join('');
@@ -76,9 +79,7 @@ function createTabs(object){
   string.push('</ul>');
   
   string.push('<div id="tabs-1">');
-  string.push('<object id="svg-edit" type="text/html" data="/javascripts/svg-edit-v2.2/editor/svg-editor.html" width="500" height="360">'); 
-  string.push('<p>Your browser does not support svg-edit...</p>'); 
-  string.push('</object>'); 
+  string.push('<iframe id="svg-edit" src="/javascripts/svg-edit-v2.2/editor/svg-editor.html" width="500" height="360"><p>Your browser does not support iframes.</p></iframe>'); 
   string.push('</div>');
  
   string.push('<div id="tabs-2">');
@@ -119,10 +120,7 @@ function createEditDialog(){
 			title: 'ADD FUN STUFF TO YOUR ISLES',
 			resizable: false,
 			buttons: {
-				Save: function() {
-				  //open view dialog box. close edit dialog box
-				  $(this).dialog('close');
-				},
+				Save: saveEditDialogInformation,
 				Cancel: function() {
 				    //close both dialogs here 
 					$(this).dialog('close');
@@ -146,6 +144,51 @@ function createAlertDialog(){
                                                     CREATING THE EDIT DIALOG */  
 
 
+/*SAVING DIALOG INFORMATION
+ *****************************************************************************/
+ function saveEditDialogInformation(event, ui){
+   
+   //lets get the notes first
+   var notes  = $('#etextarea').val();
+   
+   //now the drawing
+   //var sketch = getSvgEditImage('svg-edit','svg-edit-textarea','');
+   
+   //addNotesEventFormHandler(notes, sketch);
+   addNotesEventFormHandler(notes);
+   
+   //now the videos
+   $('#videospace').children().each(function() {
+        var $child   = $(this);    
+        var vidurlid   = $child.find("input[name='embedvidurl']");
+        var vidurl     = $(vidurlid).val();
+        
+        var viddescid   = $child.find("input[name='viddesc']");
+        var viddesc     = $(viddescid).val();
+        
+        updateEventVideoHandler(vidurl, viddesc)
+        
+   });
+   
+   //now the images
+   $('#imagespace').children().each(function() {
+        var $child     = $(this);    
+        var imgfileid   = $child.find("input[name='imgfile']");
+        var imgfile     = $(imgfileid).val();
+        
+        var imgdescid   = $child.find("input[name='imgdesc']");
+        var imgdesc     = $(imgdescid).val();
+        
+        updateEventMediaHandler(imgfile, imgdesc);
+        
+   });
+   
+   //close edit dialog box
+   $(this).dialog('close');
+ }
+ 
+ 
+
 /* CREATING THE IMAGE AND VIDEO BOXES
 ******************************************************************************/  
 var openCounters = new Array();
@@ -157,8 +200,8 @@ function addVideoBox(){
   
   html  = "<div id='vidtextboxes-" + vidcounter + "' class='vidbox'>";
   html += '<a href = "link/to/trash/script/when/we/have/js/off" title="Delete Media" class="ui-icon ui-icon-close" style="float:right;">Delete Media</a>';
-  html += "&nbsp Embed Video <input type='text' class='vidtext'/><br/>";
-  html += "&nbsp Description &nbsp <input type='text' class='vidtext'/>";
+  html += "&nbsp Embed Video <input type='text' class='vidtext' name='embedvidurl' /><br/>";
+  html += "&nbsp Description &nbsp <input type='text' class='vidtext' name='viddesc' />";
   html += "</div>";
   
   $("#videospace").append(html);
@@ -168,19 +211,34 @@ function addVideoBox(){
 var imgcounter = 0;
 function addImageBox(){
   var html = "";
-  
+ 
   html  = "<div id='imgtextboxes-" + imgcounter + "' class='imgbox'>";
-  html += '<a href = "link/to/trash/script/when/we/have/js/off" title="Delete Media" class="ui-icon ui-icon-close" style="float:right;">Delete Media</a>';
-  html += "&nbsp Choose File <input type='file' class='imgfilebox'/><br/>";
-  html += "&nbsp Description <input type='text' id='imgtext-" + imgcounter + "' class='imgtext'/>";
+  html += '<a href = "#" title="Delete Media" class="ui-icon ui-icon-close closeimgbox" style="float:right;">Delete Media</a>';
+  html += "&nbsp Choose File <input type='file' class='imgfilebox' name='imgfile'/><br/>";
+  html += "&nbsp Description <input type='text' id='imgtext-" + imgcounter + "' class='imgtext' name = 'imgdesc'/>";
   html += "</div>";
   
   $("#imagespace").append(html);
   imgcounter++;
 }
 
-function itemBoxCloseHandler(){
-  $('.imgbox, .vidbox').live ('click', function(ev) {
+function imgBoxCloseHandler(){
+ $('a.closeimgbox').live ('click', function(ev) {
+
+   //alert("parent is " + $(this).parent().attr("id"));
+   var $item   = $(this).parent();
+   var $target = $(ev.target);
+   
+   //try to remove the parent
+   if ($target.is('a.ui-icon-close')){  //close box
+      deleteBox($item); 
+    }
+  
+  });
+}
+
+function vidBoxCloseHandler(){
+ $('.vidbox').live ('click', function(ev) {
     var $item   = $(this);
     var $target = $(ev.target);
   
@@ -201,4 +259,78 @@ function deleteBox($item){
                          "Cancel": function() { $(this).dialog('close'); } } );
    $("#alertdialog").dialog('open');
 }
-/*******************************************************************************/  
+/*******************************************************************************/ 
+
+
+/*IFRAME STUFF
+ ****************************************************************************/ 
+function getSvgEditImage(iframeid,iframefield,target){
+  var mmspobj = document.getElementById(iframeid);
+  if (mmspobj.tagName=='IFRAME'){
+   
+    var savebutton = window.frames[iframeid].document.getElementById('tool_save');
+    //alert(savebutton);
+    
+    if (savebutton == null) alert("we screwed up");
+    //alert("trying to click");
+    //savebutton.onclick();
+   // alert(window.frames[iframeid]);
+    
+ //   alert(window.frames[iframeid].document.getElementById(iframefield).value);
+    //window.frames[iframeid].document.saveMe();
+    //window.frames[iframeid].document.getElementById(iframefield).click();
+    //alert("after clicking");
+    
+    var myval      = window.frames[iframeid].document.getElementById(iframefield).value;
+  }
+  //for our purposes leave the target div empty
+  //document.getElementById(target).value=myval;
+  //alert("we have the value " + myval);
+  
+  //write the value to the form element
+  return myval;
+}
+
+
+/*FORM STUFF 
+ ****************************************************************************/
+function  addNotesEventFormHandler(desc,sketch){
+  $('#event_eventnotes_eventid').val(eventId);
+  $('#event_eventnotes').val(desc);
+  //$('#event_eventsketch').val(sketch);
+  
+  //call the form submit
+  $("#update_event_notes_sketch").submit();
+}
+
+function updateEventVideoHandler(videourl, desc){
+   
+   //lets update the form from here
+   $('#event_eventvideo_eventid').val(eventId);
+   $('#event_eventvideo').val(videourl);
+   $('#event_eventvideodesc').val(desc);
+   
+   //call the form submit
+   $("#update_video_details").submit();
+}
+ 
+function updateEventMediaHandler(imgfile, imgdesc){
+  //lets update the form from here
+   $('#event_eventmedia_eventid').val(eventId);
+   $('#event_eventmedia').val(imgfile);
+   $('#event_eventmediadesc').val(imgdesc);
+   
+   //call the form submit
+   //$("#upload_media_details").submit();
+}
+
+function getEventMediaContent(){
+  
+  //alert("in get event media content called from view handler");
+  
+  //lets update the form from here
+  $('#event_get_eventid').val(eventId);
+  $('#get_eventcontent_rows').submit();
+}
+/***************************************************************************
+																FORM STUFF */

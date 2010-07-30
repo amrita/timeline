@@ -280,3 +280,17 @@ div.color_block {
 #svg_editor #copyright {
 	text-align: right;
 }
+
+#svg-edit-textarea{
+  margin-top: 650px;
+  position: relative;
+  overflow: auto;
+  width:  400px;
+  height: 100px;
+}
+
+#savestring{
+  margin-top:   -30px;
+  margin-left: 100px;
+  position: absolute;
+}

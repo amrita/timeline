@@ -97,7 +97,7 @@ var maxScreenWidth;
 var animationLoopID;
 var addIslandLoopID;
 
-var MAXISLANDS = 1000;
+var MAXISLANDS = 900;
 var RANDOMLEFT = false;
 
 // Global Islands Array
@@ -114,6 +114,7 @@ function createIslandDropSpace(){
 	drop: function(event, ui) {
 		    //$(this).addClass('ui-state-highlight').find('p').html('Dropped!');
 		    //alert("in islands.js bubble dropped ");
+		    
 	      }
   });
 }
@@ -152,42 +153,58 @@ function startIslands(){
 }
 
 function attachDraggable(island){
+  //alert("trying to attach draggable ");
+  $(island).draggable({ 
+       revert: 'invalid',
+       stop:    afterDraggableStopped
+  });
+}
+
+function attachIconBarDraggable(island){
+  //alert("trying to attach draggable ");
+  $(island).draggable({ 
+       revert: 'invalid',
+       appendTo: "droppable",
+       helper: 'clone',
+	   stack: 'true',
+       stop:    afterDraggableStopped
+  });
+}
+
+function afterDraggableStopped(event, ui){
   var index, eindex;
   var islandptr;  
   var index;
   var top;
   var left;
-  var scrollleft;
-
-  //alert("trying to attach draggable ");
-  $(island).draggable({ 
-       revert: 'invalid',
-       stop: function(event, ui) { 	   
-               //add object to events array if it isn't already there
-               eindex   =  getEventObject(eventObjects, island);
-               if (eindex == -1){
-                 index = deepCopyEventObject(island);
-                 if (index == -1){
-                   alert("something messed up in the deep copy");
-                   return;
-                 }
-                 //set the current interval of the object
-                 eventObjects[index].interval = currentInterval;
-               }
-               else{
-                 index = eindex;
-               }
-               eventObjects[index].top      = $(island).position().top;
-               eventObjects[index].left     = $(island).position().left;
-               scrollLeft                   = $('#content-scroll').scrollLeft();
-               //alert("ID:  " +  eventObjects[index].id + " TOP: " + eventObjects[index].top + " LEFT : " + eventObjects[index].left + " SCROLLLEFT: " + scrollLeft);
-               //using slider interval because it has the string instead of the number
-               getTimestampFromPosition(eventObjects[index].left, scrollLeft, islandWidth, sliderInterval, currentPartLen, index);
+  var scrollLeft;
+  
+  var island = $(this);
+  
+  //add object to events array if it isn't already there
+  eindex   =  getEventObject(eventObjects, island);
+  
+  if (eindex == -1){
+    index = deepCopyEventObject(island);
+    if (index == -1){
+      alert("something messed up in the deep copy");
+      return;
+    }
+    //set the current interval of the object
+    eventObjects[index].interval = currentInterval;
+  }
+  else{
+    index = eindex;
+  }
+  eventObjects[index].top      = $(island).position().top;
+  eventObjects[index].left     = $(island).position().left;
+  scrollLeft                   = $('#content-scroll').scrollLeft();
+  //alert("ID:  " +  eventObjects[index].id + " TOP: " + eventObjects[index].top + " LEFT : " + eventObjects[index].left + " SCROLLLEFT: " + scrollLeft);
+  //using slider interval because it has the string instead of the number
+    getTimestampFromPosition(eventObjects[index].left, scrollLeft, islandWidth, sliderInterval, currentPartLen, index);
                
-               //can we populate the event form ? 
-               addUpdateEventFormHandler(index);
-             }
-  });
+  //can we populate the event form ? 
+  addUpdateEventFormHandler(index);
 }
 
 function textareaFocusOutHandler(event){
@@ -215,7 +232,7 @@ function textareaFocusOutHandler(event){
 /* find a way to pre-populate the content space */
 function populateWithIslands(){
  
-  //clear the array
+  //reset array
   islandObjects = [];
   
   // set some globals // global defined in timelinemapping.js 
@@ -238,7 +255,9 @@ function addIsland()
 	// This should be replaced by a function that gets a random background image 
 	var randomIcon = getRandomNumber(0, islandIcons.length);
 	//alert("adding random icon " + randomIcon);
-	createAndAppendIslandDiv(idNumber, randomIcon)
+	
+	var appendObject = $('#islands');
+	createAndAppendIslandDiv(idNumber, randomIcon,appendObject);
 
 	// Now, we need to grab a reference to the island we just added to the HTML
 	var island = $("#island-" + idNumber);
@@ -247,30 +266,35 @@ function addIsland()
 	// Set the island's position using a "helper" function
 	initializePositionForIsland(island);
 	
-	// Add the island to the islands array
-	var iObject      = new eventObject();
-	
-	iObject.id       = idNumber;
-	iObject.div      = "#island-" + idNumber;
-	iObject.object   = island;
-	iObject.top      = parseInt($(island).css("top"));
-	iObject.left     = parseInt($(island).css("left"));
-	iObject.icon     = islandIcons[randomIcon].imagepath;
-	
-	islandObjects.push(iObject);
-	
-	//alert("iObject TOP: " + iObject.top + "  " + islandObjects[0].top);
+	addIslandToList(idNumber, randomIcon, island, islandObjects);
 }
 /**************************************************************************/
 
-function createAndAppendIslandDiv(idNumber,randomIcon){
+function addIslandToList(idNumber, randomIcon, island, islandArray){
+  // Add the island to the islands array
+  var iObject      = new eventObject();
+	
+  iObject.id       = idNumber;
+  iObject.div      = "#island-" + idNumber;
+  iObject.object   = island;
+  iObject.top      = parseInt($(island).css("top"));
+  iObject.left     = parseInt($(island).css("left"));
+  iObject.icon     = islandIcons[randomIcon].imagepath;
+	
+  islandArray.push(iObject);
+  
+  //alert("iObject TOP: " + iObject.top + "  " + islandObjects[0].top);
+  return;
+}
+
+function createAndAppendIslandDiv(idNumber,randomIcon, appendObject){
   var string = new Array();
   var icon   = "url('" + islandIcons[randomIcon].imagepath + "')";
   
   
   string.push('<div id="island-' + idNumber + '" class="bubble-container" title="Drag me to create a new isle">');
   string.push('<div class="myId" style="display:none">' + idNumber + '</div>');
-  string.push('<textarea class="textfield_effect commontreb" rows="2" col="18" maxlength="47" id="btext-' + idNumber + '"/>');
+  string.push('<textarea class="textfield_effect commontreb bubbletext" rows="2" col="18" maxlength="47" id="btext-' + idNumber + '"/>');
   string.push('<div class="bcontainer-' + idNumber + ' icon-lock bubbleicons" style="opacity:0">');
   string.push('<a href = "link/to/trash/script/when/we/have/js/off" title="Lock Isle" class="ui-icon ui-icon-unlocked">Lock Event</a>');
   string.push('</div>');
@@ -283,7 +307,7 @@ function createAndAppendIslandDiv(idNumber,randomIcon){
   string.push('</div>');
 
   var writestring = string.join('');
-  $('#islands').append(writestring);
+  $(appendObject).append(writestring);
 }
 /**************************************************************************/
 
@@ -314,7 +338,7 @@ var maxAnimate = 0;
 function updatePositionsForIslands(){
    
    increment  = BUBBLEWIDTH + 100;
-   globalLeft = BUBBLEWIDTH;
+   globalLeft = 20;
   
    //alert("in update positions for islands " + contentWidth);
    //find max number of islands to animate
@@ -417,12 +441,25 @@ function islandIconClickHandler(){
 /* MANIPULATING THE LITTLE ICONS ....
  **********************************************************************/
 function viewEvent(ev,$item){
+  var ofind  =  $item.find('div.myId');
+  var id     =  $(ofind).text();
+  
+  eventId     = id; //setting the global here 
+  //alert("event id is " + eventId);
+
   //alert ("trying to view the image ");
+  //pass this to the form ?
+  getEventMediaContent();
+  
   eventViewOpenClickHandler(ev);
 }
 
 function editEvent(ev,$item){
   //alert ("trying to edit the image ");
+  var ofind  =  $item.find('div.myId');
+  var id     =  $(ofind).text();
+  
+  eventId     = id; //setting the global here 
   eventEditOpenClickHandler(ev);
 }
 
@@ -508,6 +545,80 @@ function printEventObject(object){
 }
 /*****************************************************************************/
 
+
+/* CREATE AN ISLANDS TOOL BAR 
+ *****************************************************************************/
+/*
+function addIslandsToIconBar()
+{
+
+    //set up the slider
+    setIslandIconBarSlider();
+    
+	//initialize default positions
+	inc     = BUBBLEWIDTH + 50;
+    newLeft = 20;
+    newTop  =  0;
+    //alert("new top is " + newTop);
+       
+	var appendObject = $('#island-scroll');
+	
+	// This should be replaced by a function that gets a random background image 
+	for (var idx = 0; idx < islandIcons.length; idx++){
+	  // Figure out the island's id number
+	  var idNumber = getId(); 
+	  //alert("id is " + idNumber);
+	
+	  createAndAppendIslandDiv(idNumber, idx,appendObject);
+
+	  // Now, we need to grab a reference to the island we just added to the HTML
+	  var island = $("#island-" + idNumber);
+	  attachIconBarDraggable(island);
+	
+	  // Set the island's position using a "helper" function
+       $(island).css("left", newLeft);
+       $(island).css("top", newTop);
+	
+	   addIslandToList(idNumber, idx, island, islandIconBarObjects);
+	   
+	   //increment newLeft
+	   newLeft += inc;
+	   //alert("new left is " + newLeft);
+	   setTimeout(5000);
+	}
+}
+ 
+function setIslandIconBarSlider(){
+  // initialize the content slider 
+  $("#island-iconbar-slider").slider({
+    animate: true,
+    min:     0,
+    max:     islandIcons.length,
+    value:   0,
+    change:  iconBarSliderChange,
+    slide:   iconBarSliderSlide
+  });
+}
+ 
+function iconBarSliderChange(e, ui)
+{
+  var maxIconScroll = $("#island-scroll").attr("scrollWidth") - 
+                      $("#island-scroll").width();
+  $("#island-scroll").animate({scrollLeft: ui.value * 
+     (maxIconScroll / 100) }, 1000);
+}
+
+function iconBarSliderSlide(e, ui)
+{
+  var maxIconScroll = $("#island-scroll").attr("scrollWidth") - 
+                      $("#island-scroll").width();
+  $("#island-scroll").attr({scrollLeft: ui.value * (maxIconScroll / 100) });
+}
+*/
+ /***************************************************************************
+ 												  CREATING AN ICON TOOL BAR */
+ 
+ 
 
 /*FORM STUFF 
  ****************************************************************************/

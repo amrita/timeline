@@ -19,6 +19,44 @@
   display:none; 
 }
 
+#help-screen{
+  margin-top:     -60px;
+  margin-left:      0px;
+  position:  absolute;
+  width :      1263px;
+  height:       761px;
+  z-index:       9999;
+  display:       none;
+  background: url('../images/help.jpg');
+}
+
+#close-help{
+  margin-top:   10px;
+  margin-right: 20px;
+  float: right;
+  width:  32px;
+  height: 32px;
+  background: url('../images/remove.png') no-repeat;
+  z-index:    9999;
+}
+
+#close-help:hover{
+  background-color: white;
+}
+
+#helper-crab{
+  width: 58px;
+  height: 43px;
+  background: url('../images/helpcrab.png');
+  float: right;
+  margin-top:  -50px;
+  margin-right: 20px;
+}
+
+#helper-crab:hover{
+  background-color:  yellow;
+}
+
 #userinfo{
 }
 
@@ -113,10 +151,26 @@
   position: relative;
 }
 
+/*THE ISLAND SCROLL SPACE
+***************************************************/
+#island-scroll {
+  width:  500px;
+  height: 120px;
+  margin-top: 0px;
+  border: solid 1px orange;
+  position: relative;
+  overflow: auto;
+  z-index:  9999;
+}
+/****************************************************/
+
+
+
+
 /* THE SCROLL SPACE
 **************************************************/
 #timeline-content{
- height: 710px;
+ height: 725px;
 }
 
 #events{
@@ -179,7 +233,7 @@
 #content-scroll {
   width:  500px;
   height: 500px;
-  margin-top: 10px;
+  margin-top: 0px;
   overflow: hidden;
   border: solid 1px black;
   position: relative;

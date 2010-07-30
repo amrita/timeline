@@ -26,7 +26,9 @@ function initializeEventViewer(){
    
    string.push('<div id="eventview-container" >');
    string.push('<table id="eventview-table"><tr>');
-   string.push('<td valign="top"><div id="eventview-item-desc"></div></td>');
+   string.push('<td valign="top"><div id="eventview-item-desc">');
+   string.push('<textarea id="eventview-write" rows="16" cols="24" class="commontreb" disabled="disabled"></textarea>');
+   string.push('</div></td>');
    string.push('<td valign="center"><div id="eventview-items" class="slideshow"></div></td>');
    string.push('<td valign="top"><div id="eventview-nav"></div></td>');
    string.push('</tr></table>');

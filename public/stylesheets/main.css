@@ -22,6 +22,7 @@
 #sessionsettings{ 
   margin-left: 940px;
   text-align:  left;
+  font-size:   10pt;
 }
 
 #sessionsettings a{
@@ -51,6 +52,11 @@
   background-position: top center;
 }
 
+.landing-background123{
+  background:  url(../images/mainbackground123.jpg) no-repeat 0 0 #fff;
+  background-position: top center;
+}
+
 .signup-background{
   background:  url(../images/LoginPage.jpg) no-repeat 0 0 #fff;
   background-position: top center;
@@ -71,7 +77,7 @@
 }
 
 #footer{
-  width:  960px;
+  width:  1200px;
   height:  40px;
 }
 
@@ -203,6 +209,7 @@
 .about-text{
   margin-left:   30px;
   width:        600px;
+  font-size:    10pt;
 }
 
 .dots{
@@ -212,7 +219,7 @@
 
 #team{
   height: 400px;
-  width:  650px;
+  width:  700px;
   
   background-color: #EEF5A8;
   border: solid thin #EEF5A8;

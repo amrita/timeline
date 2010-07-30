@@ -121,20 +121,166 @@ class EventsController < ApplicationController
 		#find the event 
 	  @event = Event.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:delete_eventid]])
     
+		#find the event medias
+		@eventmedias = Eventmedia.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:delete_eventid]])
+		
 		#if it doesnt find it 
 		if (@event.nil?)
 			print "\n\n\n WE COULD NOT FIND AN EVENT TO UPDATE \n\n\n"
 		else
 		  #delete it
 		  @event.destroy
+			#delete any media associated with it
+			@eventmedias.destroy_all
 		
 			#redirect
 			respond_to do |format|
-      format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
-      format.js
-    end
+        format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+        format.js
+      end
 	  end
 
+	end
+	
+	
+	#add the journal notes to the events table
+	def update_event_notes_sketch
+	  flash.keep(:url)
+		
+	  #find the event 
+	  @event      = Event.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:eventnotes_eventid]])
+	  
+		
+		#if it doesnt find it 
+		if (@event.nil?)
+			print "\n\n\n WE COULD NOT FIND AN EVENT TO UPDATE \n\n\n"
+		else
+		  #update its description
+		  @event.notes  = params[:event][:eventnotes]
+			
+			#upload the sketch
+			#svgstring = params[:event][:eventsketch]
+		  #if (svgstring != nil)
+	    #  sketch_file = session["timeline_id"] + '_sketch.svg'
+			#  new = Dir.getwd + "/userdata/images/" + sketch_file
+			#  File.open(new, "wb") { |file| file << svgstring}
+	    #end
+			
+			#set sketch to the file
+			@event.sketch = params[:event][:eventsketch]
+		
+		  print "\n\n\n WE ARE TRYING TO SKETCH AT !!! "  + @event.sketch + " \n\n\n "
+		
+		  if @event.save
+			  respond_to do |format|
+			    format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+			    format.js 
+			  end
+	    else
+		    print "\n\n\n SOMETHING SCREWED UP COULD NOT UPDATE THE EVENT NOTES\n\n"
+	    end
+	  end
+
+		
+	end
+	
+	
+	#add the video
+	def update_video_details
+	  @eventvideo = Eventmedia.new;
+		
+		@eventvideo.userid     = session["timeline_id"]
+		@eventvideo.eventid    = params[:event][:eventvideo_eventid]
+		@eventvideo.mediafile  = params[:event][:eventvideo]
+		@eventvideo.desc       = params[:event][:eventvideodesc]
+		@eventvideo.type       = "video"
+		
+	  @eventvideo.created_at = Time.now
+		@eventvideo.updated_at = Time.now
+		
+		print "\n\n\n AFTER CREATING/UPDATING NEW EVENT VIDEO MEDIA ROW \n\n\n"
+	 
+	  if @eventvideo.save
+		  respond_to do |format|
+			  format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+			  format.js 
+			end
+	  else
+		  print "\n\n\n SOMETHING SCREWED UP COULD NOT SAVE EVENT MEDIA\n\n"
+	  end
+
+	 
+	
+	end
+	
+	
+	def create(prev, new)
+		print "\n\n\n IN CREATE  \n\n\n"
+		File.open(new, "wb") { |file| file << prev.read}
+	end
+	
+	
+	#add the photos and audio files
+	def upload_media_details
+	
+	  @eventmedia = Eventmedia.new;
+		
+		#upload the event media
+		prev = params[:event][:eventmediafile]
+		if (prev != nil)
+	    image_file = session["timeline_id"] + '_' + prev.original_filename
+			new = Dir.getwd + "/userdata/images/" + image_file
+			File.open(new, "wb") { |file| file << prev.read}
+	  end
+		
+		print "\n\n\n TRYING TO CREATE NEW EVENT MEDIA ROW \n\n\n"
+		
+		@eventmedia.userid     = session["timeline_id"]
+		@eventmedia.eventid    = params[:event][:eventmedia_eventid]
+		#attach the path to the mediafile before 
+		@eventmedia.mediafile  = new
+		@eventmedia.desc       = params[:event][:eventmediadesc]
+		@eventmedia.type       = "image"
+		
+	  @eventmedia.created_at = Time.now
+		@eventmedia.updated_at = Time.now
+		
+		print "\n\n\n AFTER CREATING/UPDATING NEW EVENT MEDIA ROW \n\n\n"
+		
+	  if @eventmedia.save
+		  respond_to do |format|
+			  format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+			  format.js 
+			end
+	  else
+		  print "\n\n\n SOMETHING SCREWED UP COULD NOT SAVE EVENT MEDIA\n\n"
+	  end
+	
+	end
+	
+	
+	#get all the media stuff
+	def get_eventcontent
+	  
+		#get the notes and the sketch
+		@eventart   = Event.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:get_eventid]])
+		
+		#get the images and the video
+		#@eventmedia = Event.find(:first, :conditions => ["userid = ? AND eventid = ?", session["timeline_id"], params[:event][:get_eventid]])
+	
+	  #if it doesnt find it 
+		if (@eventart.nil?)
+			print "\n\n\n WE COULD NOT FIND AN EVENT TO VIEW \n\n\n"
+		else
+		  print "\n\n\n\n  we have some event content !  " + @eventart.sketch + "\n\n\n\n"
+			
+			#redirect
+			respond_to do |format|
+        format.html { redirect_to ("/events/timeline/#{session["timeline_id"]}") }
+        format.js
+      end
+	  end
+	  
 	end
 	
 

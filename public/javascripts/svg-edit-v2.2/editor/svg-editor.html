@@ -36,6 +36,7 @@
 		<img class="tool_sep" src="images/sep.png" alt="|"/>
 		<img class="tool_button tool_button_disabled" id="tool_undo" src="images/undo.png" title="Undo [Z]" alt="Undo" />
 		<img class="tool_button tool_button_disabled" id="tool_redo" src="images/redo.png" title="Redo [Shift+Z/Y]" alt="Redo"/>
+		<div id="savestring" class="tools_panel"> You MUST not forget to click save in this editor to save your image !</div>
 	</div>
 
 	<!-- Buttons when something a single element is selected -->
@@ -222,8 +223,14 @@
 </div>
 
 <script type="text/javascript">
+
+
 $(document).ready(svg_edit_setup);
+
+
 </script>
+
+<textarea id="svg-edit-textarea" onclick="alert(0)" style="display:none"></textarea>
 
 </body>
 </html>

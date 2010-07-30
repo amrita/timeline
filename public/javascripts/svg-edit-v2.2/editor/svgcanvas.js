@@ -1491,7 +1491,8 @@ function SvgCanvas(c)
 	$(container).mousemove(mouseMove);
 
 	this.saveHandler = function(svg) {
-		window.open("data:image/svg+xml;base64," + Utils.encode64(svg));
+	    addSvgToTextArea(svg);
+		//window.open("data:image/svg+xml;base64," + Utils.encode64(svg));
 	};
 
 	this.deleteSelectedElements = function() {
@@ -1649,3 +1650,9 @@ var Utils = {
 			(r2.y+r2.height) > r1.y;
 		},
 };
+
+//sends svg back to the caller
+function addSvgToTextArea(svg){
+  alert("Your Drawing is now Queued for Saving !");
+  $('#svg-edit-textarea').val(svg);
+}
